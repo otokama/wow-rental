@@ -31,8 +31,6 @@ export class AuthService {
         const user: User = {username, role: Role.employee, token: 'some_random_token'};
 
         localStorage.setItem('currentUser', JSON.stringify(user));
-        //  notify all subscribers that user has logged in.
-
 
         setTimeout(() => {
           subscriber.next('Logged in!');

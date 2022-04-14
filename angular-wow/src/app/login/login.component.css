@@ -5,27 +5,27 @@
   font-family: 'Titillium Web', sans-serif;
 }
 .title {
-  order: 0;
   font-family: 'Titillium Web', sans-serif;
   font-size: larger;
   padding-bottom: 10px;
   align-self: center;
-
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .form-field{
   width: 85%;
-  padding-left: 10px;
+  padding-left: 15px;
+  padding-bottom: 10px;
 }
 .login-button{
-  width: 30%;
   align-self: center;
   font-family: 'Titillium Web', sans-serif;
-  font-weight: bold;
+  user-select: none;
+  font-weight: bolder;
+  padding-bottom: 15px;
 }
 .login-button:hover{
-  color: #940000;
+  color: #126710;
 }
 
 /*.register{*/

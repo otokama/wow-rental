@@ -1,19 +1,18 @@
 <div class="sign-in-container">
-  <div class="title">Sign In</div>
+  <div class="title">Welcome</div>
   <mat-dialog-content>
     <mat-form-field class="form-field">
-      <input matInput placeholder="Username" required>
+      <input matInput [(ngModel)]="username" placeholder="Username" (keypress)="enterKeyHandler($event)" required>
       <mat-error *ngIf="fieldControl.invalid">{{getError()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <input matInput placeholder="Password" required>
+      <input matInput [(ngModel)]="password" placeholder="Password" (keypress)="enterKeyHandler($event)" required>
       <mat-error *ngIf="fieldControl.invalid">{{getError()}}</mat-error>
     </mat-form-field>
   </mat-dialog-content>
-  <button mat-button (click)="login()" class="login-button" [disableRipple]="true">Sign In</button>
-
-<!--  TODO: Add register dialogue-->
+<!--  <button mat-button (click)="login()" class="login-button" [disableRipple]="true">Sign In</button>-->
+  <div (click)="login()" class="login-button">Sign In</div>
   <span class="register">
     <div>Don't have an account yet?  <a routerLink="/register" class="register-text" (click)="onNoClick()">Register</a>   </div>
   </span>

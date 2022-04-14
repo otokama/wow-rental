@@ -3,26 +3,16 @@
     justify-content: flex-end;
 }
 
-.home-button {
+.button {
     background-color: transparent;
+    font-size: medium;
+    user-select: none;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-.home-button:hover {
+.button:hover {
     color: #940000;
 }
 
-.signin-button {
-    background-color: transparent;
-}
 
-.signin-button:hover {
-    color: #940000;
-    background-color: transparent;
-}
-
-.sign-out {
-    background-color: transparent;
-}
-.sign-out:hover{
-    color: #940000;
-}

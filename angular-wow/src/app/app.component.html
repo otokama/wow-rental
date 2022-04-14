@@ -1,19 +1,7 @@
-<!--TODO: edit style, add login dialog and registration link -->
 <mat-toolbar class="toolbar">
-<!--  <button mat-flat-button routerLink="/" class="home-button">-->
-<!--    <mat-icon>home</mat-icon>-->
-<!--    Home-->
-<!--  </button>-->
-<!--  <button mat-flat-button (click)="openLogin()" *ngIf="!isCustomer" class="signin-button" [disableRipple]="true">-->
-<!--    <mat-icon>login</mat-icon>-->
-<!--    Sign in-->
-<!--  </button>-->
-  <button type="button" class="btn btn-light home-button" routerLink="/">Home</button>
-  <button type="button" class="btn btn-light signin-button" (click)="openLogin()" *ngIf="!isCustomer">Sign in</button>
-  <button mat-flat-button (click)="logout()" *ngIf="isCustomer" class="sign-out">
-    <mat-icon>logout</mat-icon>
-    Sign Out
-  </button>
+  <div class="button" routerLink="/">Home</div>
+  <div class="button" (click)="openLogin()" *ngIf="!isUser">Sign in</div>
+  <div (click)="logout()" *ngIf="isUser" class="button">Sign Out</div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

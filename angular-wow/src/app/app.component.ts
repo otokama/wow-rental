@@ -5,6 +5,7 @@ import {User} from './_models/user';
 import {Role} from './_models/role';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {LoginComponent} from './login/login.component';
+import {NotificationService} from './_services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent {
 
   constructor(  private router: Router,
                 private authService: AuthService,
-                private dialog: MatDialog
+                private dialog: MatDialog,
+                private notif: NotificationService
                 ) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -27,22 +29,21 @@ export class AppComponent {
     return this.currentUser && this.currentUser.role === Role.employee;
   }
 
-  get isCustomer() {
+  get isUser() {
     return this.currentUser;
   }
 
   openLogin() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '300px';
-    dialogConfig.data = {};
-    const dialogRef = this.dialog.open(LoginComponent, dialogConfig);
-    // TODO: authenticate user with auth service
+    dialogConfig.width = '400px';
+    this.dialog.open(LoginComponent, dialogConfig);
   }
 
 
   logout() {
     this.authService.logout();
+    this.notif.showNotif('You have signed out.', 'Dismiss');
     this.router.navigate(['']);
   }
 

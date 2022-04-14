@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AuthService} from '../_services/auth.service';
 import {Router} from '@angular/router';
 import {NotificationService} from '../_services/notification.service';
-
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,6 @@ export class LoginComponent {
   error = '';
   username: string;
   password: string;
-  loginForm: FormGroup;
   fieldControl = new FormControl('', [Validators.required]);
   constructor(
      public dialogRef: MatDialogRef<LoginComponent>,
@@ -28,15 +27,6 @@ export class LoginComponent {
     if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
     }
-    this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(
-          '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,63}$',
-      ), ]),
-      password: new FormControl('', [Validators.required, Validators.pattern(
-          '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$'
-      )])
-    });
-
   }
 
 
@@ -48,6 +38,21 @@ export class LoginComponent {
 
   login() {
     if (this.username && this.password) {
+      this.authService.login(this.username, this.password)
+          .pipe(first())
+          .subscribe(
+              data => {
+                this.notif.showNotif( 'Welcome!  ' + this.username, 'Dismiss');
+                this.dialogRef.close();
+              },
+              error => {
+                this.error = error;
+                // show a snackbar to user
+                this.notif.showNotif(this.error, 'Dismiss');
+                console.log('Error', error);
+              });
+    } else {
+      this.notif.showNotif('Please enter username and password.', 'Dismiss');
     }
   }
 
@@ -57,6 +62,12 @@ export class LoginComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  enterKeyHandler(event: KeyboardEvent) {
+    if (event.code === 'Enter') {
+      this.login();
+    }
   }
 }
 
