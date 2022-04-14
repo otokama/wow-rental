@@ -1,0 +1,49 @@
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 5px 5px 5px;
+  font-family: 'Titillium Web', sans-serif;
+}
+.title {
+  order: 0;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: larger;
+  padding-bottom: 10px;
+  align-self: center;
+
+  padding-bottom: 20px;
+}
+
+.form-field{
+  width: 85%;
+  padding-left: 10px;
+}
+.login-button{
+  width: 30%;
+  align-self: center;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: bold;
+}
+.login-button:hover{
+  color: #940000;
+}
+
+/*.register{*/
+/*  width: 35%;*/
+/*  align-self: center;*/
+/*  font-family: 'Titillium Web', sans-serif;*/
+/*}*/
+/*.register:hover{*/
+/*  color: green;*/
+/*}*/
+
+.register {
+  padding-top: 10px;
+  padding-left: 7px;
+  align-self: flex-start;
+  font-size: smaller;
+}
+
+.register-text {
+  color: darkgreen;
+}
