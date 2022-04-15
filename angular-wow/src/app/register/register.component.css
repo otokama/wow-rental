@@ -1,0 +1,35 @@
+.container{
+    display: flex;
+    padding-top: 40px;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif, 'Open Sans', Helvetica, Arial;
+}
+.title {
+    font-size: large;
+    font-weight: bolder;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.form-title{
+    font-size: 13px;
+    padding-top: 15px;
+}
+.form-field{
+    font-size: 7px;
+    width: 150px;
+}
+.form-input{
+    font-size: 17px;
+}
+.hint{
+    font-size: 11px;
+    color: red;
+}
+
+.name{
+    display: inline-flex;
+}
+.name-field{
+    padding-inline: 20px;
+}
