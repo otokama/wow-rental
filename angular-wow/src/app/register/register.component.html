@@ -1,41 +1,115 @@
 <div class="container">
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="title">
-      CREATE NEW CUSTOMER ACCOUNT
-    </div>
 
-    <div class="name">
-      <div class="name-field">
-        <div class="form-title">First Name</div>
-        <mat-form-field appearance="outline" class="form-field">
-          <input class="form-input" matInput formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+  <div class="title">
+    CREATE NEW CUSTOMER ACCOUNT
+  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-container">
+    <div class="contact">
+      <div class="sub-title">CONTACT INFORMATION</div>
+      <div class="form-title">First Name *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input class="form-input" matInput formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+        <mat-hint *ngIf="submitted && f.firstName.errors">
           <mat-hint *ngIf="f.firstName.errors.required" class="hint">First Name is required</mat-hint>
-          <mat-hint *ngIf="f.firstName.errors.pattern" class="hint">First Name is using illegal characters.</mat-hint>
-        </mat-form-field>
-      </div>
+          <mat-hint *ngIf="f.firstName.errors.pattern" class="hint">Invalid Name</mat-hint>
+        </mat-hint>
+      </mat-form-field>
 
-      <div class="name-field">
-        <div class="form-title">Last Name</div>
-        <mat-form-field appearance="outline" class="form-field">
-          <input class="form-input" matInput formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+      <div class="form-title">Last Name *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input class="form-input" matInput formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+        <mat-hint *ngIf="submitted && f.lastName.errors">
           <mat-hint *ngIf="f.lastName.errors.required" class="hint">Last Name is required</mat-hint>
-          <mat-hint *ngIf="f.lastName.errors.pattern" class="hint">Last Name is using illegal characters.</mat-hint>
-        </mat-form-field>
-      </div>
-<!--      TODO: add middle name form control.-->
-      <div class="name-field">
-        <div class="form-title">Middle Name</div>
-        <mat-form-field appearance="outline" class="form-field">
-          <input class="form-input" matInput formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-        </mat-form-field>
-      </div>
+          <mat-hint *ngIf="f.lastName.errors.pattern" class="hint">Invalid Name</mat-hint>
+        </mat-hint>
+      </mat-form-field>
+
+      <div class="form-title">Middle Name</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input class="form-input" matInput formControlName="middleName" [ngClass]="{ 'is-invalid': submitted && f.middleName.errors }">
+        <mat-hint *ngIf="submitted && f.middleName.errors">
+          <mat-hint *ngIf="f.middleName.errors.pattern" class="hint">Invalid Name</mat-hint>
+        </mat-hint>
+      </mat-form-field>
+
+      <div class="form-title">Phone Number *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput type="text" formControlName="phone" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+        <mat-hint *ngIf="submitted && f.phone.errors" >
+          <mat-hint *ngIf="f.phone.errors.required" class="hint">Phone number is required</mat-hint>
+          <mat-hint *ngIf="f.phone.errors.pattern" class="hint">Invalid phone number</mat-hint>
+        </mat-hint>
+      </mat-form-field>
+
+      <div class="form-title">Email *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input class="form-input" matInput formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+        <mat-hint *ngIf="submitted && f.email.errors" >
+          <mat-hint *ngIf="f.email.errors.required" class="hint">Email is required</mat-hint>
+          <mat-hint *ngIf="f.email.errors.pattern" class="hint">Invalid email format</mat-hint>
+        </mat-hint>
+      </mat-form-field>
     </div>
 
+    <div class="login">
+      <div class="sub-title">LOGIN CREDENTIAL</div>
+      <div class="form-title">Username *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput type="text" formControlName="username" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+        <mat-hint *ngIf="submitted && f.username.errors" >
+          <mat-hint *ngIf="f.username.errors.required" class="hint">Username is required</mat-hint>
+          <mat-hint *ngIf="f.username.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+        </mat-hint>
+      </mat-form-field>
 
+      <div class="form-title">Password *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput type="text" formControlName="password" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+        <mat-hint *ngIf="submitted && f.password.errors" >
+          <mat-hint *ngIf="f.password.errors.required" class="hint">Password is required</mat-hint>
+          <mat-hint *ngIf="f.password.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+        </mat-hint>
+      </mat-form-field>
+    </div>
 
+    <div class="address">
+      <div class="sub-title">ADDRESS</div>
+      <div class="form-title">Street Address *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput type="text" formControlName="streetaddress" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.streetaddress.errors }">
+        <mat-hint *ngIf="submitted && f.streetaddress.errors" >
+          <mat-hint *ngIf="f.streetaddress.errors.required" class="hint">Address is required</mat-hint>
+          <mat-hint *ngIf="f.streetaddress.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+        </mat-hint>
+      </mat-form-field>
 
+      <div class="form-title">City *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput type="text" formControlName="city" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+        <mat-hint *ngIf="submitted && f.city.errors" >
+          <mat-hint *ngIf="f.city.errors.required" class="hint">City is required</mat-hint>
+          <mat-hint *ngIf="f.city.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+        </mat-hint>
+      </mat-form-field>
 
+      <div class="form-title">State *</div>
+      <select class="form-select state-select" formControlName="state">
+        <option [value]="state" *ngFor="let state of states;">{{state}}</option>
+      </select>
+      <mat-hint *ngIf="submitted && f.state.errors" >
+        <mat-hint *ngIf="f.state.errors.required" class="hint">State is required</mat-hint>
+      </mat-hint>
 
+      <div class="form-title">Zipcode *</div>
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput type="text" formControlName="zipcode" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.zipcode.errors }">
+        <mat-hint *ngIf="submitted && f.zipcode.errors" >
+          <mat-hint *ngIf="f.zipcode.errors.required" class="hint">Zipcode is required</mat-hint>
+          <mat-hint *ngIf="f.zipcode.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+        </mat-hint>
+      </mat-form-field>
+    </div>
   </form>
+  <div class="button" (click)="onSubmit()">REGISTER</div>
 </div>

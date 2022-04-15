@@ -1,11 +1,23 @@
 .container{
-    display: flex;
-    padding-top: 40px;
+    margin-top: 25px;
+    padding-top: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
     flex-direction: column;
     align-items: center;
     font-family: sans-serif, 'Open Sans', Helvetica, Arial;
+    user-select: none;
+    box-shadow: rgba(0, 0, 0, 0.05) 2px 2px 18px;
+    display: flex;
+}
+.form-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
 }
 .title {
+    grid-area: title;
     font-size: large;
     font-weight: bolder;
     padding-top: 20px;
@@ -13,23 +25,59 @@
 }
 .form-title{
     font-size: 13px;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 .form-field{
     font-size: 7px;
-    width: 150px;
+    width: 160px;
 }
 .form-input{
     font-size: 17px;
 }
 .hint{
     font-size: 11px;
-    color: red;
+    color: #940000;
+}
+.contact{
+    flex: auto;
+    margin: 40px;
+
+}
+.sub-title{
+
+}
+.login{
+    flex: auto;
+    margin: 40px;
+
+}
+.address{
+    flex: auto;
+    margin: 40px;
+}
+.state-select{
+    margin-top: 2px;
+    margin-bottom: 5px;
+    width: 160px;
+    font-size: 16px;
+}
+.button {
+    background-color: black;
+    color: white;
+    border: 3px solid transparent;
+    padding: 14px 26px;
+    text-align: center;
+    font-size: 15px;
+    margin: 5px 10px 30px 10px;
+    transition: 0.2s;
+    width: 130px;
+    height: 56px;
+    cursor: pointer;
 }
 
-.name{
-    display: inline-flex;
-}
-.name-field{
-    padding-inline: 20px;
+.button:hover {
+    color: black;
+    background-color: white;
+    border: 3px solid black;
+    transition: 0.2s;
 }
