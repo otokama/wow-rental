@@ -15,8 +15,9 @@ import {JwtInterceptor} from './interceptors/jwt.interceptor';
 import {ErrorInterceptor} from './interceptors/error.interceptor';
 
 
-import {EmployeeComponent} from './employee/employee.component';
 import { ReserveGadgetComponent } from './home/reserve-gadget/reserve-gadget.component';
+import { EmpLoginComponent } from './employee/emp-login/emp-login.component';
+import { EmpHomeComponent } from './employee/emp-home/emp-home.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,9 @@ import { ReserveGadgetComponent } from './home/reserve-gadget/reserve-gadget.com
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    EmployeeComponent,
-    ReserveGadgetComponent
+    ReserveGadgetComponent,
+    EmpLoginComponent,
+    EmpHomeComponent
   ],
   imports: [
     BrowserModule,

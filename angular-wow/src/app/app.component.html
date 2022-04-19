@@ -1,8 +1,17 @@
 <mat-toolbar class="toolbar">
   <img src="assets/car-rental.png" class="car-img">
   <div class="button" routerLink="/">Home</div>
-  <div class="button" (click)="openLogin()" *ngIf="!isUser">Sign in</div>
+  <div class="button" (click)="openLogin()" *ngIf="!isUser && isEmpRoute">Sign in</div>
   <div (click)="logout()" *ngIf="isUser" class="button">Sign Out</div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
+
+<footer class="bg-light text-muted footer">
+  <div class="emp-login" routerLink="employee/login">
+    Employee Login
+  </div>
+<!--  <div class="text-center p-2">-->
+<!--    © 2021 Copyright: WOW-->
+<!--  </div>-->
+</footer>

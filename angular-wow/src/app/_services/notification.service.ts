@@ -8,11 +8,8 @@ export class NotificationService {
 
   constructor(public snackBar: MatSnackBar,
               private zone: NgZone) {}
-
+  // TODO: change styling of snackbar: https://stackoverflow.com/questions/47901127/angular-5-material-snackbar-panelclass-config
   public showNotif(message, action, duration = 4000): void {
-    // consider not using zone. However, the snackbar is know not to work outside it.
-    // zone is a built in service that allows running async tasks that don't require UI updates.
-    // this.zone.run(() => {
     this.snackBar.open(message, action, { duration }).onAction().subscribe(() => {
       console.log('Notififcation action performed');
     });

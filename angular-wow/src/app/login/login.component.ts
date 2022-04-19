@@ -49,8 +49,7 @@ export class LoginComponent {
               },
               error => {
                 this.error = error;
-                // show a snackbar to user
-                this.notif.showNotif(this.error, 'Dismiss');
+                this.notif.showNotif(this.error, 'Dismiss' );
                 console.log('Error', error);
               });
     } else {

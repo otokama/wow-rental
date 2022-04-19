@@ -10,20 +10,20 @@
     <div class="line-break"></div>
     <div class="gadget-field">
         <mat-icon class="icon">calendar_month</mat-icon>
-        <div class="field-text-empty">Pick-up Date</div>
+        <div class="field-text-empty" *ngIf="!pickUpDate">Pick-up Date</div>
     </div>
     <div class="gadget-field">
         <mat-icon class="icon">calendar_month</mat-icon>
-        <div class="field-text-empty">Drop-off Date</div>
+        <div class="field-text-empty" *ngIf="!dropOffDate">Drop-off Date</div>
     </div>
     <div class="line-break"></div>
     <div class="gadget-field">
         <mat-icon class="icon">schedule</mat-icon>
-        <div class="field-text-empty">Pick-up Time</div>
+        <div class="field-text-empty" *ngIf="!pickUpTime">Pick-up Time</div>
     </div>
     <div class="gadget-field">
         <mat-icon class="icon">schedule</mat-icon>
-        <div class="field-text-empty">Drop-off Time</div>
+        <div class="field-text-empty" *ngIf="!dropOffTime">Drop-off Time</div>
     </div>
     <div class="line-break"></div>
     <div class="search-button">Search</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Time} from '@angular/common';
 
 @Component({
   selector: 'app-reserve-gadget',
@@ -6,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reserve-gadget.component.css']
 })
 export class ReserveGadgetComponent implements OnInit {
+
+  pickUpDate: Date;
+  dropOffDate: Date;
+  pickUpTime: Time;
+  dropOffTime: Time;
 
   constructor() { }
 

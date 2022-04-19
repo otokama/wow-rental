@@ -47,6 +47,8 @@ export class AppComponent {
     this.router.navigate(['']);
   }
 
-
+  get isEmpRoute() {
+    return this.router.url.indexOf('/employee');
+  }
 
 }
