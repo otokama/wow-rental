@@ -23,12 +23,12 @@ export class AuthService {
   }
 
   // simulate server authentication:
-  login(username: string, password: string) {
+  login(email: string, password: string) {
     // In the future we will do server authentication here. For now we will simulate it.
     return new Observable(subscriber => {
 
-      if (username === 'employee' && password === '123') {
-        const user: User = {username, role: Role.employee, token: 'some_random_token'};
+      if (email === 'employee@yahoo.com' && password === '123') {
+        const user: User = {email, role: Role.employee, token: 'some_random_token', firstName: '<employee name>'};
 
         localStorage.setItem('currentUser', JSON.stringify(user));
 
@@ -36,8 +36,16 @@ export class AuthService {
           subscriber.next('Logged in!');
           this.currentUserSubject.next(user);
         }, 100);
-      } else if (username === 'customer' && password === '123') {
-        const user: User = {username, role: Role.customer, token: 'some_random_token'};
+      } else if (email === 'customer@yahoo.com' && password === '123') {
+        const user: User = {email, role: Role.customer, token: 'some_random_token', firstName: '<customer name>'};
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        //  notify all subscribers that user has logged in.
+        setTimeout(() => {
+          subscriber.next('Logged in!');
+          this.currentUserSubject.next(user);
+        }, 100);
+      } else if (email === 'manager@yahoo.com' && password === '123') {
+        const user: User = {email, role: Role.manager, token: 'some_random_token', firstName: '<manager name>'};
         localStorage.setItem('currentUser', JSON.stringify(user));
         //  notify all subscribers that user has logged in.
         setTimeout(() => {
@@ -46,7 +54,7 @@ export class AuthService {
         }, 100);
       } else {
         setTimeout(() => {
-          subscriber.error('Wrong username or password');
+          subscriber.error('Wrong Email address or password');
         }, 100);
       }
 

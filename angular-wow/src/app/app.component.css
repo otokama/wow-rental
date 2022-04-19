@@ -8,11 +8,17 @@
     font-size: medium;
     user-select: none;
     padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 40px;
 }
 
 .button:hover {
-    color: #940000;
+    transition: 0.2s;
+    color:  #00a800 ;
 }
 
+.car-img{
+    width: 50px;
+    position: absolute;
+    left: 45px;
+}
 

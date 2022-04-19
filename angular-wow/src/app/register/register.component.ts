@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  hide = true;
   states = [];
 
 
@@ -44,7 +45,6 @@ export class RegisterComponent implements OnInit {
       middleName: ['', [Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(30)]],
-      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
         Validators.maxLength(30)]],
       streetaddress: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
@@ -62,7 +62,6 @@ export class RegisterComponent implements OnInit {
       'Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
   }
 
-  // convenience getter for easy access to form fields
   get f() {
     return this.registerForm.controls; }
 

@@ -9,6 +9,7 @@
     user-select: none;
     box-shadow: rgba(0, 0, 0, 0.05) 2px 2px 18px;
     display: flex;
+    border-radius: 15px;
 }
 .form-container{
     display: flex;
@@ -38,6 +39,9 @@
 .form-input{
     font-size: 17px;
 }
+.form-visible-toggle{
+    font-size: 19px;
+}
 .hint{
     font-size: 11px;
     color: #940000;
@@ -63,22 +67,22 @@
     font-size: 16px;
 }
 .button {
-    background-color: black;
+    background-color:  #00a800 ;
     color: white;
-    border: 3px solid transparent;
+    border-radius: 5px;
     padding: 14px 26px;
     text-align: center;
     font-size: 15px;
-    margin: 5px 10px 30px 10px;
-    transition: 0.2s;
+    margin: 26px 10px 30px 10px;
     width: 130px;
-    height: 56px;
+    height: 50px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .button:hover {
-    color: black;
+    color: #00a800;
     background-color: white;
-    border: 3px solid black;
     transition: 0.2s;
+    box-shadow: rgba(0, 168, 0, 0.2) 2px 2px 18px;
 }

@@ -42,6 +42,11 @@
         </mat-hint>
       </mat-form-field>
 
+    </div>
+
+    <div class="login">
+      <div class="sub-title">LOGIN CREDENTIALS</div>
+
       <div class="form-title">Email *</div>
       <mat-form-field appearance="outline" class="form-field">
         <input class="form-input" matInput formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
@@ -50,22 +55,11 @@
           <mat-hint *ngIf="f.email.errors.pattern" class="hint">Invalid email format</mat-hint>
         </mat-hint>
       </mat-form-field>
-    </div>
-
-    <div class="login">
-      <div class="sub-title">LOGIN CREDENTIAL</div>
-      <div class="form-title">Username *</div>
-      <mat-form-field appearance="outline" class="form-field">
-        <input matInput type="text" formControlName="username" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
-        <mat-hint *ngIf="submitted && f.username.errors" >
-          <mat-hint *ngIf="f.username.errors.required" class="hint">Username is required</mat-hint>
-          <mat-hint *ngIf="f.username.errors.pattern" class="hint">Contains invalid characters</mat-hint>
-        </mat-hint>
-      </mat-form-field>
 
       <div class="form-title">Password *</div>
       <mat-form-field appearance="outline" class="form-field">
-        <input matInput type="text" formControlName="password" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+        <mat-icon matSuffix (click)="hide = !hide" class="form-visible-toggle" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         <mat-hint *ngIf="submitted && f.password.errors" >
           <mat-hint *ngIf="f.password.errors.required" class="hint">Password is required</mat-hint>
           <mat-hint *ngIf="f.password.errors.pattern" class="hint">Contains invalid characters</mat-hint>

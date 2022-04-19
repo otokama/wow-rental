@@ -14,7 +14,7 @@
 
 .form-field{
   width: 85%;
-  padding-left: 15px;
+  padding-left: 40px;
   padding-bottom: 10px;
 }
 .login-button{
@@ -23,9 +23,11 @@
   user-select: none;
   font-weight: bolder;
   padding-bottom: 15px;
+  transition: 0.6s;
 }
 .login-button:hover{
-  color: #126710;
+  transition: 0.6s;
+  color:  #00ad00 ;
 }
 
 /*.register{*/
@@ -42,8 +44,15 @@
   padding-left: 7px;
   align-self: flex-start;
   font-size: smaller;
+  user-select: none;
 }
 
 .register-text {
-  color: darkgreen;
+  color:   #00a800 ;
+}
+.pass-reset{
+  padding-top: 10px;
+  padding-left: 7px;
+  align-self: flex-start;
+  font-size: smaller;
 }

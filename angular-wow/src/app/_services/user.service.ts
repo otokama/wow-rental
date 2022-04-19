@@ -11,7 +11,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
 
-  // TODO:Change all dummy backend
+  // TODO:Change all to dummy backend
   getAll() {
      return this.http.get<User[]>(`http://localhost:3030/user/allusers`);
   }

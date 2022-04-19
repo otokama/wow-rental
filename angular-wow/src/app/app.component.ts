@@ -43,7 +43,7 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
-    this.notif.showNotif('You have signed out.', 'Dismiss');
+    this.notif.showNotif('You have been signed out.', 'Dismiss');
     this.router.navigate(['']);
   }
 

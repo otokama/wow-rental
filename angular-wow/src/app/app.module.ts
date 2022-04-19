@@ -16,6 +16,7 @@ import {ErrorInterceptor} from './interceptors/error.interceptor';
 
 
 import {EmployeeComponent} from './employee/employee.component';
+import { ReserveGadgetComponent } from './home/reserve-gadget/reserve-gadget.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {EmployeeComponent} from './employee/employee.component';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    ReserveGadgetComponent
   ],
   imports: [
     BrowserModule,

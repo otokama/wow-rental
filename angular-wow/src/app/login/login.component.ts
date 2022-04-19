@@ -13,8 +13,9 @@ import { first } from 'rxjs/operators';
 
 export class LoginComponent {
   error = '';
-  username: string;
+  email: string;
   password: string;
+  hide: boolean;
   fieldControl = new FormControl('', [Validators.required]);
   constructor(
      public dialogRef: MatDialogRef<LoginComponent>,
@@ -23,6 +24,7 @@ export class LoginComponent {
      private authService: AuthService,
      private notif: NotificationService
   ) {
+    this.hide = true;
     // redirect to home if already logged in
     if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
@@ -37,13 +39,13 @@ export class LoginComponent {
   }
 
   login() {
-    if (this.username && this.password) {
-      this.authService.login(this.username, this.password)
+    if (this.email && this.password) {
+      this.authService.login(this.email, this.password)
           .pipe(first())
           .subscribe(
               data => {
-                this.notif.showNotif( 'Welcome!  ' + this.username, 'Dismiss');
                 this.dialogRef.close();
+                this.router.navigate(['/']);
               },
               error => {
                 this.error = error;
@@ -52,7 +54,7 @@ export class LoginComponent {
                 console.log('Error', error);
               });
     } else {
-      this.notif.showNotif('Please enter username and password.', 'Dismiss');
+      this.notif.showNotif('Please enter Email and password.', 'Dismiss');
     }
   }
 

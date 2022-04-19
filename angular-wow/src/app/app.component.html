@@ -1,4 +1,5 @@
 <mat-toolbar class="toolbar">
+  <img src="assets/car-rental.png" class="car-img">
   <div class="button" routerLink="/">Home</div>
   <div class="button" (click)="openLogin()" *ngIf="!isUser">Sign in</div>
   <div (click)="logout()" *ngIf="isUser" class="button">Sign Out</div>

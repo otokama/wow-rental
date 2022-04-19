@@ -1,0 +1,79 @@
+.gadget-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+    min-width: 600px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 18px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 15px;
+    font-family: Arial, Helvetica, 'Open Sans', sans-seria, serif;
+}
+.gadget-field{
+    border: 1px solid;
+    border-radius: 6px;
+    text-align: center;
+    height: 50px;
+    width: 260px;
+    margin: 7px 10px 7px 10px;
+    transition: 0.2s;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+}
+.gadget-field:hover{
+    border: 1px solid #00a800 ;
+    border-radius: 6px;
+    transition: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 18px;
+}
+.field-text-empty{
+    font-size: 15px;
+    /*margin-top: 10px;*/
+    margin-left: 24px;
+    /*margin-right: 12px;*/
+    align-self: center;
+    overflow: hidden;
+}
+
+
+.date-text{
+
+}
+.icon{
+    font-size: 28px;
+    padding-left: 7px;
+    padding-top: 10px;
+}
+
+.line-break{
+    flex-basis: 100%;
+    height: 0;
+}
+
+.search-button{
+    background-color:  #00a800 ;
+    color: white;
+    border-radius: 8px;
+    padding: 14px 26px;
+    text-align: center;
+    font-size: 15px;
+    margin: 26px 10px 30px 10px;
+    width: 130px;
+    height: 50px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.search-button:hover{
+    color: #00a800;
+    background-color: white;
+    transition: 0.2s;
+    box-shadow: rgba(0, 168, 0, 0.2) 2px 2px 18px;
+}

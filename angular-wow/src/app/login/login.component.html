@@ -2,12 +2,13 @@
   <div class="title">Welcome</div>
   <mat-dialog-content>
     <mat-form-field class="form-field">
-      <input matInput [(ngModel)]="username" placeholder="Username:" (keypress)="enterKeyHandler($event)" required>
+      <input matInput [(ngModel)]="email" placeholder="Email:" (keypress)="enterKeyHandler($event)" required>
       <mat-error *ngIf="fieldControl.invalid">{{getError()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <input matInput [(ngModel)]="password" placeholder="Password:" (keypress)="enterKeyHandler($event)" required>
+      <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" placeholder="Password:" (keypress)="enterKeyHandler($event)" required>
+      <mat-icon matSuffix (click)="hide = !hide" class="form-visible-toggle" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       <mat-error *ngIf="fieldControl.invalid">{{getError()}}</mat-error>
     </mat-form-field>
   </mat-dialog-content>
@@ -15,7 +16,8 @@
   <div (click)="login()" class="login-button">Sign In</div>
   <span class="register">
     <div>Don't have an account yet?  <a routerLink="/register" class="register-text" (click)="onNoClick()">Register</a>   </div>
-  </span>
 
+  </span>
+  <div class="pass-reset">Forgot password?</div>
 </div>
 
