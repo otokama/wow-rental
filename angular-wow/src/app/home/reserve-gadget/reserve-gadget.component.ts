@@ -5,7 +5,7 @@ import {NotificationService} from '../../_services/notification.service';
 import {ReserveService} from '../../_services/reserve.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {SelectLocationComponent} from './select-location/select-location.component';
-
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -17,7 +17,8 @@ export class ReserveGadgetComponent implements OnInit {
 
 
   fieldControl = new FormControl('', [Validators.required]);
-
+  rangeControl = new FormGroup({start: new FormControl(), end: new FormControl()});
+  dateModel: NgbDateStruct;
 
   pickUpLoc: number;
   dropOffLoc: number;

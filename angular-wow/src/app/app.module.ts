@@ -13,13 +13,14 @@ import {RegisterComponent} from './register/register.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JwtInterceptor} from './interceptors/jwt.interceptor';
 import {ErrorInterceptor} from './interceptors/error.interceptor';
-
-
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatFormFieldModule} from "@angular/material/form-field";
 import { ReserveGadgetComponent } from './home/reserve-gadget/reserve-gadget.component';
 import { EmpLoginComponent } from './employee/emp-login/emp-login.component';
 import { EmpHomeComponent } from './employee/emp-home/emp-home.component';
 import { SelectLocationComponent } from './home/reserve-gadget/select-location/select-location.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,11 @@ import { SelectLocationComponent } from './home/reserve-gadget/select-location/s
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    NgbModule
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
