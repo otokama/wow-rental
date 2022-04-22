@@ -33,6 +33,7 @@
     "ng2-charts": "^2.4.2",
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~6.6.7",
+    "select-autocomplete": "^0.0.1",
     "tslib": "^1.9.0",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.10.3"

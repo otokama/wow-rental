@@ -1,0 +1,25 @@
+<div class="select-location-container">
+    <h3 *ngIf="pickup">Where to pickup your car?</h3>
+    <h3 *ngIf="!pickup">Where to drop off your car?</h3>
+    <mat-form-field class="loc-select">
+        <input matInput
+               type="text"
+               [(ngModel)]="location"
+               [formControl]="fieldControl"
+               [matAutocomplete]="auto"
+               (keypress)="enterKeyHandler($event)" required>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayLoc" [disableRipple]="true">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.name}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-checkbox  [(ngModel)]="sameLoc" *ngIf="pickup" class="checkbox" [disableRipple]="true" >Same pick-up and drop-off location</mat-checkbox>
+    <div class="confirm-button" (click)="save()" class="confirm-button">Confirm</div>
+</div>
+
+
+
+
+
+

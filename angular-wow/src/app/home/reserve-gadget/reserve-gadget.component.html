@@ -1,11 +1,13 @@
 <div class="gadget-container">
-    <div class="gadget-field">
+    <div class="gadget-field" (click)="openLocSelectorPickup()">
         <mat-icon class="icon">location_on</mat-icon>
-        <div class="field-text-empty">Pick-up Location</div>
+        <div class="field-text-empty" *ngIf="!pickUpLoc">Pick-up Location</div>
+        <div class="field-text" *ngIf="pickUpLoc">{{displayBranchName(pickUpLoc)}}</div>
     </div>
-    <div class="gadget-field">
+    <div class="gadget-field" (click)="openLocSelectorDropOff()">
         <mat-icon class="icon">where_to_vote</mat-icon>
-        <div class="field-text-empty">Drop off Location</div>
+        <div class="field-text-empty" *ngIf="!dropOffLoc">Drop off Location</div>
+        <div class="field-text" *ngIf="dropOffLoc">{{displayBranchName(dropOffLoc)}}</div>
     </div>
     <div class="line-break"></div>
     <div class="gadget-field">

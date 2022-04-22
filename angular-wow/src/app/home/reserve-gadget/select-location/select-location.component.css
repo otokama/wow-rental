@@ -1,0 +1,38 @@
+.select-location-container{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 10px 20px;
+
+}
+.loc-select{
+    /*padding-top: 20px;*/
+    width: 80%;
+    align-self: center;
+}
+
+.confirm-button{
+    background-color:  #00a800 ;
+    color: white;
+    border-radius: 8px;
+    padding: 11px 26px;
+    text-align: center;
+    font-size: 12px;
+    margin: 26px 10px 0px 10px;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    transition: 0.2s;
+    align-self: center;
+}
+.confirm-button:hover{
+    color: #00a800;
+    background-color: white;
+    transition: 0.2s;
+    box-shadow: rgba(0, 168, 0, 0.2) 2px 2px 18px;
+}
+.checkbox{
+
+    font-size: 14px;
+    margin-left: 40px;
+}
+
