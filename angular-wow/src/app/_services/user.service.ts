@@ -23,12 +23,4 @@ export class UserService {
   }
 
 
-  setGoal(calGoal: number, minGoal: number) {
-    return this.http.post<User>(`http://localhost:3030/user/setgoals`, {calGoal, minGoal});
-  }
-
-  getGoal(username) {
-    return this.http.get<any>(`http://localhost:3030/user/getgoals/${username}`);
-  }
-
 }

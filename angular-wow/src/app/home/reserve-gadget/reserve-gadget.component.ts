@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {Time} from '@angular/common';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../../_services/notification.service';
@@ -32,7 +33,7 @@ export class ReserveGadgetComponent implements OnInit {
   pickUpTimeOptions: Time[];
   dropOffTimeOptions: Time[];
   constructor(private notif: NotificationService, private reserveService: ReserveService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog, private router: Router) {
     this.timeOptions = [
       {hours: 8, minutes: 30}, {hours: 9, minutes: 0}, {hours: 9, minutes: 30}, {hours: 10, minutes: 0},
       {hours: 10, minutes: 30}, {hours: 11, minutes: 0}, {hours: 11, minutes: 30}, {hours: 12, minutes: 0},
@@ -52,7 +53,7 @@ export class ReserveGadgetComponent implements OnInit {
     this.minDropOffDate = new Date((new Date().getTime()));
   }
 
-  displayBranchName(key: number): string {
+  private displayBranchName(key: number): string {
     return this.reserveService.getBranchName(key);
   }
 
@@ -86,29 +87,83 @@ export class ReserveGadgetComponent implements OnInit {
   }
 
   pickUpDateChange(event: MatDatepickerInputEvent<Date>) {
-    this.minDropOffDate = new Date(event.value);
+    this.pickUpDate = new Date(event.value);
+    this.minDropOffDate = this.pickUpDate;
+    this.dropOffTime = null;
     // adjust dropOffDate since it can't be earlier than pickup date.
-    if (this.dropOffDate < this.pickUpDate) {
-      this.dropOffDate = this.pickUpDate;
+    if (this.dropOffDate) {
+
+      if (this.dropOffDate < this.pickUpDate ||
+          this.dropOffDate.toISOString() === this.pickUpDate.toISOString()) {
+        console.log('same pickup and drop off');
+        this.dropOffDate = this.pickUpDate;
+        if (this.pickUpTime) {
+          this.filterDropOffTime(this.pickUpTime.hours, this.pickUpTime.minutes);
+        }
+      } else {
+        this.resetDropOffTimeOptions();
+      }
     }
   }
 
+  dropOffDateChange(event: MatDatepickerInputEvent<Date>) {
+    this.dropOffDate = new Date(event.value);
+    console.log(this.dropOffDate);
+    this.dropOffTime = null;
+    if (this.dropOffDate.toISOString() === this.pickUpDate.toISOString() && this.pickUpTime ) {
+      console.log('same pickup and drop off');
+      this.filterDropOffTime(this.pickUpTime.hours, this.pickUpTime.minutes);
+    } else {
+      this.resetDropOffTimeOptions();
+    }
+  }
+
+  filterDropOffTime(hours, minutes) {
+    this.dropOffTimeOptions = this.timeOptions.filter(
+          (ele) => (ele.hours > hours) ||
+              (ele.hours === hours && ele.minutes > minutes)
+      );
+  }
+
   selectTime(option, pickUp) {
+
     if (pickUp) {
       this.pickUpTime = {
         hours: option.hours,
         minutes: option.minutes
       };
       this.dropOffTime = null;
-      this.dropOffTimeOptions = this.timeOptions.filter(
-          (ele) => (ele.hours > option.hours) ||
-          (ele.hours === option.hours && ele.minutes > option.minutes)
-      );
+      if (this.pickUpDate.toISOString() === this.dropOffDate.toISOString()) {
+        this.dropOffTimeOptions = this.timeOptions.filter(
+            (ele) => (ele.hours > option.hours) ||
+                (ele.hours === option.hours && ele.minutes > option.minutes)
+        );
+      }
     } else {
       this.dropOffTime = {
         hours: option.hours,
         minutes: option.minutes
       };
+    }
+  }
+
+  search() {
+    if (this.pickUpLoc && this.pickUpDate && this.pickUpTime
+      && this.dropOffLoc && this.dropOffDate && this.dropOffTime) {
+      this.pickUpDate.setHours(this.pickUpTime.hours);
+      this.pickUpDate.setMinutes(this.pickUpTime.minutes);
+      this.dropOffDate.setHours(this.dropOffTime.hours);
+      this.dropOffDate.setMinutes(this.dropOffTime.minutes);
+      // TODO: send query parameters with router param to searchresult component.
+      this.router.navigate(['/search'], {queryParams: {
+        pickupLoc: this.pickUpLoc,
+        dropOffLoc: this.dropOffLoc,
+        pickupDate: this.pickUpDate,
+        dropOffDate: this.dropOffDate }
+      });
+
+    } else {
+      this.notif.showNotif('Please fill in all fields', 'Dismiss');
     }
   }
 
@@ -130,5 +185,9 @@ export class ReserveGadgetComponent implements OnInit {
 
   private displayTime(t: Time): string {
     return this.displayHour(t.hours) + ' : ' + this.displayMin(t.minutes);
+  }
+
+  private resetDropOffTimeOptions() {
+    this.dropOffTimeOptions = this.timeOptions.filter((ele) => ele.hours > 8);
   }
 }

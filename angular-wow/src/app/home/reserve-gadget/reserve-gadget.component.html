@@ -12,7 +12,7 @@
     <div class="line-break"></div>
 
     <mat-form-field class="dummy-date-picker">
-        <input matInput [matDatepicker]="picker1" [(ngModel)]="pickUpDate" [min]="minDate"
+        <input matInput [matDatepicker]="picker1" [min]="minDate"
                (dateChange)="pickUpDateChange($event)">
         <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
@@ -24,7 +24,8 @@
     </div>
 
     <mat-form-field class="dummy-date-picker">
-        <input matInput [matDatepicker]="picker2" [(ngModel)]="dropOffDate" [min]="minDropOffDate">
+        <input matInput [matDatepicker]="picker2" [min]="minDropOffDate"
+            (dateChange)="dropOffDateChange($event)">
         <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
 
@@ -66,6 +67,6 @@
     </div>
 
     <div class="line-break"></div>
-    <div class="search-button">Search</div>
+    <div class="search-button" (click)="search()">Search</div>
 
 </div>
