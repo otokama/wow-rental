@@ -6,7 +6,7 @@ import {ReserveService} from '../../_services/reserve.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {SelectLocationComponent} from './select-location/select-location.component';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-reserve-gadget',
@@ -20,17 +20,21 @@ export class ReserveGadgetComponent implements OnInit {
   rangeControl = new FormGroup({start: new FormControl(), end: new FormControl()});
   dateModel: NgbDateStruct;
 
-  pickUpLoc: number;
-  dropOffLoc: number;
-  pickUpDate: Date;
-  dropOffDate: Date;
-  pickUpTime: Time;
-  dropOffTime: Time;
+  pickUpLoc: number | null;
+  dropOffLoc: number | null;
+  pickUpDate: Date | null;
+  dropOffDate: Date | null;
+  minDate: Date;
+  minDropOffDate: Date | null;
+  pickUpTime: Time | null;
+  dropOffTime: Time | null;
 
   constructor(private notif: NotificationService, private reserveService: ReserveService,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.minDate = new Date((new Date().getTime()))
+    this.minDropOffDate = new Date((new Date().getTime()));
   }
 
   displayBranchName(key: number): string {
@@ -65,4 +69,12 @@ export class ReserveGadgetComponent implements OnInit {
       }
     }, error => {console.log(error); } );
   }
+
+  pickUpDateChange(event: MatDatepickerInputEvent<Date>) {
+    this.minDropOffDate = new Date(event.value);
+    if (this.dropOffDate < this.pickUpDate) {
+      this.dropOffDate = this.pickUpDate;
+    }
+  }
+
 }

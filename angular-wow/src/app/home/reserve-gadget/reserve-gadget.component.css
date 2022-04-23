@@ -13,6 +13,7 @@
     padding-left: 20px;
     padding-right: 20px;
     border-radius: 15px;
+    user-select: none;
     font-family: Arial, Helvetica, 'Open Sans', sans-seria, serif;
 }
 .gadget-field{
@@ -21,7 +22,7 @@
     text-align: center;
     height: 50px;
     width: 260px;
-    margin: 7px 10px 7px 10px;
+    margin: 23px 10px 5px 10px;
     transition: 0.2s;
     cursor: pointer;
 
@@ -34,6 +35,28 @@
     transition: 0.3s;
     box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 18px;
 }
+
+.time-gadget-field{
+    border: 1px solid;
+    border-radius: 6px;
+    text-align: center;
+    height: 50px;
+    width: 260px;
+    margin: 0px 10px 5px 10px;
+    transition: 0.2s;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.time-gadget-field:hover{
+    border: 1px solid #00a800 ;
+    border-radius: 6px;
+    transition: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 18px;
+}
+
 .field-text-empty{
     font-size: 15px;
     /*margin-top: 10px;*/
@@ -52,6 +75,12 @@
     white-space: nowrap;
 }
 
+.dummy-date-picker{
+    width: 1px;
+    visibility: hidden;
+    margin-top: 26px;
+    padding-top: 10px;
+}
 
 .date-text{
 

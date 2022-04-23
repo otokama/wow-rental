@@ -11,30 +11,41 @@
     </div>
     <div class="line-break"></div>
 
-    <mat-form-field style="width:1px;visibility:hidden;">
-        <input matInput [matDatepicker]="picker" >
-        <mat-datepicker #picker></mat-datepicker>
+    <mat-form-field class="dummy-date-picker">
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="pickUpDate" [min]="minDate"
+               (dateChange)="pickUpDateChange($event)">
+        <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
 
-    <div class="gadget-field" (click)="picker.open()">
+    <div class="gadget-field" (click)="picker1.open()">
         <mat-icon class="icon">calendar_month</mat-icon>
         <div class="field-text-empty" *ngIf="!pickUpDate">Pick-up Date</div>
-
-
+        <div class="field-text" *ngIf="pickUpDate">{{pickUpDate | date}}</div>
     </div>
-    <div class="gadget-field">
+
+    <mat-form-field class="dummy-date-picker">
+        <input matInput [matDatepicker]="picker2" [(ngModel)]="dropOffDate" [min]="minDropOffDate">
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <div class="gadget-field" (click)="picker2.open()">
         <mat-icon class="icon">calendar_month</mat-icon>
         <div class="field-text-empty" *ngIf="!dropOffDate">Drop-off Date</div>
+        <div class="field-text" *ngIf="dropOffDate">{{dropOffDate | date}}</div>
     </div>
+
     <div class="line-break"></div>
-    <div class="gadget-field">
+
+    <div class="time-gadget-field">
         <mat-icon class="icon">schedule</mat-icon>
         <div class="field-text-empty" *ngIf="!pickUpTime">Pick-up Time</div>
     </div>
-    <div class="gadget-field">
+
+    <div class="time-gadget-field">
         <mat-icon class="icon">schedule</mat-icon>
         <div class="field-text-empty" *ngIf="!dropOffTime">Drop-off Time</div>
     </div>
+
     <div class="line-break"></div>
     <div class="search-button">Search</div>
 
