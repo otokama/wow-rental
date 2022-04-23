@@ -4,7 +4,7 @@
     justify-content: center;
     width: 100%;
     max-width: 800px;
-    min-width: 600px;
+    min-width: 610px;
     box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 18px;
     margin-top: 20px;
     margin-right: 20px;
@@ -81,9 +81,27 @@
     margin-top: 26px;
     padding-top: 10px;
 }
-
-.date-text{
-
+.dropdown-toggle::after {
+    display:none;
+}
+.dropdown-menu{
+    padding-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.08) 2px 2px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    min-width: 18px;
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.time-option{
+    transition: 0.1s;
+}
+.time-option:hover{
+    color: #00a800;
+    background-color: white;
+    transition: 0.1s;
 }
 .icon{
     font-size: 20px;

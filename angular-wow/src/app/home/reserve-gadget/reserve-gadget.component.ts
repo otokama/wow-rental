@@ -28,9 +28,24 @@ export class ReserveGadgetComponent implements OnInit {
   minDropOffDate: Date | null;
   pickUpTime: Time | null;
   dropOffTime: Time | null;
-
+  timeOptions: Time[];
+  pickUpTimeOptions: Time[];
+  dropOffTimeOptions: Time[];
   constructor(private notif: NotificationService, private reserveService: ReserveService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) {
+    this.timeOptions = [
+      {hours: 8, minutes: 30}, {hours: 9, minutes: 0}, {hours: 9, minutes: 30}, {hours: 10, minutes: 0},
+      {hours: 10, minutes: 30}, {hours: 11, minutes: 0}, {hours: 11, minutes: 30}, {hours: 12, minutes: 0},
+      {hours: 12, minutes: 30}, {hours: 13, minutes: 0}, {hours: 13, minutes: 30}, {hours: 14, minutes: 0},
+      {hours: 14, minutes: 30}, {hours: 15, minutes: 0}, {hours: 15, minutes: 30}, {hours: 16, minutes: 0},
+      {hours: 16, minutes: 30}, {hours: 17, minutes: 0}, {hours: 17, minutes: 30}, {hours: 18, minutes: 0},
+      {hours: 18, minutes: 30}, {hours: 19, minutes: 0}, {hours: 19, minutes: 30}, {hours: 20, minutes: 0},
+      {hours: 20, minutes: 30}
+    ];
+    this.dropOffTimeOptions = this.timeOptions.filter((ele) => ele.hours > 8);
+    this.pickUpTimeOptions = this.timeOptions.slice(0, 24);
+
+  }
 
   ngOnInit(): void {
     this.minDate = new Date((new Date().getTime()))
@@ -72,9 +87,48 @@ export class ReserveGadgetComponent implements OnInit {
 
   pickUpDateChange(event: MatDatepickerInputEvent<Date>) {
     this.minDropOffDate = new Date(event.value);
+    // adjust dropOffDate since it can't be earlier than pickup date.
     if (this.dropOffDate < this.pickUpDate) {
       this.dropOffDate = this.pickUpDate;
     }
   }
 
+  selectTime(option, pickUp) {
+    if (pickUp) {
+      this.pickUpTime = {
+        hours: option.hours,
+        minutes: option.minutes
+      };
+      this.dropOffTime = null;
+      this.dropOffTimeOptions = this.timeOptions.filter(
+          (ele) => (ele.hours > option.hours) ||
+          (ele.hours === option.hours && ele.minutes > option.minutes)
+      );
+    } else {
+      this.dropOffTime = {
+        hours: option.hours,
+        minutes: option.minutes
+      };
+    }
+  }
+
+  private displayHour(num: number): string {
+    if (num < 10) {
+      return '0' + num.toString();
+    } else {
+      return num.toString();
+    }
+  }
+
+  private displayMin(num: number): string {
+    if (num !== 30) {
+      return '00';
+    } else {
+      return num.toString();
+    }
+  }
+
+  private displayTime(t: Time): string {
+    return this.displayHour(t.hours) + ' : ' + this.displayMin(t.minutes);
+  }
 }

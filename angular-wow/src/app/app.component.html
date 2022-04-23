@@ -8,7 +8,7 @@
 <router-outlet></router-outlet>
 
 <footer class="bg-light text-muted footer">
-  <div class="emp-login" routerLink="employee/login">
+  <div class="emp-login" routerLink="employee/login" *ngIf="isHome && !isUser">
     Employee Login
   </div>
 <!--  <div class="text-center p-2">-->

@@ -51,4 +51,8 @@ export class AppComponent {
     return this.router.url.indexOf('/employee');
   }
 
+  get isHome() {
+    return this.router.url === '/';
+  }
+
 }

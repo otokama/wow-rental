@@ -4,9 +4,7 @@ import {BranchLocation} from '../_models/branch';
 
 @Injectable({ providedIn: 'root' })
 export class ReserveService {
-    branchMap;
     branchLocation: BranchLocation[];
-
     constructor() {
         this.branchLocation = [
             { val: 1, name: 'New York (JFK - John F. Kennedy Intl.)'},
@@ -15,6 +13,7 @@ export class ReserveService {
             { val: 4, name: 'Philadelphia (PHL - Philadelphia Intl.)'},
             { val: 5, name: 'Dallas (DFW - Dallas-Fort Worth Intl.)'}
         ];
+
     }
 
     getAllBranchLocation(): BranchLocation[] {

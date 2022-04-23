@@ -36,14 +36,33 @@
 
     <div class="line-break"></div>
 
-    <div class="time-gadget-field">
-        <mat-icon class="icon">schedule</mat-icon>
-        <div class="field-text-empty" *ngIf="!pickUpTime">Pick-up Time</div>
+    <div ngbDropdown>
+        <div class="time-gadget-field" ngbDropdownToggle>
+            <mat-icon class="icon">schedule</mat-icon>
+            <div class="field-text-empty" *ngIf="!pickUpTime">Pick-up Time</div>
+            <div class="field-text" *ngIf="pickUpTime">{{displayTime(pickUpTime)}}</div>
+            <div ngbDropdownMenu class="dropdown-menu">
+                <button ngbDropdownItem *ngFor="let option of pickUpTimeOptions" class="time-option"
+                        (click)="selectTime(option, true)">
+                    {{displayTime(option)}}
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="time-gadget-field">
-        <mat-icon class="icon">schedule</mat-icon>
-        <div class="field-text-empty" *ngIf="!dropOffTime">Drop-off Time</div>
+
+    <div ngbDropdown>
+        <div class="time-gadget-field" ngbDropdownToggle>
+            <mat-icon class="icon">schedule</mat-icon>
+            <div class="field-text-empty" *ngIf="!dropOffTime">Drop-off Time</div>
+            <div class="field-text" *ngIf="dropOffTime">{{displayTime(dropOffTime)}}</div>
+            <div ngbDropdownMenu class="dropdown-menu">
+                <button ngbDropdownItem *ngFor="let option of dropOffTimeOptions" class="time-option"
+                        (click)="selectTime(option, false)">
+                    {{displayTime(option)}}
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="line-break"></div>
