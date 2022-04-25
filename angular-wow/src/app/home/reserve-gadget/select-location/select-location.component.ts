@@ -39,8 +39,8 @@ export class SelectLocationComponent implements OnInit {
 
   save() {
     if (this.location) {
-      if (this.location.val !== undefined) {
-        this.dialogRef.close({locationID: this.location.val, sameLoc: this.sameLoc});
+      if (this.location.id !== undefined) {
+        this.dialogRef.close({locationID: this.location.id, sameLoc: this.sameLoc});
       } else {
         this.notif.showNotif('Select a valid location', 'Dismiss');
       }
@@ -55,8 +55,12 @@ export class SelectLocationComponent implements OnInit {
 
   private _filter(name: string): BranchLocation[] {
     const filterValue = name.toLowerCase();
-
-    return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
+    return this.options.filter(option => (
+        option.name.toLowerCase().includes(filterValue) ||
+        option.street.toLowerCase().includes(filterValue) ||
+        option.city.toLowerCase().includes(filterValue) ||
+        option.state.toLowerCase().includes(filterValue))
+    );
   }
 
   enterKeyHandler(event: KeyboardEvent) {

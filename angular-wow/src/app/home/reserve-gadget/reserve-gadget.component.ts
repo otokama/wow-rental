@@ -156,9 +156,9 @@ export class ReserveGadgetComponent implements OnInit {
       this.dropOffDate.setMinutes(this.dropOffTime.minutes);
       // TODO: send query parameters with router param to searchresult component.
       this.router.navigate(['/search'], {queryParams: {
-        pickupLoc: this.pickUpLoc,
+        pickUpLoc: this.pickUpLoc,
         dropOffLoc: this.dropOffLoc,
-        pickupDate: this.pickUpDate,
+        pickUpDate: this.pickUpDate,
         dropOffDate: this.dropOffDate }
       });
 
