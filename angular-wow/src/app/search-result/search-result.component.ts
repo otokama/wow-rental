@@ -12,6 +12,8 @@ export class SearchResultComponent implements OnInit {
   dropOffLoc; dropOffBranch: string;
   pickUpDate: Date;
   dropOffDate: Date;
+  sort: string | null;
+  bodyTypeFilter: string | null;
   constructor(private route: ActivatedRoute, private router: Router,
               private reserveService: ReserveService) { }
 
@@ -36,6 +38,23 @@ export class SearchResultComponent implements OnInit {
     }
   }
 
+  // TODO: add sorting here
+  sortPrice(sort: number) {
+    if (sort === 0) {
+      this.sort = null;
+    } else if (sort === 1) {
+      this.sort = 'Sort by price - Low to High';
+    } else {
+      this.sort = 'Sort by price - High to Low';
+    }
+  }
 
+  filterBodyType(typeID: number){
+    if (typeID === 0) {
+      this.bodyTypeFilter = null;
+    } else {
+      this.bodyTypeFilter = this.reserveService.getBodyTypeName(Number(typeID));
+    }
+  }
 
 }

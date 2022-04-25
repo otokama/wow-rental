@@ -170,6 +170,16 @@ export class ReserveService {
         return 'No such branch ID';
     }
 
+    getBodyTypeName(key: number): string{
+        let i;
+        for (i = 0; i < this.vehicleTypes.length; ++i) {
+            if (this.vehicleTypes[i].typeID === Number(key)) {
+                return this.vehicleTypes[i].typeName;
+            }
+        }
+        return 'No such body type ID';
+    }
+
     getVehicleReservable(carType: number, pickUpDate: Date, dropOffDate: Date, pickUpLoc: number, dropOffLoc: number) {
 
     }
