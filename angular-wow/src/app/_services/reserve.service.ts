@@ -163,7 +163,7 @@ export class ReserveService {
     getBranchName(key: number): string {
         let i;
         for (i = 0; i < this.branchLocation.length; ++i) {
-            if (this.branchLocation[i].id === key) {
+            if (this.branchLocation[i].id === Number(key)) {
                 return this.branchLocation[i].name;
             }
         }

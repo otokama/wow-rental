@@ -8,8 +8,8 @@ import { ReserveService } from '../_services/reserve.service';
   styleUrls: ['./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit {
-  pickUpLoc: number;
-  dropOffLoc: number;
+  pickUpLoc; pickupBranch: string;
+  dropOffLoc; dropOffBranch: string;
   pickUpDate: Date;
   dropOffDate: Date;
   constructor(private route: ActivatedRoute, private router: Router,
@@ -21,11 +21,21 @@ export class SearchResultComponent implements OnInit {
       this.pickUpDate = params.pickUpDate;
       this.dropOffLoc = params.dropOffLoc;
       this.dropOffDate = params.dropOffDate;
+      this.initBranchName();
     })
     if (!this.pickUpLoc || !this.pickUpDate
         || !this.dropOffLoc || !this.dropOffDate) {
       this.router.navigate(['/']);
     }
   }
+
+  initBranchName() {
+    if (this.pickUpLoc && this.dropOffLoc) {
+      this.pickupBranch = this.reserveService.getBranchName((this.pickUpLoc));
+      this.dropOffBranch = this.reserveService.getBranchName(this.dropOffLoc);
+    }
+  }
+
+
 
 }

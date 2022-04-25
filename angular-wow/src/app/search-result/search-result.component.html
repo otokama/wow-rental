@@ -1,8 +1,26 @@
-<div class="search-container">
-    <div class="search-toolbar">
-
+<div class="search-toolbar">
+    <div class="select-location">
+        <div class="search-title">Pick-up Location</div>
+        <div class="search-text">{{pickupBranch}}</div>
+    </div>
+    <div class="select-location">
+        <div class="search-title">Drop-off Location</div>
+        <div class="search-text">{{dropOffBranch}}</div>
+    </div>
+    <div class="select-time">
+        <div class="search-title">Pick-up Time</div>
+        <div class="search-text">{{pickUpDate | date:'short'}}</div>
+    </div>
+    <div class="select-time">
+        <div class="search-title">Drop-off Time</div>
+        <div class="search-text">{{dropOffDate | date:'short'}}</div>
+    </div>
+    <div class="search-button">
+        Search
     </div>
 
-
+</div>
+<div class="search-container">
+    <div class="sort-field"></div>
 </div>
 
