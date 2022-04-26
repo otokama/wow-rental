@@ -1,25 +1,70 @@
 <div class="search-toolbar">
-    <div class="select-location select-hover">
+    <div class="select-location select-hover" (click)="openLocSelector(true)">
         <div class="search-title">Pick-up Location</div>
         <div class="search-text">{{pickupBranch}}</div>
     </div>
-    <div class="select-location select-hover">
+    <div class="select-location select-hover" (click)="openLocSelector(false)">
         <div class="search-title">Drop-off Location</div>
         <div class="search-text">{{dropOffBranch}}</div>
     </div>
-    <div class="select-time select-hover">
-        <div class="search-title">Pick-up Time</div>
-        <div class="search-text">{{pickUpDate | date:'short'}}</div>
+
+    <mat-form-field class="dummy-date-picker">
+        <input matInput [matDatepicker]="picker1" [min]="minDate" [max]="maxDate"
+               (dateChange)="selectDate($event, true)"
+                [value]="pickUpDate">
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <div class="select-date select-hover" (click)="picker1.open()">
+        <div class="search-title">Pick-up Date</div>
+        <div class="search-text">{{pickUpDate | date:'MMM. d'}}</div>
     </div>
-    <div class="select-time select-hover">
-        <div class="search-title">Drop-off Time</div>
-        <div class="search-text">{{dropOffDate | date:'short'}}</div>
+
+    <mat-form-field class="dummy-date-picker">
+        <input matInput [matDatepicker]="picker2" [min]="minDropOffDate" [max]="maxDate"
+               (dateChange)="selectDate($event, false)"
+                [value]="dropOffDate">
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <div class="select-date select-hover" (click)="picker2.open()">
+        <div class="search-title">Drop-off Date</div>
+        <div class="search-text">{{dropOffDate | date:'MMM. d'}}</div>
     </div>
-    <div class="search-button">Search</div>
+
+    <div class="select-time select-hover" ngbDropdown>
+        <div ngbDropdownToggle class="ngbDropDownAnch">
+            <div class="search-title">Pick-up Time</div>
+            <div class="search-text">{{displayTime(pickUpTime)}}</div>
+            <div ngbDropdownMenu class="time-dropdown-menu">
+                <button ngbDropdownItem *ngFor="let option of timeOptions" class="time-option"
+                        (click)="selectTime(option, true)">
+                    {{displayTime(option)}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="select-time select-hover" ngbDropdown>
+        <div ngbDropdownToggle class="ngbDropDownAnch">
+            <div class="search-title">Drop-off Time</div>
+            <div class="search-text">{{displayTime(dropOffTime)}}</div>
+            <div ngbDropdownMenu class="time-dropdown-menu">
+                <button ngbDropdownItem *ngFor="let option of timeOptions" class="time-option"
+                        (click)="selectTime(option, false)">
+                    {{displayTime(option)}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="search-button" (click)="search()">Search</div>
 
 </div>
+<mat-divider></mat-divider>
 
-<div ngbDropdown>
+<div ngbDropdown class="sort-toolbar">
     <div class="sort-button" ngbDropdownToggle>
         <div *ngIf="!sort" >Sort By Price</div>
         <div *ngIf="sort">{{sort}}</div>
@@ -38,5 +83,9 @@
     </div>
 </div>
 
+<div class="search-container">
 
+
+
+</div>
 

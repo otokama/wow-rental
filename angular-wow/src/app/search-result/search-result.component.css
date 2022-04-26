@@ -4,7 +4,7 @@
     flex-wrap: wrap;
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 17px;
+    margin-top: 23px;
     justify-content: center;
     min-width: 750px;
     user-select: none;
@@ -21,23 +21,68 @@
     flex-direction: column;
     padding-left: 6px;
     padding-right: 6px;
+    cursor: pointer;
 }
-.select-time{
+.select-date{
     flex-grow: 5555;
     border: 1px solid;
     border-radius: 8px;
     text-align: center;
     height: 55px;
     flex-basis: 150px;
-    margin: 0px 5px 10px 5px;
-    display: flex;
-    flex-direction: column;
+    margin: 0px 5px 15px 5px;
     padding-left: 6px;
     padding-right: 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+.select-time{
+    flex-grow: 1200;
+    border: 1px solid;
+    border-radius: 8px;
+    text-align: center;
+    height: 55px;
+    flex-basis: 150px;
+    margin: 0px 5px 10px 5px;
+    padding-left: 6px;
+    padding-right: 6px;
+    cursor: pointer;
+}
+.time-dropdown-menu{
+    box-shadow: rgba(0, 0, 0, 0.08) 2px 2px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    min-width: 18px;
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.time-option{
+    transition: 0.1s;
+}
+.time-option:hover{
+    color: #00a800;
+    background-color: white;
+    transition: 0.1s;
+}
+.ngbDropDownAnch{
+    display: flex;
+    flex-direction: column;
+
+}
+.ngbDropDownAnch:after{
+    display: none;
+}
+.dummy-date-picker{
+    width: 1px;
+    visibility: hidden;
+    margin-top: 12px;
 }
 .select-hover:hover{
     border: 1px solid #00a800 ;
-    border-radius: 5px;
+    border-radius: 8px;
     transition: 0.3s;
     box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 14px;
 }
@@ -45,12 +90,13 @@
     margin-left: 4px;
     margin-top: 2px;
     font-size: 13px;
-    color: rgba(0,0,0,80%);
+    color: rgba(0,0,0,75%);
     align-self: flex-start;
 }
 .search-text{
     font-size: 17px;
     overflow: hidden;
+    margin-bottom: 8px;
     padding-left: 6px;
     padding-right: 6px;
 }
@@ -77,14 +123,17 @@
     transition: 0.2s;
     box-shadow: rgba(0, 168, 0, 0.2) 2px 2px 18px;
 }
+.sort-toolbar{
+    display: flex;
+    justify-content: flex-end;
+}
 .sort-button{
-    position: absolute;
     margin-top: 10px;
-    right: 25px;
+    margin-right: 25px;
     border: 1px solid;
     border-radius: 5px;
     text-align: center;
-    min-width: 130px;
+    /*min-width: 130px;*/
     height: 45px;
     cursor: pointer;
     padding: 10px 10px 10px 10px;
@@ -114,7 +163,9 @@
     background-color: white;
     transition: 0.2s;
 }
-.search-container{
 
+.search-container{
+    display: flex;
+    justify-content: space-between;
 }
 
