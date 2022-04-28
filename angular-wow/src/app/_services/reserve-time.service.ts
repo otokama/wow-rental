@@ -19,6 +19,25 @@ export class ReserveTimeService {
         return this.timeOptions;
     }
 
+    compareTime(t1: Time, t2: Time): number {
+        if (t1.hours < t2.hours) {
+            return -1;
+        } else if (t1.hours === t2.hours) {
+            if (t1.minutes <= t2.minutes) {
+                return -1;
+            } else {
+                return 1;
+            }
+        } else {
+            return 1;
+        }
+    }
+
+    compareDate(d1: Date, d2: Date): boolean {
+        return (d1.getMonth() === d2.getMonth()
+            && d1.getDate() === d2.getDate());
+    }
+
     private displayHour(num: number): string {
         if (num < 10) {
             return '0' + num.toString();

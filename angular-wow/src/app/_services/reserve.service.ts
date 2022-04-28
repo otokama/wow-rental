@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {BranchLocation} from '../_models/branch';
 import {Vehicle} from '../_models/vehicle';
 import {VehicleType} from '../_models/vehicleType';
+import { VehicleFilter } from '../_models/vehiclefilter';
 
 @Injectable({ providedIn: 'root' })
 export class ReserveService {
@@ -180,8 +181,11 @@ export class ReserveService {
         return 'No such body type ID';
     }
 
-    getVehicleReservable(carType: number, pickUpDate: Date, dropOffDate: Date, pickUpLoc: number, dropOffLoc: number) {
+    getVehicleReservable(carType: number, pickUpDate: Date, dropOffDate: Date,
+                         pickUpLoc: number, dropOffLoc: number) {
 
     }
+
+
 
 }

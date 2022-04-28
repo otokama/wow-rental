@@ -30,15 +30,6 @@
   color:  #00ad00 ;
 }
 
-/*.register{*/
-/*  width: 35%;*/
-/*  align-self: center;*/
-/*  font-family: 'Titillium Web', sans-serif;*/
-/*}*/
-/*.register:hover{*/
-/*  color: green;*/
-/*}*/
-
 .register {
   padding-top: 10px;
   padding-left: 7px;
@@ -50,9 +41,12 @@
 .register-text {
   color:   #00a800 ;
 }
+
 .pass-reset{
   padding-top: 10px;
   padding-left: 7px;
   align-self: flex-start;
   font-size: smaller;
+  user-select: none;
+  cursor: pointer;
 }

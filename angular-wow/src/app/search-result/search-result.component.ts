@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReserveService } from '../_services/reserve.service';
 import { ReserveTimeService } from '../_services/reserve-time.service';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {SelectLocationComponent} from '../home/reserve-gadget/select-location/select-location.component';
-import {Time} from '@angular/common';
+import { NotificationService } from "../_services/notification.service";
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SelectLocationComponent } from '../home/reserve-gadget/select-location/select-location.component';
+import { Time } from '@angular/common';
+import { VehicleFilter } from "../_models/vehiclefilter";
 
 @Component({
   selector: 'app-search-result',
@@ -25,7 +27,8 @@ export class SearchResultComponent implements OnInit {
   sort: string | null;
   bodyTypeFilter: string | null;
   constructor(private route: ActivatedRoute, private router: Router, private timeService: ReserveTimeService,
-              private reserveService: ReserveService, private dialog: MatDialog) { }
+              private reserveService: ReserveService, private dialog: MatDialog,
+              private notif: NotificationService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -67,13 +70,7 @@ export class SearchResultComponent implements OnInit {
     }
   }
 
-  filterBodyType(typeID: number){
-    if (typeID === 0) {
-      this.bodyTypeFilter = null;
-    } else {
-      this.bodyTypeFilter = this.reserveService.getBodyTypeName(Number(typeID));
-    }
-  }
+
 
   openLocSelector(pickup: boolean) {
     const dialogConfig = new MatDialogConfig();
@@ -121,9 +118,14 @@ export class SearchResultComponent implements OnInit {
   search() {
     if (this.pickUpLoc && this.dropOffLoc && this.pickUpDate && this.dropOffDate
       && this.pickUpTime && this.dropOffTime) {
+      if ( this.timeService.compareDate(this.pickUpDate, this.dropOffDate)
+        && this.timeService.compareTime(this.dropOffTime, this.pickUpTime) < 0) {
+        this.notif.showNotif('Invalid time or date', 'Dismiss');
+      } else {
 
+      }
     } else {
-
+      this.notif.showNotif('Please fill in all fields', 'Dismiss');
     }
   }
 

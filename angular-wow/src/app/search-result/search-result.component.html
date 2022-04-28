@@ -64,28 +64,47 @@
 </div>
 <mat-divider></mat-divider>
 
-<div ngbDropdown class="sort-toolbar">
-    <div class="sort-button" ngbDropdownToggle>
-        <div *ngIf="!sort" >Sort By Price</div>
-        <div *ngIf="sort">{{sort}}</div>
-        <div ngbDropdownMenu>
-            <button ngbDropdownItem class="sort-dropdown-button" (click)="sortPrice(0)">
-                None
-            </button>
-            <button ngbDropdownItem class="sort-dropdown-button" (click)="sortPrice(2)">
-                Price: High to Low
-            </button>
-            <button ngbDropdownItem class="sort-dropdown-button" (click)="sortPrice(1)">
-                Price: Low to High
-            </button>
-        </div>
-        <mat-icon class="sort-arrow-icon">keyboard_arrow_down</mat-icon>
-    </div>
-</div>
 
 <div class="search-container">
+    <div ngbDropdown class="sort-toolbar">
+        <div class="sort-button" ngbDropdownToggle>
+            <div *ngIf="!sort" >Sort By Price</div>
+            <div *ngIf="sort">{{sort}}</div>
+            <div ngbDropdownMenu>
+                <button ngbDropdownItem class="sort-dropdown-button" (click)="sortPrice(0)">
+                    None
+                </button>
+                <button ngbDropdownItem class="sort-dropdown-button" (click)="sortPrice(2)">
+                    Price: High to Low
+                </button>
+                <button ngbDropdownItem class="sort-dropdown-button" (click)="sortPrice(1)">
+                    Price: Low to High
+                </button>
+            </div>
+            <mat-icon class="sort-arrow-icon">keyboard_arrow_down</mat-icon>
+        </div>
+    </div>
+
+    <div class="filter-gadget">
+        <div class="filter-title">
+            <div class="filter-title-text-type">Car Type</div>
+            <div class="filter-title-text-price">Price</div>
+        </div>
+        <div class="filter-entry">
+            <mat-checkbox class="filter-checkbox" [disableRipple]="true">SUV [30]</mat-checkbox>
+            <div class="filter-entry-price">$46</div>
+        </div>
+        <div class="filter-entry">
+            <mat-checkbox class="filter-checkbox">Coupe [10]</mat-checkbox>
+            <div class="filter-entry-price">$46</div>
+        </div>
+        <div class="filter-entry">
+            <mat-checkbox class="filter-checkbox">Full-size [12]</mat-checkbox>
+            <div class="filter-entry-price">$100,000</div>
+        </div>
 
 
+    </div>
 
 </div>
 
