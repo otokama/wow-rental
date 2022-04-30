@@ -86,14 +86,11 @@
     </div>
 
     <div class="vehicle-list-container">
-        <div ngbDropdown class="sort-toolbar">
+        <div ngbDropdown class="sort-toolbar" *ngIf="filteredVehicles.length > 0">
             <div class="sort-button" ngbDropdownToggle>
                 <div *ngIf="!sort" >Sort By Price</div>
                 <div *ngIf="sort">{{sort}}</div>
                 <div ngbDropdownMenu>
-                    <button ngbDropdownItem class="sort-dropdown-button" (click)="sortPrice(0)">
-                        None
-                    </button>
                     <button ngbDropdownItem class="sort-dropdown-button" (click)="sortPrice(2)">
                         Price: High to Low
                     </button>
@@ -105,7 +102,7 @@
             </div>
         </div>
 
-        <app-vehicle-item *ngFor="let vehicle of vehicleReservable" [vehicle]="vehicle" [reserveDays]="reserveDuration"></app-vehicle-item>
+        <app-vehicle-item *ngFor="let vehicle of filteredVehicles" [vehicle]="vehicle" [reserveDays]="reserveDuration"></app-vehicle-item>
     </div>
 
 </div>
