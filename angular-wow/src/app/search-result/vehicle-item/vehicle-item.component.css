@@ -1,0 +1,76 @@
+.vehicle-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 500px;
+    height: 200px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.18) 2px 2px 18px;
+
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 24px;
+    user-select: none;
+    transition: 0.2s;
+}
+.vehicle-card:hover{
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: rgba(0, 168, 0, 0.18) 2px 2px 18px;
+    transition: 0.2s;
+}
+.vehicle-details{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-left: 10px;
+    max-width: 250px;
+}
+.vehicle-model{
+    font-size: 16px;
+    font-weight: bold;
+}
+.vehicle-type{
+    font-size: 14px;
+}
+.excess-charge{
+    font-size: 12px;
+    margin-top: auto;
+}
+.action{
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.price-detail{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+.price-rate{
+    font-size: 13px;
+    align-self: end;
+}
+.price-total{
+    font-size: 15px;
+    font-weight: bold;
+    align-self: end;
+}
+.reserve-button{
+    align-self: flex-end;
+    border: 1px solid;
+    border-radius: 8px;
+    text-align: center;
+    height: 55px;
+    width: 100px;
+    margin: 0 5px 0 5px;
+
+    background-color:  #00a800 ;
+    color: white;
+    padding-top: 15px;
+    font-size: 15px;
+    cursor: pointer;
+}
+

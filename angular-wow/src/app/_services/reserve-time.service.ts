@@ -38,6 +38,13 @@ export class ReserveTimeService {
             && d1.getDate() === d2.getDate());
     }
 
+    getDuration(d1: Date, d2: Date): number {
+        if (this.compareDate(d1, d2)){
+            return 1;
+        }
+        return (Math.abs(d1.getTime() - d2.getTime())) / (1000 * 60 * 60 * 24);
+    }
+
     private displayHour(num: number): string {
         if (num < 10) {
             return '0' + num.toString();

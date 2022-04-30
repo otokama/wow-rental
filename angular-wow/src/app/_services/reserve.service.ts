@@ -106,6 +106,7 @@ export class ReserveService {
                  model: 'Mustang',
                  make: 'Ford',
                  tagNo: '13Mustang',
+                 mileage: 8100,
                  branchID: this.branchLocation[3]
             },
             {
@@ -115,6 +116,7 @@ export class ReserveService {
                 model: 'MazdaSpeed3',
                 make: 'Mazda',
                 tagNo: 'SmokeSTI',
+                mileage: 13000,
                 branchID: this.branchLocation[4]
             },
             {
@@ -124,6 +126,7 @@ export class ReserveService {
                 model: 'Charger',
                 make: 'Dodge',
                 tagNo: 'UVM-2933',
+                mileage: 12000,
                 branchID: this.branchLocation[0]
             },
             {
@@ -133,6 +136,7 @@ export class ReserveService {
                 model: 'CrossTrek',
                 make: 'Subaru',
                 tagNo: 'UBK-5936',
+                mileage: 4031,
                 branchID: this.branchLocation[2]
             },
             {
@@ -142,6 +146,7 @@ export class ReserveService {
                 model: 'Altima',
                 make: 'Nissan',
                 tagNo: 'NOT-GTR',
+                mileage: 8482,
                 branchID: this.branchLocation[1]
             },
             {
@@ -151,7 +156,28 @@ export class ReserveService {
                 model: 'Avalon',
                 make: 'Toyota',
                 tagNo: 'UVK-9493',
+                mileage: 49231,
                 branchID: this.branchLocation[0]
+            },
+            {
+                VIN: '1G1YA2D43M5114844',
+                vehicleType: this.vehicleTypes[0],
+                year: 2021,
+                model: 'Corvette',
+                make: 'Chevrolet',
+                tagNo: 'UVK-1149',
+                mileage: 39492,
+                branchID: this.branchLocation[4]
+            },
+            {
+                VIN: '1C4BJWFG1GL209558',
+                vehicleType: this.vehicleTypes[5],
+                year: 2016,
+                model: 'Wrangler',
+                make: 'Jeep',
+                tagNo: 'WRB-3391',
+                mileage: 11021,
+                branchID: this.branchLocation[2]
             }
         ];
 
@@ -181,9 +207,10 @@ export class ReserveService {
         return 'No such body type ID';
     }
 
-    getVehicleReservable(carType: number, pickUpDate: Date, dropOffDate: Date,
-                         pickUpLoc: number, dropOffLoc: number) {
-
+    getVehicleReservable(carType: number[] | null, pickUpDate: Date, dropOffDate: Date,
+                         pickUpLoc: number, dropOffLoc: number): Vehicle[] {
+        // TODO: replace with API request for reservable vehicles.
+        return this.vehicles;
     }
 
 

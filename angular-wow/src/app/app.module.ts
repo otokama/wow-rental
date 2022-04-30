@@ -22,6 +22,7 @@ import { EmpHomeComponent } from './employee/emp-home/emp-home.component';
 import { SelectLocationComponent } from './home/reserve-gadget/select-location/select-location.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { VehicleItemComponent } from './search-result/vehicle-item/vehicle-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,8 @@ import { SearchResultComponent } from './search-result/search-result.component';
     EmpLoginComponent,
     EmpHomeComponent,
     SelectLocationComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    VehicleItemComponent
   ],
   imports: [
     BrowserModule,

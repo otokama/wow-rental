@@ -1,0 +1,17 @@
+<div class="vehicle-card">
+    <div class="vehicle-details">
+        <div class="vehicle-model">{{year}} {{make}} {{model}}</div>
+        <div class="vehicle-type">{{vehicleType.typeName}}</div>
+        <div class="vehicle-type">Mileage: {{mileage | number}} mi</div>
+        <div class="excess-charge">*Excess mileage charge: {{vehicleType.excessRate | currency}}/mi</div>
+    </div>
+
+    <div class="action">
+        <div class="price-detail">
+            <div class="price-total">{{vehicleType.serviceRate * reserveDays | currency}} Total</div>
+            <div class="price-rate">{{vehicleType.serviceRate | currency}} per day</div>
+
+        </div>
+        <div class="reserve-button">Reserve</div>
+    </div>
+</div>

@@ -9,4 +9,5 @@ export class Vehicle {
     make: string;
     tagNo: string;
     branchID: BranchLocation;
+    mileage: number;
 }
