@@ -45,7 +45,9 @@ export class LoginComponent {
           .subscribe(
               data => {
                 this.dialogRef.close();
-                this.router.navigate(['/']);
+                if (this.router.url.indexOf('/search') < 0) {
+                  this.router.navigate(['/']);
+                }
               },
               error => {
                 this.error = error;

@@ -9,7 +9,6 @@
   font-size: larger;
   padding-bottom: 10px;
   align-self: center;
-  padding-bottom: 10px;
 }
 
 .form-field{
@@ -24,6 +23,7 @@
   font-weight: bolder;
   padding-bottom: 15px;
   transition: 0.6s;
+  cursor: pointer;
 }
 .login-button:hover{
   transition: 0.6s;
@@ -36,6 +36,7 @@
   align-self: flex-start;
   font-size: smaller;
   user-select: none;
+  cursor: pointer;
 }
 
 .register-text {

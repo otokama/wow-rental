@@ -4,13 +4,18 @@ import {BranchLocation} from '../_models/branch';
 import {Vehicle} from '../_models/vehicle';
 import {VehicleType} from '../_models/vehicleType';
 import { VehicleFilter } from '../_models/vehiclefilter';
+import {Coupon} from "../_models/coupon";
+import {ReserveTimeService} from "./reserve-time.service";
+import {RentalService} from "../_models/rentalService";
+import {AuthService} from "./auth.service";
 
 @Injectable({ providedIn: 'root' })
 export class ReserveService {
     branchLocation: BranchLocation[];
     vehicleTypes: VehicleType[];
     vehicles: Vehicle[];
-    constructor() {
+    coupons: Coupon[];
+    constructor(private timeService: ReserveTimeService, private authService: AuthService) {
         this.branchLocation = [
             {
                 id: 1,
@@ -181,10 +186,41 @@ export class ReserveService {
             }
         ];
 
+        this.coupons = [
+            {
+                code: 'BUDGET',
+                discount: 5,
+                validDate: new Date('2021-03-01'),
+                expireDate: new Date('2025-03-01')
+            },
+            {
+                code: 'ALAMO',
+                discount: 10,
+                validDate: new Date('2021-03-01'),
+                expireDate: new Date('2025-03-01')
+            },
+            {
+                code: 'ENTERPRISE',
+                discount: 5,
+                validDate: new Date('2021-03-01'),
+                expireDate: new Date('2022-03-01')
+            }
+        ];
+
     }
 
     getAllBranchLocation(): BranchLocation[] {
         return this.branchLocation;
+    }
+
+    getBranchByID(key: number): BranchLocation{
+        let i;
+        for (i = 0; i < this.branchLocation.length; ++i) {
+            if (this.branchLocation[i].id === Number(key)) {
+                return this.branchLocation[i];
+            }
+        }
+        return;
     }
 
     getBranchName(key: number): string {
@@ -213,6 +249,35 @@ export class ReserveService {
         return this.vehicles;
     }
 
+    // TODO: put this in vehicle service.
+    getVehicleByVin(vin: string) {
+        let i;
+        for (i = 0; i < this.vehicles.length; ++i) {
+            if (this.vehicles[i].VIN === vin) {
+                return this.vehicles[i];
+            }
+        }
+    }
 
+    // TODO: put this in coupon service.
+    validateCoupon(coupon: string): number{
+        let i;
+        for (i = 0; i < this.coupons.length; ++i) {
+            if (this.coupons[i].code === coupon) {
+                if (this.timeService.isBetween(this.coupons[i].validDate,
+                        this.coupons[i].expireDate, new Date((new Date().getTime())))){
+                    return this.coupons[i].discount;
+                } else {
+                    return -1;
+                }
+            }
+        }
+        return -1;
+    }
+
+
+    submitNewReservation(service: RentalService) {
+
+    }
 
 }

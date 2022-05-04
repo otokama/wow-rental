@@ -5,4 +5,5 @@ export class User {
   firstName: string;
   role: Role;
   token?: string;
+  corporate: boolean;
 }

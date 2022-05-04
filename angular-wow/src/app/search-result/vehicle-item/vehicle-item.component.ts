@@ -1,6 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {Vehicle} from '../../_models/vehicle';
 import {VehicleType} from '../../_models/vehicleType';
+import {AuthService} from '../../_services/auth.service';
+import {NotificationService} from '../../_services/notification.service';
 
 @Component({
   selector: 'app-vehicle-item',
@@ -15,8 +17,9 @@ export class VehicleItemComponent implements OnInit {
   make: string;
   mileage: number;
   @Input() reserveDays: number;
-  @Input() vehicle:Vehicle;
-  constructor() { }
+  @Input() vehicle: Vehicle;
+  @Output() reserveEvent: EventEmitter<Vehicle> = new EventEmitter<Vehicle>();
+  constructor(private authService: AuthService, private notif: NotificationService) { }
   ngOnInit(): void {
     this.vehicleType = this.vehicle.vehicleType;
     this.year = this.vehicle.year;
@@ -25,4 +28,11 @@ export class VehicleItemComponent implements OnInit {
     this.mileage = this.vehicle.mileage;
   }
 
+  reserve() {
+    if (this.authService.currentUserValue) {
+      this.reserveEvent.emit(this.vehicle);
+    } else {
+      this.notif.showNotif('Please log in to reserve', 'Dismiss');
+    }
+  }
 }

@@ -23,6 +23,11 @@ import { SelectLocationComponent } from './home/reserve-gadget/select-location/s
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { VehicleItemComponent } from './search-result/vehicle-item/vehicle-item.component';
+import { ReserveComponent } from './reserve/reserve.component';
+import {IgxAvatarModule} from "igniteui-angular";
+import {AvatarModule} from "ngx-avatar";
+import { AccountComponent } from './account/account.component';
+import { TripComponent } from './account/trip/trip.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,21 +39,26 @@ import { VehicleItemComponent } from './search-result/vehicle-item/vehicle-item.
     EmpHomeComponent,
     SelectLocationComponent,
     SearchResultComponent,
-    VehicleItemComponent
+    VehicleItemComponent,
+    ReserveComponent,
+    AccountComponent,
+    TripComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    NgbModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        NgbModule,
+        IgxAvatarModule,
+        AvatarModule
+    ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]

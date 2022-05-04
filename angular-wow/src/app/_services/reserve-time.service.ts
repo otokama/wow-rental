@@ -42,7 +42,11 @@ export class ReserveTimeService {
         if (this.compareDate(d1, d2)){
             return 1;
         }
-        return (Math.abs(d1.getTime() - d2.getTime())) / (1000 * 60 * 60 * 24);
+        return Math.ceil(Math.abs(d1.getTime() - d2.getTime())) / (1000 * 60 * 60 * 24);
+    }
+
+    isBetween(d1: Date, d2: Date, checkValid: Date): boolean{
+        return d1 < checkValid && d2 > checkValid;
     }
 
     private displayHour(num: number): string {

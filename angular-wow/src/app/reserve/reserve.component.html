@@ -1,0 +1,135 @@
+<div class="container">
+    <div class="title">Reservation Detail</div>
+    <div class="rental-detail">
+                <div class="title">Pick-up</div>
+                <div class="field">
+                    <mat-icon class="icon">calendar_today</mat-icon>
+                    {{pickUpDate | date:'EEE, MMM d, HH:mm'}}
+                </div>
+                <div class="field">
+                    <mat-icon class="icon">location_on</mat-icon>
+                    {{pickUpLoc.name}},
+                    {{pickUpLoc.street}},
+                    {{pickUpLoc.city}},
+                    {{pickUpLoc.state}},
+                    {{pickUpLoc.zipcode}}
+                </div>
+                <div class="field">
+                    <mat-icon class="icon">directions_bus</mat-icon> Free shuttle
+                </div>
+                <mat-divider class="divider"></mat-divider>
+                <div class="title">Drop-off</div>
+                <div class="field">
+                    <mat-icon class="icon">calendar_today</mat-icon>
+                    {{dropOffDate | date:'EEE, MMM d, HH:mm'}}
+                </div>
+                <div class="field">
+                    <mat-icon class="icon">location_on</mat-icon>
+                    <div></div>
+                    {{dropOffLoc.name}},
+                    {{dropOffLoc.street}},
+                    {{dropOffLoc.city}},
+                    {{dropOffLoc.state}},
+                    {{dropOffLoc.zipcode}}
+                </div>
+                <div class="field">
+                    <mat-icon class="icon">directions_bus</mat-icon> Free shuttle
+                </div>
+    </div>
+
+    <div class="rental-detail">
+        <div class="title">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</div>
+        <div class="field">
+            <div class="field-title">Current Mileage:</div>
+            <div class="field-value">{{vehicle.mileage | number}} mi</div>
+        </div>
+        <div class="field">
+            <div class="field-title">Vehicle Class: </div>
+            <div class="field-value">{{vehicle.vehicleType.typeName}}</div>
+        </div>
+        <div class="field">
+            <div class="field-title">Excess mileage charge:</div>
+            <div class="field-value">{{vehicle.vehicleType.excessRate | currency}}/mi</div>
+        </div>
+        <mat-checkbox [disableRipple]="true" [(ngModel)]="unlimitedMile" class="unlimit-checkbox">
+            Opt in unlimited mileage package
+        </mat-checkbox>
+
+    </div>
+
+    <div class="rental-detail">
+        <div class="title">Total Price:</div>
+
+        <div class="field">
+            <div class="field-title">Car rental fee x {{duration | number}} day</div>
+            <div class="field-value">{{rentalRate | currency}}</div>
+        </div>
+        <mat-hint class="hint">{{vehicle.vehicleType.serviceRate | currency}} per day</mat-hint>
+        <div class="field">
+            <div class="field-title">Service Fee</div>
+            <div class="field-value">{{50 | currency}}</div>
+        </div>
+        <div class="field" *ngIf="unlimitedMile">
+            <div class="field-title">Unlimited Mileage Package Charge </div>
+            <div class="field-value"> + {{50 | currency}}</div>
+        </div>
+        <div class="field" *ngIf="couponValid">
+            <div class="field-title">Coupon Discount {{discPercentage}}%</div>
+            <div class="field-value"> - {{discAmount | currency}}</div>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+        <div class="field" *ngIf="!couponValid">
+            <div class="field-title">Total:</div>
+            <div class="field-value" *ngIf="!unlimitedMile">{{totalRate | currency}}</div>
+            <div class="field-value" *ngIf="unlimitedMile">{{totalRate + 50| currency}}</div>
+        </div>
+        <div class="field" *ngIf="couponValid">
+            <div class="field-title">Total:</div>
+            <div class="field-value" *ngIf="!unlimitedMile">{{discountedRate | currency}}</div>
+            <div class="field-value" *ngIf="unlimitedMile">{{discountedRate + 50 | currency}}</div>
+        </div>
+
+
+    </div>
+
+    <div class="rental-detail">
+        <div class="title">Payment Information</div>
+        <form [formGroup]="reserveForm" class="payment-form">
+            <div class="form-title">Payment Method *</div>
+            <select class="form-select method-select" formControlName="paymentMethod">
+                <option value="GIFT">Gift Card</option>
+                <option value="CREDIT">Credit Card</option>
+                <option value="DEBIT">Debit Card</option>
+            </select>
+            <mat-hint *ngIf="submitted && f.paymentMethod.errors" >
+                <mat-hint *ngIf="f.paymentMethod.errors.required" class="method-error-hint">Payment method is required</mat-hint>
+            </mat-hint>
+
+            <div class="form-title">Card Number *</div>
+            <mat-form-field appearance="outline" class="form-field">
+                <input matInput type="text" formControlName="cardNumber" class="form-input"
+                       [ngClass]="{'is-invalid': submitted && f.cardNumber.errors}" >
+                <mat-hint *ngIf="submitted && f.cardNumber.errors">
+                    <mat-hint *ngIf="f.cardNumber.errors.required" class="error-hint">Card number is required</mat-hint>
+                    <mat-hint *ngIf="f.cardNumber.errors.pattern" class="error-hint">Invalid card number</mat-hint>
+                </mat-hint>
+            </mat-form-field>
+
+            <div class="form-title">Coupon Code:</div>
+            <div class="coupon-field">
+                <mat-form-field appearance="outline" class="form-field">
+                    <input matInput type="text" formControlName="couponCode" class="form-input"
+                           [ngClass]="{'is-invalid': submitted && f.couponCode.errors}" [(ngModel)]="couponCode">
+                    <mat-hint *ngIf="submitted && f.couponCode.errors">
+                        <mat-hint *ngIf="f.couponCode.errors.pattern" class="error-hint">Invalid coupon code</mat-hint>
+                    </mat-hint>
+                </mat-form-field>
+                <div class="apply-coupon" (click)="validCoupon()">Apply</div>
+            </div>
+        </form>
+
+
+    </div>
+    <div class="submit" (click)="onSubmit()">Confirm Booking</div>
+
+</div>

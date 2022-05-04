@@ -25,7 +25,12 @@ export class SearchResultComponent implements OnInit {
   pickUpTime: Time;
   dropOffTime: Time;
   timeOptions: Time[];
-  sort: string | null;
+  selectedPickUpDate: Date;
+  selectedDropOffDate: Date;
+  selectedPickUpLoc: number;
+  selectedDropOffLoc: number;
+  sort: string[];
+  sortOrder: number;
   typeFilters: Map<number, VehicleFilter>;
   selectedFilters: number[] | null;
   vehicleReservable: Vehicle[] | null;
@@ -33,7 +38,9 @@ export class SearchResultComponent implements OnInit {
   reserveDuration: number;
   constructor(private route: ActivatedRoute, private router: Router, private timeService: ReserveTimeService,
               private reserveService: ReserveService, private dialog: MatDialog,
-              private notif: NotificationService) { }
+              private notif: NotificationService) {
+    this.sortOrder = 2;
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -49,6 +56,9 @@ export class SearchResultComponent implements OnInit {
       this.pickUpTime = {hours: this.pickUpDate.getHours(), minutes: this.pickUpDate.getMinutes()};
       this.dropOffTime = {hours: this.dropOffDate.getHours(), minutes: this.dropOffDate.getMinutes()};
       this.timeOptions = this.timeService.getTimeOptions();
+      this.sort = [
+        'Sort by price - High to Low','Sort by price - Low to High'
+      ];
       this.search();
     })
     if (!this.pickUpLoc || !this.pickUpDate
@@ -67,15 +77,15 @@ export class SearchResultComponent implements OnInit {
   // TODO: add sorting here
   sortPrice(sort: number) {
     if (sort === 1) {
-      this.sort = 'Sort by price - Low to High';
+      this.sortOrder = 1;
       this.sortVehicle(false);
     } else {
-      this.sort = 'Sort by price - High to Low';
+      this.sortOrder = 0;
       this.sortVehicle(true);
     }
   }
 
-  sortVehicle(desc: boolean) {
+  private sortVehicle(desc: boolean) {
     if (desc) { // sort by high to low
       this.filteredVehicles = this.filteredVehicles.sort((v1, v2) => {
         if (v1.vehicleType.serviceRate * this.reserveDuration > v2.vehicleType.serviceRate * this.reserveDuration) {
@@ -142,19 +152,29 @@ export class SearchResultComponent implements OnInit {
   }
 
   search() {
-    this.filteredVehicles = [];
-    this.sort = 'Sort By Price';
     if (this.pickUpLoc && this.dropOffLoc && this.pickUpDate && this.dropOffDate
       && this.pickUpTime && this.dropOffTime) {
       if ( this.timeService.compareDate(this.pickUpDate, this.dropOffDate)
         && this.timeService.compareTime(this.dropOffTime, this.pickUpTime) < 0) {
         this.notif.showNotif('Invalid time or date', 'Dismiss');
       } else {
+        this.filteredVehicles = [];
         this.vehicleReservable = this.reserveService.getVehicleReservable(null, this.pickUpDate, this.dropOffDate,
             this.pickUpLoc, this.dropOffLoc);
         this.filteredVehicles = this.vehicleReservable;
         this.initVehicleFilters();
+
+        // set reserveDuration:
+        this.pickUpDate.setHours(this.pickUpTime.hours);
+        this.pickUpDate.setMinutes(this.pickUpTime.minutes);
+        this.dropOffDate.setHours(this.dropOffTime.hours);
+        this.dropOffDate.setMinutes(this.dropOffTime.minutes);
         this.reserveDuration = this.timeService.getDuration(this.pickUpDate, this.dropOffDate);
+
+        this.selectedPickUpDate = this.pickUpDate;
+        this.selectedPickUpLoc = this.pickUpLoc;
+        this.selectedDropOffDate = this.dropOffDate;
+        this.selectedDropOffLoc = this.dropOffLoc;
       }
     } else {
       this.notif.showNotif('Please fill in all fields', 'Dismiss');
@@ -179,8 +199,15 @@ export class SearchResultComponent implements OnInit {
           this.typeFilters.set(this.vehicleReservable[i].vehicleType.typeID, filter);
         }
       }
-
+      this.typeFilters = new Map<number, VehicleFilter>([...this.typeFilters.entries()].sort((a, b) => {
+        if (a[1].price > b[1].price) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }));
     }
+
   }
 
   updateFilter() {
@@ -202,12 +229,29 @@ export class SearchResultComponent implements OnInit {
       }
     } else {
       this.filteredVehicles = this.vehicleReservable;
+      if (this.sortOrder === 1) {
+        this.sortVehicle(false)
+      } else if (this.sortOrder === 0) {
+        this.sortVehicle(true);
+      }
     }
   }
+
+  reserve(vehicle: Vehicle) {
+    // redirect to reserve page
+    this.router.navigate(['/reserve'], {queryParams: {
+      pickUpLoc: Number(this.selectedPickUpLoc),
+      pickUpDate: this.selectedPickUpDate,
+      dropOffLoc: Number(this.selectedDropOffLoc),
+      dropOffDate: this.selectedDropOffDate,
+      vehicleDetail: vehicle.VIN
+    }
+    });
+  }
+
 
   displayTime(t: Time): string {
     return this.timeService.displayTime(t);
   }
-
 
 }

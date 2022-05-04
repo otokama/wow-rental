@@ -35,6 +35,7 @@ export class RegisterComponent implements OnInit {
     if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
     }
+    this.states = this.userService.getStates();
   }
 
   ngOnInit() {
@@ -51,15 +52,10 @@ export class RegisterComponent implements OnInit {
       city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(30)]],
       state: ['', [Validators.required]],
       zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
+      driverLicense: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      insureName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      insureNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]]
     });
-
-    this.states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',
-      'Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho',
-      'Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts',
-      'Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey',
-      'New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon',
-      'Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah',
-      'Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
   }
 
   get f() {
@@ -86,6 +82,7 @@ export class RegisterComponent implements OnInit {
           console.log('Error:', error);
           this.notification.showNotif(error, 'error');
           this.loading = false;
+          this.submitted = false;
         });
   }
 }

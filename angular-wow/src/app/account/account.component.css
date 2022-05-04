@@ -1,29 +1,56 @@
 .container{
-    margin-top: 25px;
-    padding-top: 20px;
-    padding-left: 40px;
-    padding-right: 40px;
-    flex-direction: column;
-    align-items: center;
-    font-family: sans-serif, 'Open Sans', Helvetica, Arial;
-    user-select: none;
-    box-shadow: rgba(0, 0, 0, 0.05) 2px 2px 18px;
+    margin: 50px 50px 50px 50px;
+    height: 100%;
+    width: 100%;
     display: flex;
-    border-radius: 15px;
-    margin-bottom: 200px;
+    flex-direction: row;
+    user-select: none;
 }
-.form-container{
+.sidenav{
+    flex-grow: 1;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.divider{
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.content{
+    flex-grow: 9999;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+    align-items: center;
+}
+
+.sidenav-item{
+    height: 40px;
+    margin-top: 20px;
+}
+.sidenav-item:hover{
+    color: #00a800;
+    transition: 0.2s;
+}
+.content-title{
+    font-size: 20px;
+    align-self: center;
+}
+.account-info{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
 }
-.title {
-    grid-area: title;
-    font-size: 20px;
-    font-weight: bolder;
-    padding-top: 20px;
-    padding-bottom: 20px;
+.contact{
+    flex: auto;
+    margin: 40px;
+}
+.address{
+    flex: auto;
+    margin: 40px;
 }
 .sub-title{
     font-size: 16px;
@@ -40,26 +67,9 @@
 .form-input{
     font-size: 17px;
 }
-.form-visible-toggle{
-    font-size: 19px;
-}
 .hint{
     font-size: 11px;
     color: #940000;
-}
-.contact{
-    flex: auto;
-    margin: 40px;
-
-}
-.login{
-    flex: auto;
-    margin: 40px;
-
-}
-.address{
-    flex: auto;
-    margin: 40px;
 }
 .state-select{
     margin-top: 2px;
@@ -67,6 +77,7 @@
     width: 160px;
     font-size: 16px;
 }
+
 .button {
     background-color:  #00a800 ;
     color: white;
@@ -87,3 +98,4 @@
     transition: 0.2s;
     box-shadow: rgba(0, 168, 0, 0.2) 2px 2px 18px;
 }
+

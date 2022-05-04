@@ -1,17 +1,28 @@
+
 <mat-toolbar class="toolbar">
-  <img src="assets/car-rental.png" class="car-img">
-  <div class="button" routerLink="/">Home</div>
-  <div class="button" (click)="openLogin()" *ngIf="!isUser && isEmpRoute">Sign in</div>
-  <div (click)="logout()" *ngIf="isUser" class="button">Sign Out</div>
+    <img src="assets/car-rental.png" class="car-img">
+    <div class="button" routerLink="/">Home</div>
+    <div class="button" (click)="openLogin()" *ngIf="!isUser && isEmpRoute">Sign in</div>
+    <div ngbDropdown *ngIf="isUser">
+        <ngx-avatar *ngIf="isUser" class='avatar' name="{{name}}" size="40" ngbDropdownToggle></ngx-avatar>
+        <div ngbDropdownMenu class="dropdown-menu">
+            <button ngbDropdownItem class="dropdown-button" routerLink="account">Account</button>
+            <button ngbDropdownItem *ngIf="!isEmployee" class="dropdown-button" routerLink="trip">Trips</button>
+            <button ngbDropdownItem (click)="logout()" class="dropdown-button sign-out">Sign Out</button>
+        </div>
+
+    </div>
+
 </mat-toolbar>
+  <router-outlet></router-outlet>
 
-<router-outlet></router-outlet>
 
-<footer class="bg-light text-muted footer">
-  <div class="emp-login" routerLink="employee/login" *ngIf="isHome && !isUser">
-    Employee Login
-  </div>
-<!--  <div class="text-center p-2">-->
-<!--    © 2021 Copyright: WOW-->
-<!--  </div>-->
-</footer>
+  <footer class="bg-light text-muted footer">
+    <div class="emp-login" routerLink="employee/login" *ngIf="isHome && !isUser">
+      Employee Login
+    </div>
+    <!--  <div class="text-center p-2">-->
+    <!--    © 2021 Copyright: WOW-->
+    <!--  </div>-->
+  </footer>
+

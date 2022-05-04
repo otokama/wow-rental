@@ -1,4 +1,4 @@
-import {Component, NgModule} from '@angular/core';
+import {Component, OnInit, NgModule} from '@angular/core';
 import {AuthService} from './_services/auth.service';
 import {Router} from '@angular/router';
 import {User} from './_models/user';
@@ -6,23 +6,30 @@ import {Role} from './_models/role';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {LoginComponent} from './login/login.component';
 import {NotificationService} from './_services/notification.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'WOW';
   currentUser: User;
-
-
+  name: string;
+  private currentUserSubs: Subscription;
   constructor(  private router: Router,
                 private authService: AuthService,
                 private dialog: MatDialog,
                 private notif: NotificationService
                 ) {
-    this.authService.currentUser.subscribe(x => this.currentUser = x);
+  }
+
+  ngOnInit() {
+    this.currentUserSubs = this.authService.currentUser.subscribe(x => {
+      this.currentUser = x;
+      this.name = x.firstName;
+    }, error => (console.log('logged out')));
   }
 
   get isEmployee() {

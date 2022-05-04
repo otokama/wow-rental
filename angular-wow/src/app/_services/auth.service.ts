@@ -28,7 +28,7 @@ export class AuthService {
     return new Observable(subscriber => {
 
       if (email === 'employee@yahoo.com' && password === '123') {
-        const user: User = {email, role: Role.employee, token: 'some_random_token', firstName: '<employee name>'};
+        const user: User = {email, role: Role.employee, token: 'some_random_token', firstName: 'Employee', corporate: false};
 
         localStorage.setItem('currentUser', JSON.stringify(user));
 
@@ -36,8 +36,16 @@ export class AuthService {
           subscriber.next('Logged in!');
           this.currentUserSubject.next(user);
         }, 100);
-      } else if (email === 'customer@yahoo.com' && password === '123') {
-        const user: User = {email, role: Role.customer, token: 'some_random_token', firstName: '<customer name>'};
+      } else if (email === 'corporate@yahoo.com' && password === '123') {
+        const user: User = {email, role: Role.customer, token: 'some_random_token', firstName: 'CorporateCustomer', corporate: true};
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        //  notify all subscribers that user has logged in.
+        setTimeout(() => {
+          subscriber.next('Logged in!');
+          this.currentUserSubject.next(user);
+        }, 100);
+      }  else if (email === 'customer@yahoo.com' && password === '123') {
+        const user: User = {email, role: Role.customer, token: 'some_random_token', firstName: 'Customer', corporate: false};
         localStorage.setItem('currentUser', JSON.stringify(user));
         //  notify all subscribers that user has logged in.
         setTimeout(() => {
@@ -45,7 +53,7 @@ export class AuthService {
           this.currentUserSubject.next(user);
         }, 100);
       } else if (email === 'manager@yahoo.com' && password === '123') {
-        const user: User = {email, role: Role.manager, token: 'some_random_token', firstName: '<manager name>'};
+        const user: User = {email, role: Role.manager, token: 'some_random_token', firstName: 'Manager', corporate: false};
         localStorage.setItem('currentUser', JSON.stringify(user));
         //  notify all subscribers that user has logged in.
         setTimeout(() => {
