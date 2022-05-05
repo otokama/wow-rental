@@ -4,7 +4,7 @@
   <div class="title">
     CREATE NEW CUSTOMER ACCOUNT
   </div>
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-container">
+  <form [formGroup]="registerForm" class="form-container">
     <div class="contact">
       <div class="sub-title">CONTACT INFORMATION</div>
       <div class="form-title">First Name *</div>
@@ -90,6 +90,8 @@
         <mat-hint *ngIf="submitted && f.password.errors" >
           <mat-hint *ngIf="f.password.errors.required" class="hint">Password is required</mat-hint>
           <mat-hint *ngIf="f.password.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+          <mat-hint *ngIf="f.password.errors.minlength" class="hint">Password should be at least 6 characters</mat-hint>
+          <mat-hint *ngIf="f.password.errors.maxlength" class="hint">Password should have maximum of 30 characters</mat-hint>
         </mat-hint>
       </mat-form-field>
     </div>
@@ -132,5 +134,5 @@
       </mat-form-field>
     </div>
   </form>
-  <div class="button" (click)="onSubmit()">REGISTER</div>
+  <div class="button" (click)="onSubmit()" >REGISTER</div>
 </div>

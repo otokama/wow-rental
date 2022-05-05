@@ -1,0 +1,86 @@
+.container{
+    margin: 50px 50px 50px 50px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+}
+.sidenav{
+    flex-grow: 1;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.divider{
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.content{
+    flex-grow: 9999;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+    align-items: center;
+}
+.trip-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.trip-card{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    margin: 25px 20px 20px 20px;
+    padding: 20px;
+    border: 1px solid transparent;
+    box-shadow: rgba(0, 0, 0, 0.05) 2px 2px 18px;
+    border-radius: 5px;
+    width: 400px;
+    transition: 0.2s;
+}
+.trip-card:hover{
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: rgba(0, 168, 0, 0.18) 2px 2px 18px;
+    transition: 0.2s;
+}
+.hdivier{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.title{
+    font-weight: bolder;
+    font-size: 17px;
+}
+
+.sidenav-item{
+    height: 40px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.sidenav-item:hover{
+    color: #00a800;
+    transition: 0.2s;
+}
+.content-title{
+    font-size: 20px;
+    align-self: center;
+}
+.icon{
+    font-size: 18px;
+    padding-top: 2px;
+    padding-right: 10px;
+    margin-right: 20px;
+}
+.field{
+    display: flex;
+    max-width: 400px;
+    color: rgba(0, 0, 0, 0.7);
+    margin-top: 8px;
+}

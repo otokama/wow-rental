@@ -1,1 +1,150 @@
-<p>trip works!</p>
+<div class="container">
+    <div class="sidenav">
+        <h4>Trips</h4>
+        <mat-divider></mat-divider>
+        <div class="sidenav-item" (click)="switchPage(0)">Previous Trips</div>
+        <div class="sidenav-item" (click)="switchPage(1)">Upcoming Trips</div>
+        <div class="sidenav-item" (click)="switchPage(2)">Current Trips</div>
+
+    </div>
+
+    <mat-divider vertical class="divider"></mat-divider>
+
+    <div class="content">
+        <div *ngIf="page===0" class="content">
+            <div class="content-title">Previous Trips</div>
+            <div class="trip-container">
+                <div class="trip-card" *ngFor="let trip of previousTrips">
+                    <div class="title">Pick-up At</div>
+
+                    <div class="field">
+                        <mat-icon class="icon">calendar_today</mat-icon>
+                        {{trip.pickUpDate | date:'EEE, MMM d, HH:mm'}}
+                    </div>
+
+                    <div class="field">
+                        <mat-icon class="icon">location_on</mat-icon>
+                        {{trip.pickUpLocation}}
+                    </div>
+
+                    <mat-divider class="hdivier"></mat-divider>
+
+                    <div class="title">Drop-off At</div>
+                    <div class="field">
+                        <mat-icon class="icon">calendar_today</mat-icon>
+                        {{trip.dropOffDate | date:'EEE, MMM d, HH:mm'}}
+                    </div>
+
+                    <div class="field">
+                        <mat-icon class="icon">location_on</mat-icon>
+                        {{trip.dropOffLocation}}
+                    </div>
+
+                    <mat-divider class="hdivier"></mat-divider>
+                    <div class="title">Vehicle</div>
+                    <div class="field">
+                        {{trip.vehicleYear}} {{trip.vehicleMake}} {{trip.vehicleModel}}
+                    </div>
+                    <div class="field">Mileage: {{trip.mileage | number}} mi</div>
+                    <mat-divider class="hdivier"></mat-divider>
+                    <div class="title">Total Payment</div>
+                    <div class="field">
+                        {{trip.totalCharge | currency}}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div *ngIf="page===1" class="content">
+            <div class="content-title">Upcoming Trips</div>
+            <div class="trip-container">
+                <div class="trip-card" *ngFor="let trip of upComingTrips">
+                    <div class="title">Pick-up At</div>
+
+                    <div class="field">
+                        <mat-icon class="icon">calendar_today</mat-icon>
+                        {{trip.pickUpDate | date:'EEE, MMM d, HH:mm'}}
+                    </div>
+
+                    <div class="field">
+                        <mat-icon class="icon">location_on</mat-icon>
+                        {{trip.pickUpLocation}}
+                    </div>
+
+                    <mat-divider class="hdivier"></mat-divider>
+
+                    <div class="title">Drop-off At</div>
+                    <div class="field">
+                        <mat-icon class="icon">calendar_today</mat-icon>
+                        {{trip.dropOffDate | date:'EEE, MMM d, HH:mm'}}
+                    </div>
+
+                    <div class="field">
+                        <mat-icon class="icon">location_on</mat-icon>
+                        {{trip.dropOffLocation}}
+                    </div>
+
+                    <mat-divider class="hdivier"></mat-divider>
+                    <div class="title">Vehicle</div>
+                    <div class="field">
+                        {{trip.vehicleYear}} {{trip.vehicleMake}} {{trip.vehicleModel}}
+                    </div>
+                    <mat-divider class="hdivier"></mat-divider>
+                    <div class="title">Total Payment</div>
+                    <div class="field">
+                        {{trip.totalCharge | currency}}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div *ngIf="page===2" class="content">
+            <div class="content-title">Current Trips</div>
+            <div class="trip-container">
+                <div class="trip-card" *ngFor="let trip of currentTrips">
+                    <div class="title">Pick-up At</div>
+
+                    <div class="field">
+                        <mat-icon class="icon">calendar_today</mat-icon>
+                        {{trip.pickUpDate | date:'EEE, MMM d, HH:mm'}}
+                    </div>
+
+                    <div class="field">
+                        <mat-icon class="icon">location_on</mat-icon>
+                        {{trip.pickUpLocation}}
+                    </div>
+
+                    <mat-divider class="hdivier"></mat-divider>
+
+                    <div class="title">Drop-off At</div>
+                    <div class="field">
+                        <mat-icon class="icon">calendar_today</mat-icon>
+                        {{trip.dropOffDate | date:'EEE, MMM d, HH:mm'}}
+                    </div>
+
+                    <div class="field">
+                        <mat-icon class="icon">location_on</mat-icon>
+                        {{trip.dropOffLocation}}
+                    </div>
+
+                    <mat-divider class="hdivier"></mat-divider>
+                    <div class="title">Vehicle</div>
+                    <div class="field">
+                        {{trip.vehicleYear}} {{trip.vehicleMake}} {{trip.vehicleModel}}
+                    </div>
+                    <mat-divider class="hdivier"></mat-divider>
+                    <div class="title">Total Payment</div>
+                    <div class="field">
+                        {{trip.totalCharge | currency}}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

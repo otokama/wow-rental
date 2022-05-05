@@ -13,9 +13,12 @@ import {NotificationService} from '../_services/notification.service';
 })
 export class AccountComponent implements OnInit {
   customerAccountForm: FormGroup;
+  credentials: FormGroup;
   currentUser: User;
-  submitted = false;
+  submittedCustomerAccountForm = false;
+  submittedUpdateCredentialForm = false;
   states: string[];
+  hide = true;
   page: number;
   constructor(private authService: AuthService, private formBuilder: FormBuilder,private userService: UserService,
               private notification: NotificationService) {
@@ -40,9 +43,19 @@ export class AccountComponent implements OnInit {
       insureName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
       insureNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]]
     });
+    this.credentials = this.formBuilder.group({
+      oldPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
+        Validators.maxLength(30)]],
+      newPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
+        Validators.maxLength(30)]]
+    })
   }
   get customerForm() {
     return this.customerAccountForm.controls; }
+
+  get credentialForm() {
+    return this.credentials.controls;
+  }
 
   get isEmployee() {
     return this.currentUser && this.currentUser.role === Role.employee;
@@ -52,7 +65,13 @@ export class AccountComponent implements OnInit {
     this.page = page;
   }
 
-  updateAccountInfo(){
-    this.submitted = true;
+  updateCustomerAccountInfo(){
+    this.submittedCustomerAccountForm = true;
   }
+
+  updatePassword(){
+    this.submittedUpdateCredentialForm = true;
+    console.log('updating password.');
+  }
+
 }

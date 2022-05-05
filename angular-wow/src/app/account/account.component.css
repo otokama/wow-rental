@@ -30,6 +30,8 @@
 .sidenav-item{
     height: 40px;
     margin-top: 20px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 .sidenav-item:hover{
     color: #00a800;
@@ -64,8 +66,14 @@
     font-size: 7px;
     width: 170px;
 }
+.credential-form-field{
+    margin-bottom: 10px;
+}
 .form-input{
     font-size: 17px;
+}
+.form-visible-toggle{
+    font-size: 19px;
 }
 .hint{
     font-size: 11px;
@@ -77,7 +85,10 @@
     width: 160px;
     font-size: 16px;
 }
-
+.credential{
+    flex: auto;
+    margin: 40px;
+}
 .button {
     background-color:  #00a800 ;
     color: white;
@@ -98,4 +109,6 @@
     transition: 0.2s;
     box-shadow: rgba(0, 168, 0, 0.2) 2px 2px 18px;
 }
-
+.update-password-button{
+    width: 180px;
+}
