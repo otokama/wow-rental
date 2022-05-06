@@ -38,22 +38,19 @@ export class EmpHomeComponent implements OnInit {
     dialogConfig.width = '450px';
     if (this.page === 0) {
       dialogConfig.data = {form: 2};
-      const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
     } else if (this.page === 1) {
       dialogConfig.data = {form: 0};
-      const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
     } else if (this.page === 2) {
       dialogConfig.data = {form: 3};
-      const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
     } else if (this.page === 3) {
       dialogConfig.data = {form: 1};
-      const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
     } else if (this.page === 5) {
       dialogConfig.data = {form: 4};
-      const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
     } else if (this.page === 6) {
+      dialogConfig.data = {form: 6};
+    } else if (this.page === 7) {
       dialogConfig.data = {form: 5};
-      const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
     }
+    const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
   }
 }

@@ -21,16 +21,17 @@ export class AccountComponent implements OnInit {
   submittedEmployeeAccountForm = false;
   submittedUpdateCredentialForm = false;
   states: string[];
-  hide = true;
+  hide1 = true;
+  hide2 = true;
   page: number;
   constructor(private authService: AuthService, private formBuilder: FormBuilder,private userService: UserService,
               private notification: NotificationService) {
     this.page = 0;
     this.states = this.userService.getStates();
+    this.currentUser = this.authService.currentUserValue;
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.currentUserValue;
     // TODO: get user account detail:
     this.customerAccountForm = this.formBuilder.group({
       customerId: [this.currentUser.customerId],
@@ -52,12 +53,23 @@ export class AccountComponent implements OnInit {
       lastName: [this.currentUser.lastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       middleName: ['', [Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
     });
-    this.credentials = this.formBuilder.group({
-      oldPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
-        Validators.maxLength(30)]],
-      newPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
-        Validators.maxLength(30)]]
-    })
+    if (this.isEmployee) {
+      this.credentials = this.formBuilder.group({
+        employeeId: [this.currentUser.employeeId],
+        currentPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
+          Validators.maxLength(30)]],
+        newPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
+          Validators.maxLength(30)]]
+      });
+    } else {
+      this.credentials = this.formBuilder.group({
+        customerId: [this.currentUser.customerId],
+        currentPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
+          Validators.maxLength(30)]],
+        newPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
+          Validators.maxLength(30)]]
+      });
+    }
   }
   get customerForm() {
     return this.customerAccountForm.controls; }
@@ -86,7 +98,7 @@ export class AccountComponent implements OnInit {
       }
       this.userService.updateEmployee(this.employeeAccountForm.value).subscribe(
           data => {
-            console.log(data);
+            this.notification.showNotif('Account updated! Changes apply in next sign in.', 'Dismiss');
           }, error => {
             this.notification.showNotif(error, 'error');
             this.submittedEmployeeAccountForm = false;
@@ -99,7 +111,7 @@ export class AccountComponent implements OnInit {
       }
       this.userService.updateIndividual(this.customerAccountForm.value).subscribe(
           data => {
-            console.log(data);
+            this.notification.showNotif('Account updated! Changes apply in next sign in.', 'Dismiss');
           }, error => {
             this.notification.showNotif(error, 'error');
             this.submittedCustomerAccountForm = false;
@@ -110,7 +122,28 @@ export class AccountComponent implements OnInit {
 
   updatePassword(){
     this.submittedUpdateCredentialForm = true;
-    console.log('updating password.');
+    if (this.credentials.invalid) {
+      return;
+    }
+    if (this.isEmployee) {
+      this.userService.updateEmployeeCredential(this.credentials.value).subscribe(
+          data => {
+            this.notification.showNotif('Password changed! Changes apply in next sign in.', 'Dismiss');
+          }, error => {
+            this.notification.showNotif(error, 'error');
+            this.submittedCustomerAccountForm = false;
+          }
+      );
+    } else {
+      this.userService.updateCustomerCredential(this.credentials.value).subscribe(
+          data => {
+            this.notification.showNotif('Password changed! Changes apply in next sign in.', 'Dismiss');
+          }, error => {
+            this.notification.showNotif(error, 'error');
+            this.submittedCustomerAccountForm = false;
+          }
+      );
+    }
   }
 
 }

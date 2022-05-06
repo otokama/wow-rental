@@ -5,6 +5,7 @@ import {AuthService} from '../_services/auth.service';
 import {Router} from '@angular/router';
 import {NotificationService} from '../_services/notification.service';
 import { first } from 'rxjs/operators';
+import {Role} from '../_models/role';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +48,12 @@ export class LoginComponent {
                 if (data) {
                   this.dialogRef.close();
                   if (this.router.url.indexOf('/search') < 0) {
-                    this.router.navigate(['/']);
+                    if (this.authService.currentUserValue.role === Role.customer) {
+                      this.router.navigate(['/']);
+                    } else if (this.authService.currentUserValue.role === Role.manager ||
+                      this.authService.currentUserValue.role === Role.employee) {
+                      this.router.navigate(['employee/home'])
+                    }
                   }
                   this.notif.showNotif('Welcome, ' + this.authService.currentUserValue.firstName,
                       'Dismiss');

@@ -4,12 +4,14 @@
         <h4 *ngIf="!isManager">Employee Dashboard</h4>
         <mat-divider></mat-divider>
         <div class="sidenav-item" (click)="switchPage(0)">Branch Location</div>
+
         <div class="sidenav-item" (click)="switchPage(1)">Corporate</div>
         <div class="sidenav-item" (click)="switchPage(2)">Corporate Customer</div>
         <div class="sidenav-item" (click)="switchPage(3)">Coupon</div>
         <div class="sidenav-item" (click)="switchPage(4)">Reservation & Order</div>
         <div class="sidenav-item" (click)="switchPage(5)">Vehicle</div>
-        <div class="sidenav-item" (click)="switchPage(6)" *ngIf="isManager">Employee Management</div>
+        <div class="sidenav-item" (click)="switchPage(6)">Vehicle Class</div>
+        <div class="sidenav-item" (click)="switchPage(7)" *ngIf="isManager">Employee Management</div>
     </div>
 
     <mat-divider class="divider" vertical></mat-divider>
@@ -39,7 +41,11 @@
             <app-emp-vehicle></app-emp-vehicle>
         </div>
 
-        <div *ngIf="page === 6 && isManager" class="content">
+        <div *ngIf="page === 6" class="content">
+            <app-emp-vehicle-class></app-emp-vehicle-class>
+        </div>
+
+        <div *ngIf="page === 7 && isManager" class="content">
             <app-emp-register></app-emp-register>
         </div>
 

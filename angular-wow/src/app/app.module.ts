@@ -38,6 +38,7 @@ import { EmpRegisterCustomerComponent } from './employee/emp-register-customer/e
 import { EditDialogComponent } from './employee/edit-dialog/edit-dialog.component';
 import { DeleteDialogComponent } from './employee/delete-dialog/delete-dialog.component';
 import { AddDialogComponent } from './employee/add-dialog/add-dialog.component';
+import { EmpVehicleClassComponent } from './employee/emp-vehicle-class/emp-vehicle-class.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,8 @@ import { AddDialogComponent } from './employee/add-dialog/add-dialog.component';
     EmpRegisterCustomerComponent,
     EditDialogComponent,
     DeleteDialogComponent,
-    AddDialogComponent
+    AddDialogComponent,
+    EmpVehicleClassComponent
   ],
     imports: [
         BrowserModule,

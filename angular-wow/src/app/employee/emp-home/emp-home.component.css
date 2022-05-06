@@ -38,6 +38,9 @@
     color: #00a800;
     transition: 0.2s;
 }
+.sidenav-item-clicked{
+
+}
 .fab-container{
     position: fixed;
     bottom: 72px;

@@ -154,20 +154,20 @@
             <form [formGroup]="credentials" class="credential" >
                 <div class="form-title">Current Password</div>
                 <mat-form-field appearance="outline" class="form-field credential-form-field">
-                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="oldPassword" class="form-input" [ngClass]="{ 'is-invalid': submittedUpdateCredentialForm && credentialForm.oldPassword.errors}">
-                    <mat-icon matSuffix (click)="hide = !hide" class="form-visible-toggle" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    <mat-hint *ngIf="submittedUpdateCredentialForm && credentialForm.oldPassword.errors" >
-                        <mat-hint *ngIf="credentialForm.oldPassword.errors.required" class="hint">Password is required</mat-hint>
-                        <mat-hint *ngIf="credentialForm.oldPassword.errors.pattern" class="hint">Contains invalid characters</mat-hint>
-                        <mat-hint *ngIf="credentialForm.oldPassword.errors.minlength" class="hint">Password should be at least 6 characters</mat-hint>
-                        <mat-hint *ngIf="credentialForm.oldPassword.errors.maxlength" class="hint">Password should have maximum of 30 characters</mat-hint>
+                    <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="currentPassword" class="form-input" [ngClass]="{ 'is-invalid': submittedUpdateCredentialForm && credentialForm.currentPassword.errors}">
+                    <mat-icon matSuffix (click)="hide1 = !hide1" class="form-visible-toggle" >{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-hint *ngIf="submittedUpdateCredentialForm && credentialForm.currentPassword.errors" >
+                        <mat-hint *ngIf="credentialForm.currentPassword.errors.required" class="hint">Password is required</mat-hint>
+                        <mat-hint *ngIf="credentialForm.currentPassword.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+                        <mat-hint *ngIf="credentialForm.currentPassword.errors.minlength" class="hint">Password should be at least 6 characters</mat-hint>
+                        <mat-hint *ngIf="credentialForm.currentPassword.errors.maxlength" class="hint">Password should have maximum of 30 characters</mat-hint>
                     </mat-hint>
                 </mat-form-field>
 
                 <div class="form-title">New Password</div>
                 <mat-form-field appearance="outline" class="form-field credential-form-field">
-                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="newPassword" class="form-input" [ngClass]="{ 'is-invalid': submittedUpdateCredentialForm && credentialForm.newPassword.errors}">
-                    <mat-icon matSuffix (click)="hide = !hide" class="form-visible-toggle" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="newPassword" class="form-input" [ngClass]="{ 'is-invalid': submittedUpdateCredentialForm && credentialForm.newPassword.errors}">
+                    <mat-icon matSuffix (click)="hide2 = !hide2" class="form-visible-toggle" >{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
                     <mat-hint *ngIf="submittedUpdateCredentialForm && credentialForm.newPassword.errors" >
                         <mat-hint *ngIf="credentialForm.newPassword.errors.required" class="hint">Password is required</mat-hint>
                         <mat-hint *ngIf="credentialForm.newPassword.errors.pattern" class="hint">Contains invalid characters</mat-hint>

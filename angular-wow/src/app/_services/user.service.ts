@@ -5,8 +5,6 @@ import {RegisterIndividual} from '../_models/registerIndividual';
 import {environment} from '../../environments/environment';
 import {UpdateIndividual} from '../_models/updateIndividual';
 import {UpdateEmployee} from "../_models/updateEmployee";
-import {catchError, map} from "rxjs/operators";
-import {stringify} from "querystring";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -31,23 +29,27 @@ export class UserService {
     return this.states;
   }
 
+  updateCustomerCredential(credentials) {
+    return this.http.post(`${this.URL}/customer/update/credential`, credentials);
+  }
+
+  updateEmployeeCredential(credentials) {
+    return this.http.post(`${this.URL}/employee/update/credential`, credentials);
+  }
+
+  registerEmployee(newEmployee) {
+    return this.http.post(`${this.URL}/employee/register`, newEmployee);
+  }
+
   registerIndividual(newIndividual: RegisterIndividual) {
     return this.http.post(`${this.URL}/customer/register`, newIndividual);
   }
 
   updateIndividual(update: UpdateIndividual) {
-    return this.http.post<any>(`${this.URL}/customer/update/individual`, update)
-        .pipe(map(res => {
-          if (res.message === 'Success') {
-            return res;
-          }
-        }), catchError(error => {
-          return error;
-        }));
+    return this.http.post<any>(`${this.URL}/customer/update/individual`, update);
   }
 
   updateEmployee(update: UpdateEmployee){
-      console.log(update);
     return this.http.post<any>(`${this.URL}/employee/update`, update);
   }
 

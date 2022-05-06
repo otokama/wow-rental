@@ -1,5 +1,37 @@
 <div *ngIf="form === 0" class="container">
-    <h5>Add New Company</h5>
+    <form [formGroup]="companyForm" class="form-container">
+        <h5 class="title">Add New Company</h5>
+        <div class="form-title">Company Name</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="corporateName" [ngClass]="{ 'is-invalid': submitted && companyControl.corporateName.errors }">
+            <mat-hint *ngIf="submitted && companyControl.corporateName.errors">
+                <mat-hint *ngIf="companyControl.corporateName.errors.required" class="hint">Company name is required</mat-hint>
+                <mat-hint *ngIf="companyControl.corporateName.errors.pattern" class="hint">Invalid name</mat-hint>
+                <mat-hint *ngIf="companyControl.corporateName.errors.maxlength" class="hint">Name exceeds 30 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Corporate Registration #</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="registrationNumber" [ngClass]="{ 'is-invalid': submitted && companyControl.registrationNumber.errors }">
+            <mat-hint *ngIf="submitted && companyControl.registrationNumber.errors">
+                <mat-hint *ngIf="companyControl.registrationNumber.errors.required" class="hint">Registration number is required</mat-hint>
+                <mat-hint *ngIf="companyControl.registrationNumber.errors.pattern" class="hint">Invalid number</mat-hint>
+                <mat-hint *ngIf="companyControl.registrationNumber.errors.maxlength" class="hint">Number exceeds 10 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Corporate Discount (%)</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="corporateDiscount" [ngClass]="{ 'is-invalid': submitted && companyControl.corporateDiscount.errors }">
+            <mat-hint *ngIf="submitted && companyControl.corporateDiscount.errors">
+                <mat-hint *ngIf="companyControl.corporateDiscount.errors.required" class="hint">Discount is required</mat-hint>
+                <mat-hint *ngIf="companyControl.corporateDiscount.errors.pattern || companyControl.corporateDiscount.errors.min" class="hint">Invalid number</mat-hint>
+                <mat-hint *ngIf="companyControl.corporateDiscount.errors.max" class="hint">No more than 30% discount</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+        <div class="button" (click)="submit(0)">Add</div>
+    </form>
 </div>
 
 <div *ngIf="form === 1" class="container">
@@ -15,6 +47,7 @@
             <mat-hint *ngIf="submitted && locationControl.locationName.errors">
                 <mat-hint *ngIf="locationControl.locationName.errors.required" class="hint">Branch name is required</mat-hint>
                 <mat-hint *ngIf="locationControl.locationName.errors.pattern" class="hint">Invalid name</mat-hint>
+                <mat-hint *ngIf="locationControl.locationName.errors.maxlength" class="hint">Name exceeds 30 characters</mat-hint>
             </mat-hint>
         </mat-form-field>
 
@@ -24,6 +57,7 @@
             <mat-hint *ngIf="submitted && locationControl.street.errors">
                 <mat-hint *ngIf="locationControl.street.errors.required" class="hint">Street address is required</mat-hint>
                 <mat-hint *ngIf="locationControl.street.errors.pattern" class="hint">Invalid street address</mat-hint>
+                <mat-hint *ngIf="locationControl.street.errors.maxlength" class="hint">Street address exceeds 30 characters</mat-hint>
             </mat-hint>
         </mat-form-field>
 
@@ -33,6 +67,7 @@
             <mat-hint *ngIf="submitted && locationControl.city.errors">
                 <mat-hint *ngIf="locationControl.city.errors.required" class="hint">City is required</mat-hint>
                 <mat-hint *ngIf="locationControl.city.errors.pattern" class="hint">Invalid city</mat-hint>
+                <mat-hint *ngIf="locationControl.city.errors.maxlength" class="hint">City name exceeds 30 characters</mat-hint>
             </mat-hint>
         </mat-form-field>
 
@@ -75,10 +110,54 @@
 </div>
 
 <div *ngIf="form === 5" class="container">
-    <h5>Add New Employee</h5>
+    <form [formGroup]="employeeForm" class="form-container">
+        <h5 class="title">Add New Employee</h5>
+
+        <div class="form-title">First Name *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && employeeControl.firstName.errors }">
+            <mat-hint *ngIf="submitted && employeeControl.firstName.errors">
+                <mat-hint *ngIf="employeeControl.firstName.errors.required" class="hint">First name is required</mat-hint>
+                <mat-hint *ngIf="employeeControl.firstName.errors.pattern" class="hint">Invalid name</mat-hint>
+                <mat-hint *ngIf="employeeControl.firstName.errors.maxlength" class="hint">Name exceeds 20 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Last Name *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && employeeControl.lastName.errors }">
+            <mat-hint *ngIf="submitted && employeeControl.lastName.errors">
+                <mat-hint *ngIf="employeeControl.lastName.errors.required" class="hint">Last name is required</mat-hint>
+                <mat-hint *ngIf="employeeControl.lastName.errors.pattern" class="hint">Invalid name</mat-hint>
+                <mat-hint *ngIf="employeeControl.lastName.errors.maxlength" class="hint">Name exceeds 20 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Email *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="email" [ngClass]="{ 'is-invalid': submitted && employeeControl.email.errors }">
+            <mat-hint *ngIf="submitted && employeeControl.email.errors">
+                <mat-hint *ngIf="employeeControl.email.errors.required" class="hint">Email is required</mat-hint>
+                <mat-hint *ngIf="employeeControl.email.errors.email" class="hint">Invalid email</mat-hint>
+                <mat-hint *ngIf="employeeControl.email.errors.maxlength" class="hint">Name exceeds 30 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Temporary Password *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="password" [ngClass]="{ 'is-invalid': submitted && employeeControl.password.errors }">
+            <mat-hint *ngIf="submitted && employeeControl.password.errors">
+                <mat-hint *ngIf="employeeControl.password.errors.required" class="hint">Password is required</mat-hint>
+                <mat-hint *ngIf="employeeControl.password.errors.pattern" class="hint">Invalid password</mat-hint>
+                <mat-hint *ngIf="employeeControl.password.errors.minlength" class="hint">Password should be at least 6 characters</mat-hint>
+                <mat-hint *ngIf="employeeControl.password.errors.maxlength" class="hint">Password exceeds 30 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+    </form>
+    <div class="button" (click)="submit(5)">Add</div>
 </div>
 
 <div *ngIf="form === 6" class="container">
-    <h5>Unknown Add</h5>
+    <h5>Add New Vehicle Class</h5>
 </div>
 

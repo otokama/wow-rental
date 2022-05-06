@@ -24,6 +24,10 @@ export class LocationService {
         return this.http.get<any>(`${this.URL}/vehicle/getLocationByID/${locationID}`)
     }
 
+    addLocation(location) {
+        console.log(location);
+        return this.http.post(`${this.URL}/vehicle/locations/add`, location);
+    }
 
 
 }
