@@ -35,10 +35,10 @@
 
       <div class="form-title">Phone Number *</div>
       <mat-form-field appearance="outline" class="form-field">
-        <input matInput type="text" formControlName="phone" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
-        <mat-hint *ngIf="submitted && f.phone.errors" >
-          <mat-hint *ngIf="f.phone.errors.required" class="hint">Phone number is required</mat-hint>
-          <mat-hint *ngIf="f.phone.errors.pattern" class="hint">Invalid phone number</mat-hint>
+        <input matInput type="text" formControlName="phoneNumber" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }">
+        <mat-hint *ngIf="submitted && f.phoneNumber.errors" >
+          <mat-hint *ngIf="f.phoneNumber.errors.required" class="hint">Phone number is required</mat-hint>
+          <mat-hint *ngIf="f.phoneNumber.errors.pattern" class="hint">Invalid phone number</mat-hint>
         </mat-hint>
       </mat-form-field>
 
@@ -53,19 +53,19 @@
 
       <div class="form-title">Personal Insurance Company *</div>
       <mat-form-field appearance="outline" class="form-field">
-        <input matInput type="text" formControlName="insureName" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.insureName.errors }">
-        <mat-hint *ngIf="submitted && f.insureName.errors">
-          <mat-hint *ngIf="f.insureName.errors.required" class="hint">Insurance company is required</mat-hint>
-          <mat-hint *ngIf="f.insureName.errors.pattern" class="hint">Invalid insurance name</mat-hint>
+        <input matInput type="text" formControlName="insuranceCompany" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.insuranceCompany.errors }">
+        <mat-hint *ngIf="submitted && f.insuranceCompany.errors">
+          <mat-hint *ngIf="f.insuranceCompany.errors.required" class="hint">Insurance company is required</mat-hint>
+          <mat-hint *ngIf="f.insuranceCompany.errors.pattern" class="hint">Invalid insurance name</mat-hint>
         </mat-hint>
       </mat-form-field>
 
       <div class="form-title">Insurance policy number *</div>
       <mat-form-field appearance="outline" class="form-field">
-        <input matInput type="text" formControlName="insureNumber" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.insureNumber.errors }">
-        <mat-hint *ngIf="submitted && f.insureNumber.errors">
-          <mat-hint *ngIf="f.insureNumber.errors.required" class="hint">Insurance number is required</mat-hint>
-          <mat-hint *ngIf="f.insureNumber.errors.pattern" class="hint">Invalid insurance number</mat-hint>
+        <input matInput type="text" formControlName="insuranceNumber" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.insuranceNumber.errors }">
+        <mat-hint *ngIf="submitted && f.insuranceNumber.errors">
+          <mat-hint *ngIf="f.insuranceNumber.errors.required" class="hint">Insurance number is required</mat-hint>
+          <mat-hint *ngIf="f.insuranceNumber.errors.pattern" class="hint">Invalid insurance number</mat-hint>
         </mat-hint>
       </mat-form-field>
 
@@ -100,10 +100,10 @@
       <div class="sub-title">ADDRESS</div>
       <div class="form-title">Street Address *</div>
       <mat-form-field appearance="outline" class="form-field">
-        <input matInput type="text" formControlName="streetaddress" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.streetaddress.errors }">
-        <mat-hint *ngIf="submitted && f.streetaddress.errors" >
-          <mat-hint *ngIf="f.streetaddress.errors.required" class="hint">Address is required</mat-hint>
-          <mat-hint *ngIf="f.streetaddress.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+        <input matInput type="text" formControlName="street" class="form-input" [ngClass]="{ 'is-invalid': submitted && f.street.errors }">
+        <mat-hint *ngIf="submitted && f.street.errors" >
+          <mat-hint *ngIf="f.street.errors.required" class="hint">Address is required</mat-hint>
+          <mat-hint *ngIf="f.street.errors.pattern" class="hint">Contains invalid characters</mat-hint>
         </mat-hint>
       </mat-form-field>
 

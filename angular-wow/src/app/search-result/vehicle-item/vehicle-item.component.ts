@@ -3,6 +3,7 @@ import {Vehicle} from '../../_models/vehicle';
 import {VehicleType} from '../../_models/vehicleType';
 import {AuthService} from '../../_services/auth.service';
 import {NotificationService} from '../../_services/notification.service';
+import {Role} from "../../_models/role";
 
 @Component({
   selector: 'app-vehicle-item',
@@ -30,7 +31,11 @@ export class VehicleItemComponent implements OnInit {
 
   reserve() {
     if (this.authService.currentUserValue) {
-      this.reserveEvent.emit(this.vehicle);
+      if (this.authService.currentUserValue.role === Role.customer) {
+        this.reserveEvent.emit(this.vehicle);
+      } else {
+        this.notif.showNotif('Only customers can make reservations.', 'Dismiss');
+      }
     } else {
       this.notif.showNotif('Please log in to reserve', 'Dismiss');
     }

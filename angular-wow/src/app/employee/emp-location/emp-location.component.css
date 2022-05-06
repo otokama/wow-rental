@@ -1,0 +1,67 @@
+.container{
+    margin: 50px 50px 50px 60px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.header{
+    font-size: 15px;
+}
+.content-title{
+    font-size: 20px;
+    align-self: center;
+}
+.table{
+    margin-top: 20px;
+    align-self: center;
+}
+.element-detail {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.element-row td {
+    border-bottom-width: 0;
+}
+tr.detail-row {
+    height: 0;
+}
+tr.element-row:not(.expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+    background: #efefef;
+}
+.action-icon{
+    height: 40px;
+    margin-left: 20px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.action-icon:hover{
+    color: #00a800;
+    transition: 0.2s;
+}
+.delete-icon:hover{
+    color: #940000;
+    transition: 0.2s;
+}
+.closed-field{
+    padding-top: 13px;
+}
+.fab-container{
+    position: fixed;
+    bottom: 72px;
+    right: 23px;
+    z-index: 100;
+}
+.button{
+    background-color:  #00a800 ;
+    color: white;
+    width: 70px;
+    height: 40px;
+    cursor: pointer;
+}

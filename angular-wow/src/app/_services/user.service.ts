@@ -1,15 +1,14 @@
-
 import { Injectable } from '@angular/core';
-
 import {HttpClient} from '@angular/common/http';
 import {User} from '../_models/user';
 import {RegisterIndividual} from '../_models/registerIndividual';
+import {environment} from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
   states: string[];
-
+  private URL = environment.URL;
   constructor(private http: HttpClient) {
     this.states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',
       'Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho',
@@ -21,17 +20,12 @@ export class UserService {
   }
 
 
-  // TODO:Change all to dummy backend
-  getAll() {
-     return this.http.get<User[]>(`http://localhost:3030/user/allusers`);
-  }
-
   getStates(): string[]{
     return this.states;
   }
 
   registerIndividual(newIndividual: RegisterIndividual) {
-    return this.http.post(`http://localhost:3030/user/register`, newIndividual);
+    return this.http.post(`${this.URL}/customer/register`, newIndividual);
   }
 
 

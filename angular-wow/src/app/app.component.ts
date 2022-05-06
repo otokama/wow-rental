@@ -15,7 +15,7 @@ import {Subscription} from 'rxjs';
 })
 export class AppComponent implements OnInit{
   title = 'WOW';
-  currentUser: User;
+  currentUser: User | null;
   name: string;
   private currentUserSubs: Subscription;
   constructor(  private router: Router,
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit{
   }
 
   get isEmployee() {
-    return this.currentUser && this.currentUser.role === Role.employee;
+    return this.currentUser && (this.currentUser.role === Role.employee || this.currentUser.role === Role.manager);
   }
 
   get isUser() {

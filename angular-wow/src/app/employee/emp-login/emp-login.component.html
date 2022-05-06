@@ -1,1 +1,20 @@
-<p>emp-login works!</p>
+<div class="container">
+    <div class="title">WOW Employee Login</div>
+    <mat-dialog-content>
+        <mat-form-field class="form-field">
+            <input matInput [(ngModel)]="email" placeholder="Email:" (keypress)="enterKeyHandler($event)" required>
+            <mat-error *ngIf="fieldControl.invalid">{{getError()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" placeholder="Password:" (keypress)="enterKeyHandler($event)" required>
+            <mat-icon matSuffix (click)="hide = !hide" class="form-visible-toggle" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-error *ngIf="fieldControl.invalid">{{getError()}}</mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+    <!--  <button mat-button (click)="login()" class="login-button" [disableRipple]="true">Sign In</button>-->
+    <div (click)="empLogin()" class="login-button">Sign In</div>
+
+
+
+</div>

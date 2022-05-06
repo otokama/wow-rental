@@ -4,10 +4,10 @@ import {BranchLocation} from '../_models/branch';
 import {Vehicle} from '../_models/vehicle';
 import {VehicleType} from '../_models/vehicleType';
 import { VehicleFilter } from '../_models/vehiclefilter';
-import {Coupon} from "../_models/coupon";
-import {ReserveTimeService} from "./reserve-time.service";
-import {RentalService} from "../_models/rentalService";
-import {AuthService} from "./auth.service";
+import {Coupon} from '../_models/coupon';
+import {ReserveTimeService} from './reserve-time.service';
+import {RentalService} from '../_models/rentalService';
+import {AuthService} from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ReserveService {

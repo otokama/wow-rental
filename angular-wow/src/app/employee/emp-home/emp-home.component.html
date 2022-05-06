@@ -1,1 +1,48 @@
-<p>emp-home works!</p>
+<div class="container">
+    <div class="sidenav">
+        <h4 *ngIf="isManager">Manager Dashboard</h4>
+        <h4 *ngIf="!isManager">Employee Dashboard</h4>
+        <mat-divider></mat-divider>
+        <div class="sidenav-item" (click)="switchPage(0)">Branch Location</div>
+        <div class="sidenav-item" (click)="switchPage(1)">Corporate</div>
+        <div class="sidenav-item" (click)="switchPage(2)">Corporate Customer</div>
+        <div class="sidenav-item" (click)="switchPage(3)">Coupon</div>
+        <div class="sidenav-item" (click)="switchPage(4)">Reservation & Order</div>
+        <div class="sidenav-item" (click)="switchPage(5)">Vehicle</div>
+        <div class="sidenav-item" (click)="switchPage(6)" *ngIf="isManager">Employee Management</div>
+    </div>
+
+    <mat-divider class="divider" vertical></mat-divider>
+
+    <div class="content">
+        <div *ngIf="page === 0" class="content">
+            <app-emp-location class="content"></app-emp-location>
+        </div>
+
+        <div *ngIf="page === 1" class="content">
+            <app-emp-company></app-emp-company>
+        </div>
+
+        <div *ngIf="page === 2" class="content">
+            <app-emp-register-customer></app-emp-register-customer>
+        </div>
+
+        <div *ngIf="page === 3" class="content">
+            <app-emp-coupon></app-emp-coupon>
+        </div>
+
+        <div *ngIf="page === 4" class="content">
+            <app-emp-reservation></app-emp-reservation>
+        </div>
+
+        <div *ngIf="page === 5" class="content">
+            <app-emp-vehicle></app-emp-vehicle>
+        </div>
+
+        <div *ngIf="page === 6 && isManager" class="content">
+            <app-emp-register></app-emp-register>
+        </div>
+
+    </div>
+
+</div>

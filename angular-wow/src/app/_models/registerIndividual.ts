@@ -5,11 +5,11 @@ export class RegisterIndividual {
     phone: string;
     email: string;
     password: string;
-    streetaddress: string;
+    street: string;
     city: string;
     state: string;
     zipcode: string;
     driverLicense: string;
-    insureName: string;
-    insureNumber: string;
+    insuranceName: string;
+    insuranceNumber: string;
 }

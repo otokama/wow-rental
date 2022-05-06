@@ -44,10 +44,10 @@
 
                     <div class="form-title">Phone Number *</div>
                     <mat-form-field appearance="outline" class="form-field">
-                        <input matInput type="text" formControlName="phone" class="form-input" [ngClass]="{ 'is-invalid': submittedCustomerAccountForm && customerForm.phone.errors }">
-                        <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.phone.errors" >
-                            <mat-hint *ngIf="customerForm.phone.errors.required" class="hint">Phone number is required</mat-hint>
-                            <mat-hint *ngIf="customerForm.phone.errors.pattern" class="hint">Invalid phone number</mat-hint>
+                        <input matInput type="text" formControlName="phoneNumber" class="form-input" [ngClass]="{ 'is-invalid': submittedCustomerAccountForm && customerForm.phoneNumber.errors }">
+                        <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.phoneNumber.errors" >
+                            <mat-hint *ngIf="customerForm.phoneNumber.errors.required" class="hint">Phone number is required</mat-hint>
+                            <mat-hint *ngIf="customerForm.phoneNumber.errors.pattern" class="hint">Invalid phone number</mat-hint>
                         </mat-hint>
                     </mat-form-field>
 
@@ -62,19 +62,19 @@
 
                     <div class="form-title">Personal Insurance Company *</div>
                     <mat-form-field appearance="outline" class="form-field">
-                        <input matInput type="text" formControlName="insureName" class="form-input" [ngClass]="{ 'is-invalid': submittedCustomerAccountForm && customerForm.insureName.errors }">
-                        <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.insureName.errors">
-                            <mat-hint *ngIf="customerForm.insureName.errors.required" class="hint">Insurance company is required</mat-hint>
-                            <mat-hint *ngIf="customerForm.insureName.errors.pattern" class="hint">Invalid insurance name</mat-hint>
+                        <input matInput type="text" formControlName="insuranceCompany" class="form-input" [ngClass]="{ 'is-invalid': submittedCustomerAccountForm && customerForm.insuranceCompany.errors }">
+                        <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.insuranceCompany.errors">
+                            <mat-hint *ngIf="customerForm.insuranceCompany.errors.required" class="hint">Insurance company is required</mat-hint>
+                            <mat-hint *ngIf="customerForm.insuranceCompany.errors.pattern" class="hint">Invalid insurance name</mat-hint>
                         </mat-hint>
                     </mat-form-field>
 
                     <div class="form-title">Insurance policy number *</div>
                     <mat-form-field appearance="outline" class="form-field">
-                        <input matInput type="text" formControlName="insureNumber" class="form-input" [ngClass]="{ 'is-invalid': submittedCustomerAccountForm && customerForm.insureNumber.errors }">
-                        <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.insureNumber.errors">
-                            <mat-hint *ngIf="customerForm.insureNumber.errors.required" class="hint">Insurance number is required</mat-hint>
-                            <mat-hint *ngIf="customerForm.insureNumber.errors.pattern" class="hint">Invalid insurance number</mat-hint>
+                        <input matInput type="text" formControlName="insuranceNumber" class="form-input" [ngClass]="{ 'is-invalid': submittedCustomerAccountForm && customerForm.insuranceNumber.errors }">
+                        <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.insuranceNumber.errors">
+                            <mat-hint *ngIf="customerForm.insuranceNumber.errors.required" class="hint">Insurance number is required</mat-hint>
+                            <mat-hint *ngIf="customerForm.insuranceNumber.errors.pattern" class="hint">Invalid insurance number</mat-hint>
                         </mat-hint>
                     </mat-form-field>
 
@@ -85,10 +85,10 @@
                     <div class="sub-title">ADDRESS</div>
                     <div class="form-title">Street Address *</div>
                     <mat-form-field appearance="outline" class="form-field">
-                        <input matInput type="text" formControlName="streetaddress" class="form-input" [ngClass]="{ 'is-invalid': submittedCustomerAccountForm && customerForm.streetaddress.errors }">
-                        <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.streetaddress.errors" >
-                            <mat-hint *ngIf="customerForm.streetaddress.errors.required" class="hint">Address is required</mat-hint>
-                            <mat-hint *ngIf="customerForm.streetaddress.errors.pattern" class="hint">Contains invalid characters</mat-hint>
+                        <input matInput type="text" formControlName="street" class="form-input" [ngClass]="{ 'is-invalid': submittedCustomerAccountForm && customerForm.street.errors }">
+                        <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.street.errors" >
+                            <mat-hint *ngIf="customerForm.street.errors.required" class="hint">Address is required</mat-hint>
+                            <mat-hint *ngIf="customerForm.street.errors.pattern" class="hint">Contains invalid characters</mat-hint>
                         </mat-hint>
                     </mat-form-field>
 
@@ -119,7 +119,33 @@
                     </mat-form-field>
                 </div>
             </form>
-            <div class="button" (click)="updateCustomerAccountInfo()">Update</div>
+
+            <form [formGroup]="employeeAccountForm"  class="account-info" *ngIf="isEmployee">
+                <div class="contact">
+                    <div class="sub-title">CONTACT INFORMATION</div>
+                    <div class="form-title">First Name *</div>
+                    <mat-form-field appearance="outline" class="form-field">
+                        <input class="form-input" matInput formControlName="firstName" [ngClass]="{ 'is-invalid': submittedEmployeeAccountForm && employeeForm.firstName.errors }">
+                        <mat-hint *ngIf="submittedEmployeeAccountForm && employeeForm.firstName.errors">
+                            <mat-hint *ngIf="employeeForm.firstName.errors.required" class="hint">First Name is required</mat-hint>
+                            <mat-hint *ngIf="employeeForm.firstName.errors.pattern" class="hint">Invalid Name</mat-hint>
+                        </mat-hint>
+                    </mat-form-field>
+
+                    <div class="form-title">Last Name *</div>
+                    <mat-form-field appearance="outline" class="form-field">
+                        <input class="form-input" matInput formControlName="lastName" [ngClass]="{ 'is-invalid': submittedEmployeeAccountForm && employeeForm.lastName.errors }">
+                        <mat-hint *ngIf="submittedEmployeeAccountForm && employeeForm.lastName.errors">
+                            <mat-hint *ngIf="employeeForm.lastName.errors.required" class="hint">Last Name is required</mat-hint>
+                            <mat-hint *ngIf="employeeForm.lastName.errors.pattern" class="hint">Invalid Name</mat-hint>
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+
+            </form>
+
+
+            <div class="button" (click)="updateAccountInfo()">Update</div>
         </div>
 
         <!--SECURITY-->

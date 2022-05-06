@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'search', component: SearchResultComponent },
   { path: 'reserve', component: ReserveComponent, canActivate: [AuthGuard], data: {roles: [Role.customer]}},
   { path: 'employee/login', component: EmpLoginComponent},
-  // { path: 'employee/home', component: EmpHomeComponent, canActivate: [AuthGuard], data: { roles: [Role.employee] }},
+  { path: 'employee/home', component: EmpHomeComponent, canActivate: [AuthGuard], data: { roles: [Role.employee, Role.manager] }},
   { path: '**', redirectTo: '' }];
 
 @NgModule({

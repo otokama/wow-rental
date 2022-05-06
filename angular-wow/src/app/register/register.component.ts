@@ -43,17 +43,17 @@ export class RegisterComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       middleName: ['', [Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(30)]],
       password: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
         Validators.maxLength(30)]],
-      streetaddress: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      street: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
       city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(30)]],
       state: ['', [Validators.required]],
       zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
       driverLicense: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-      insureName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-      insureNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]]
+      insuranceCompany: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      insuranceNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]]
     });
   }
 
@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           //  this.alertService.success('Registration successful', true);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
         },
         error => {
           console.log('Error:', error);

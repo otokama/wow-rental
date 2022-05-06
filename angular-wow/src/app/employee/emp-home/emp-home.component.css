@@ -1,0 +1,40 @@
+.container{
+    margin: 50px 50px 50px 50px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+}
+.sidenav{
+    flex-grow: 1;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.divider{
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.content{
+    flex-grow: 9999;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+    align-items: center;
+}
+
+.sidenav-item{
+    height: 40px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.sidenav-item:hover{
+    color: #00a800;
+    transition: 0.2s;
+}

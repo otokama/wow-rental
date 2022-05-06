@@ -24,10 +24,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { VehicleItemComponent } from './search-result/vehicle-item/vehicle-item.component';
 import { ReserveComponent } from './reserve/reserve.component';
-import {IgxAvatarModule} from "igniteui-angular";
-import {AvatarModule} from "ngx-avatar";
+import {IgxAvatarModule} from 'igniteui-angular';
+import {AvatarModule} from 'ngx-avatar';
 import { AccountComponent } from './account/account.component';
 import { TripComponent } from './account/trip/trip.component';
+import { EmpVehicleComponent } from './employee/emp-vehicle/emp-vehicle.component';
+import { EmpLocationComponent } from './employee/emp-location/emp-location.component';
+import { EmpRegisterComponent } from './employee/emp-register/emp-register.component';
+import { EmpCompanyComponent } from './employee/emp-company/emp-company.component';
+import { EmpCouponComponent } from './employee/emp-coupon/emp-coupon.component';
+import { EmpReservationComponent } from './employee/emp-reservation/emp-reservation.component';
+import { EmpRegisterCustomerComponent } from './employee/emp-register-customer/emp-register-customer.component';
+import { EditDialogComponent } from './employee/edit-dialog/edit-dialog.component';
+import { DeleteDialogComponent } from './employee/delete-dialog/delete-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +51,16 @@ import { TripComponent } from './account/trip/trip.component';
     VehicleItemComponent,
     ReserveComponent,
     AccountComponent,
-    TripComponent
+    TripComponent,
+    EmpVehicleComponent,
+    EmpLocationComponent,
+    EmpRegisterComponent,
+    EmpCompanyComponent,
+    EmpCouponComponent,
+    EmpReservationComponent,
+    EmpRegisterCustomerComponent,
+    EditDialogComponent,
+    DeleteDialogComponent
   ],
     imports: [
         BrowserModule,

@@ -40,19 +40,21 @@ export class LoginComponent {
 
   login() {
     if (this.email && this.password) {
-      this.authService.login(this.email, this.password)
+      this.authService.login(this.email, this.password, false)
           .pipe(first())
           .subscribe(
               data => {
-                this.dialogRef.close();
-                if (this.router.url.indexOf('/search') < 0) {
-                  this.router.navigate(['/']);
+                if (data) {
+                  this.dialogRef.close();
+                  if (this.router.url.indexOf('/search') < 0) {
+                    this.router.navigate(['/']);
+                  }
+                  this.notif.showNotif('Welcome, ' + this.authService.currentUserValue.firstName,
+                      'Dismiss');
                 }
               },
               error => {
-                this.error = error;
-                this.notif.showNotif(this.error, 'Dismiss' );
-                console.log('Error', error);
+                console.log('Error: ', error);
               });
     } else {
       this.notif.showNotif('Please enter Email and password.', 'Dismiss');
@@ -60,8 +62,6 @@ export class LoginComponent {
   }
 
 
-  register() {
-  }
 
   onNoClick(): void {
     this.dialogRef.close();

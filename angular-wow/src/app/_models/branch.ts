@@ -1,4 +1,4 @@
-export class BranchLocation {
+export interface BranchLocation {
     id: number;
     name: string;
     street: string;

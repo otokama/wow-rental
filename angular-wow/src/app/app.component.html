@@ -1,7 +1,8 @@
 
 <mat-toolbar class="toolbar">
     <img src="assets/car-rental.png" class="car-img">
-    <div class="button" routerLink="/">Home</div>
+    <div class="button" routerLink="/" *ngIf="!isEmployee">Home</div>
+    <div class="button" routerLink="employee/home" *ngIf="isEmployee">Home</div>
     <div class="button" (click)="openLogin()" *ngIf="!isUser && isEmpRoute">Sign in</div>
     <div ngbDropdown *ngIf="isUser">
         <ngx-avatar *ngIf="isUser" class='avatar' name="{{name}}" size="40" ngbDropdownToggle></ngx-avatar>
