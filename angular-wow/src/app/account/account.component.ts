@@ -5,6 +5,7 @@ import {User} from '../_models/user';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../_services/user.service';
 import {NotificationService} from '../_services/notification.service';
+import {first} from "rxjs/operators";
 // TODO: integrate with backend
 @Component({
   selector: 'app-account',
@@ -32,12 +33,11 @@ export class AccountComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
     // TODO: get user account detail:
     this.customerAccountForm = this.formBuilder.group({
-      customerID: [this.currentUser.customerID],
+      customerId: [this.currentUser.customerId],
       firstName: [this.currentUser.firstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       lastName: [this.currentUser.lastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       middleName: ['', [Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      email: [this.currentUser.email, [Validators.required, Validators.email, Validators.maxLength(30)]],
       street: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
       city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(30)]],
       state: ['', [Validators.required]],
@@ -47,10 +47,10 @@ export class AccountComponent implements OnInit {
       insuranceNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]]
     });
     this.employeeAccountForm = this.formBuilder.group({
-      employeeID: [this.currentUser.employeeID],
+      employeeId: [this.currentUser.employeeId],
       firstName: [this.currentUser.firstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       lastName: [this.currentUser.lastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
-      email: [this.currentUser.email, [Validators.required, Validators.email, Validators.maxLength(30)]]
+      middleName: ['', [Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
     });
     this.credentials = this.formBuilder.group({
       oldPassword: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9/!%^&*()]+$'), Validators.minLength(6),
@@ -81,8 +81,30 @@ export class AccountComponent implements OnInit {
   updateAccountInfo() {
     if (this.isEmployee) {
       this.submittedEmployeeAccountForm = true;
+      if (this.employeeAccountForm.invalid){
+        return;
+      }
+      this.userService.updateEmployee(this.employeeAccountForm.value).subscribe(
+          data => {
+            console.log(data);
+          }, error => {
+            this.notification.showNotif(error, 'error');
+            this.submittedEmployeeAccountForm = false;
+          }
+      )
     } else {
       this.submittedCustomerAccountForm = true;
+      if (this.customerAccountForm.invalid) {
+        return;
+      }
+      this.userService.updateIndividual(this.customerAccountForm.value).subscribe(
+          data => {
+            console.log(data);
+          }, error => {
+            this.notification.showNotif(error, 'error');
+            this.submittedCustomerAccountForm = false;
+          }
+      )
     }
   }
 

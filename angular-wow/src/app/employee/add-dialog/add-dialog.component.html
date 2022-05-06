@@ -1,0 +1,84 @@
+<div *ngIf="form === 0" class="container">
+    <h5>Add New Company</h5>
+</div>
+
+<div *ngIf="form === 1" class="container">
+    <h5>Add New Coupon</h5>
+</div>
+
+<div *ngIf="form === 2"  [formGroup]="locationForm" class="container">
+    <form [formGroup]="locationForm" class="form-container">
+        <h5 class="title">Add New Branch Location</h5>
+        <div class="form-title">Branch Name *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="locationName" [ngClass]="{ 'is-invalid': submitted && locationControl.locationName.errors }">
+            <mat-hint *ngIf="submitted && locationControl.locationName.errors">
+                <mat-hint *ngIf="locationControl.locationName.errors.required" class="hint">Branch name is required</mat-hint>
+                <mat-hint *ngIf="locationControl.locationName.errors.pattern" class="hint">Invalid name</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Street Address *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="street" [ngClass]="{ 'is-invalid': submitted && locationControl.street.errors }">
+            <mat-hint *ngIf="submitted && locationControl.street.errors">
+                <mat-hint *ngIf="locationControl.street.errors.required" class="hint">Street address is required</mat-hint>
+                <mat-hint *ngIf="locationControl.street.errors.pattern" class="hint">Invalid street address</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">City *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="city" [ngClass]="{ 'is-invalid': submitted && locationControl.city.errors }">
+            <mat-hint *ngIf="submitted && locationControl.city.errors">
+                <mat-hint *ngIf="locationControl.city.errors.required" class="hint">City is required</mat-hint>
+                <mat-hint *ngIf="locationControl.city.errors.pattern" class="hint">Invalid city</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">State *</div>
+        <select class="form-select state-select" formControlName="state">
+            <option [value]="state" *ngFor="let state of states;">{{state}}</option>
+        </select>
+        <mat-hint *ngIf="submitted && locationControl.state.errors" >
+            <mat-hint *ngIf="locationControl.state.errors.required" class="hint">State is required</mat-hint>
+        </mat-hint>
+
+        <div class="form-title">Zipcode *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="zipcode" [ngClass]="{ 'is-invalid': submitted && locationControl.zipcode.errors }">
+            <mat-hint *ngIf="submitted && locationControl.zipcode.errors">
+                <mat-hint *ngIf="locationControl.zipcode.errors.required" class="hint">Zipcode is required</mat-hint>
+                <mat-hint *ngIf="locationControl.zipcode.errors.pattern" class="hint">Invalid zipcode</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Phone Number *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="phoneNumber" [ngClass]="{ 'is-invalid': submitted && locationControl.phoneNumber.errors }">
+            <mat-hint *ngIf="submitted && locationControl.phoneNumber.errors">
+                <mat-hint *ngIf="locationControl.phoneNumber.errors.required" class="hint">Phone number is required</mat-hint>
+                <mat-hint *ngIf="locationControl.phoneNumber.errors.pattern" class="hint">Invalid number</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+    </form>
+    <div class="button" (click)="submit(2)">Add</div>
+</div>
+
+<div *ngIf="form === 3" class="container">
+    <h5>Add New Corporate Customer</h5>
+</div>
+
+<div *ngIf="form === 4" class="container">
+    <h5>Add New Vehicle</h5>
+</div>
+
+<div *ngIf="form === 5" class="container">
+    <h5>Add New Employee</h5>
+</div>
+
+<div *ngIf="form === 6" class="container">
+    <h5>Unknown Add</h5>
+</div>
+

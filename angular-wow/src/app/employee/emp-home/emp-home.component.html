@@ -46,3 +46,8 @@
     </div>
 
 </div>
+<div class="fab-container" *ngIf="page !== 4">
+    <button mat-flat-button color="primary" class="button" matTooltip="Add new location" matTooltipPosition="above" (click)="add()">
+        <i class="material-icons">add</i>
+    </button>
+</div>

@@ -1,4 +1,4 @@
-export class RegisterIndividual {
+export interface RegisterIndividual {
     firstName: string;
     lastName: string;
     middleName: string;

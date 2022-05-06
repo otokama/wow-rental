@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../_models/user';
 import {RegisterIndividual} from '../_models/registerIndividual';
 import {environment} from '../../environments/environment';
+import {UpdateIndividual} from '../_models/updateIndividual';
+import {UpdateEmployee} from "../_models/updateEmployee";
+import {catchError, map} from "rxjs/operators";
+import {stringify} from "querystring";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-
+  headers = new HttpHeaders({
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  });
   states: string[];
   private URL = environment.URL;
   constructor(private http: HttpClient) {
@@ -28,5 +35,20 @@ export class UserService {
     return this.http.post(`${this.URL}/customer/register`, newIndividual);
   }
 
+  updateIndividual(update: UpdateIndividual) {
+    return this.http.post<any>(`${this.URL}/customer/update/individual`, update)
+        .pipe(map(res => {
+          if (res.message === 'Success') {
+            return res;
+          }
+        }), catchError(error => {
+          return error;
+        }));
+  }
+
+  updateEmployee(update: UpdateEmployee){
+      console.log(update);
+    return this.http.post<any>(`${this.URL}/employee/update`, update);
+  }
 
 }

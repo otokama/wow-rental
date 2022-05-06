@@ -37,6 +37,7 @@ import { EmpReservationComponent } from './employee/emp-reservation/emp-reservat
 import { EmpRegisterCustomerComponent } from './employee/emp-register-customer/emp-register-customer.component';
 import { EditDialogComponent } from './employee/edit-dialog/edit-dialog.component';
 import { DeleteDialogComponent } from './employee/delete-dialog/delete-dialog.component';
+import { AddDialogComponent } from './employee/add-dialog/add-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +61,8 @@ import { DeleteDialogComponent } from './employee/delete-dialog/delete-dialog.co
     EmpReservationComponent,
     EmpRegisterCustomerComponent,
     EditDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    AddDialogComponent
   ],
     imports: [
         BrowserModule,

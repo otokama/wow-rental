@@ -38,3 +38,16 @@
     color: #00a800;
     transition: 0.2s;
 }
+.fab-container{
+    position: fixed;
+    bottom: 72px;
+    right: 23px;
+    z-index: 100;
+}
+.button{
+    background-color:  #00a800 ;
+    color: white;
+    width: 70px;
+    height: 40px;
+    cursor: pointer;
+}

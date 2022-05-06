@@ -1,11 +1,11 @@
 import { Role } from './role';
 
-export class User {
+export interface User {
   email: string;
   firstName: string;
   lastName: string;
-  employeeID: string;
-  customerID: string;
+  employeeId: string;
+  customerId: string;
   role: Role;
   token?: string;
   corporate?: boolean;

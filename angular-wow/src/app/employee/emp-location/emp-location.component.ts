@@ -31,11 +31,7 @@ export class EmpLocationComponent implements OnInit {
     );
   }
 
-  addLocation() {
-      console.log('adding new location');
-  }
-
-
+  // TODO: add pop up dialog for update and delete locations.
   updateLocation(location) {
       console.log(location);
   }
