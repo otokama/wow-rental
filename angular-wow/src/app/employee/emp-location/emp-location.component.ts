@@ -15,23 +15,25 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
         ]),
     ],
 })
-export class EmpLocationComponent implements OnInit {
+
+export class EmpLocationComponent  {
   locations: BranchLocation[];
   displayColumns: string[] = ['Branch Name', 'Street', 'City', 'State', 'Phone'];
   namingColumns: string[] = ['locationName', 'street', 'city', 'state', 'phoneNumber'];
   expandedElement: BranchLocation | null;
-  constructor(private locationService: LocationService) { }
-
-  ngOnInit(): void {
-    this.locationService.getAllBranchLocation().subscribe(
-        locations => {
-          this.locations = locations;
-          console.log('got locations: ', this.locations.length);
-        }, error => {console.log('cannot load branch locations');}
-    );
+  constructor(private locationService: LocationService) {
+      this.fetchLocation();
   }
 
-  // TODO: add pop up dialog for update and delete locations.
+  fetchLocation() {
+      this.locationService.getAllBranchLocation().subscribe(
+          locations => {
+              this.locations = locations;
+              console.log('got locations: ', this.locations.length);
+          }, error => {console.log('cannot load branch locations');}
+      );
+  }
+
   updateLocation(location) {
       console.log(location);
   }

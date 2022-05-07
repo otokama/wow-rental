@@ -39,6 +39,7 @@ import { EditDialogComponent } from './employee/edit-dialog/edit-dialog.componen
 import { DeleteDialogComponent } from './employee/delete-dialog/delete-dialog.component';
 import { AddDialogComponent } from './employee/add-dialog/add-dialog.component';
 import { EmpVehicleClassComponent } from './employee/emp-vehicle-class/emp-vehicle-class.component';
+import { ConfirmDeleteComponent } from './employee/emp-location/confirm-delete/confirm-delete.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +65,8 @@ import { EmpVehicleClassComponent } from './employee/emp-vehicle-class/emp-vehic
     EditDialogComponent,
     DeleteDialogComponent,
     AddDialogComponent,
-    EmpVehicleClassComponent
+    EmpVehicleClassComponent,
+    ConfirmDeleteComponent
   ],
     imports: [
         BrowserModule,

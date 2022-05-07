@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {NotificationService} from '../../_services/notification.service';
 import {UserService} from '../../_services/user.service';
 import {LocationService} from "../../_services/location.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -24,7 +25,7 @@ export class AddDialogComponent {
   states = [];
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>, @Inject(MAT_DIALOG_DATA) data,
               private notif: NotificationService, private formBuilder: FormBuilder, private userService: UserService,
-              private locationService: LocationService) {
+              private locationService: LocationService, private router: Router,) {
     if (data.form === 0) {
       this.form = 0;
       this.initCompanyForm();
@@ -128,7 +129,7 @@ export class AddDialogComponent {
           data => {
             if (data) {
               this.notif.showNotif('Added new location', 'Dismiss');
-              this.dialogRef.close();
+              this.dialogRef.close(data);
             }
           }, error => {this.notif.showNotif(error, 'error')}
       );

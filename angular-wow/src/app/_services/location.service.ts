@@ -26,7 +26,7 @@ export class LocationService {
 
     addLocation(location) {
         console.log(location);
-        return this.http.post(`${this.URL}/vehicle/locations/add`, location);
+        return this.http.post(`${this.URL}/vehicle/add/location`, location);
     }
 
 
