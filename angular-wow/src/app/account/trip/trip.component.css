@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+    min-width: 190px;
 }
 .divider{
     margin-right: 20px;
@@ -30,6 +31,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
 }
 .trip-card{
     display: flex;
@@ -57,7 +59,9 @@
     font-weight: bolder;
     font-size: 17px;
 }
-
+.selected-sidenav-item{
+    color: #00a800;
+}
 .sidenav-item{
     height: 40px;
     margin-top: 20px;

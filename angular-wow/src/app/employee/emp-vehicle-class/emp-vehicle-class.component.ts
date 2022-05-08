@@ -18,7 +18,7 @@ import {NotificationService} from '../../_services/notification.service';
 })
 export class EmpVehicleClassComponent {
   vehicleClass: VehicleType[];
-  displayColumns: string[] = ['Vehicle Type', 'Service Rate', 'Excess Mileage Fee'];
+  displayColumns: string[] = ['Vehicle Type', 'Service Rate($)', 'Excess Mileage Fee($)'];
   namingColumns: string[] = ['vehicleType', 'serviceRate', 'excessMileageFee'];
   expandedElement: VehicleType | null;
   constructor(private vehicleService: VehicleService, private notif: NotificationService) {

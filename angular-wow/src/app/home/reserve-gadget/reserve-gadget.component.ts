@@ -9,6 +9,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {SelectLocationComponent} from './select-location/select-location.component';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {BranchLocation} from '../../_models/branch';
 
 @Component({
   selector: 'app-reserve-gadget',
@@ -24,6 +25,8 @@ export class ReserveGadgetComponent implements OnInit {
 
   pickUpLoc: number | null;
   dropOffLoc: number | null;
+  pickUpLocObj: BranchLocation | null;
+  dropOffLocObj: BranchLocation | null;
   pickUpDate: Date | null;
   dropOffDate: Date | null;
   minDate: Date;
@@ -49,10 +52,6 @@ export class ReserveGadgetComponent implements OnInit {
     this.minDropOffDate = new Date((new Date().getTime()));
   }
 
-  private displayBranchName(key: number): string {
-    return this.reserveService.getBranchName(key);
-  }
-
   openLocSelectorPickup() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = false;
@@ -61,9 +60,11 @@ export class ReserveGadgetComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectLocationComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.pickUpLoc = result.locationID;
+        this.pickUpLoc = result.location.locationId;
+        this.pickUpLocObj = result.location;
         if (result.sameLoc) {
           this.dropOffLoc = this.pickUpLoc;
+          this.dropOffLocObj = result.location;
         }
       }
     }, error => {console.log(error); } );
@@ -77,7 +78,8 @@ export class ReserveGadgetComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectLocationComponent, dialogConfigDropOff);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dropOffLoc = result.locationID;
+        this.dropOffLoc = result.location.locationId;
+        this.dropOffLocObj = result.location;
       }
     }, error => {console.log(error); } );
   }

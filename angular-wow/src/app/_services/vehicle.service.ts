@@ -9,16 +9,22 @@ export class VehicleService {
     constructor(private http: HttpClient) {}
 
     getAllVehicleClass() {
-        return this.http.get<any>(`${this.URL}/vehicle/types`).pipe(map(res => {
+        return this.http.get<any>(`${this.URL}/vehicle/get/types`).pipe(map(res => {
             if (res.message === 'Success') {
                 return res.data;
             }
         }));
     }
 
-    addVehicleClass(){}
+    addVehicleClass(vehicleTye){
+        return this.http.post(`${this.URL}/vehicle/add/type`, vehicleTye);
+    }
 
-    updateVehicleClass(){}
+    updateVehicleClass(vehicleType){
+        return this.http.post(`${this.URL}/vehicle/update/type`, vehicleType);
+    }
 
-    deleteVehicleClass(){}
+    deleteVehicleClass(vehicleTypeId){
+        return this.http.delete(`${this.URL}/vehicle/delete/type?vehicleTypeId=${vehicleTypeId}`);
+    }
 }

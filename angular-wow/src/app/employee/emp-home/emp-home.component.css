@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+    min-width: 190px;
 }
 .divider{
     margin-right: 20px;
@@ -27,7 +28,9 @@
     margin-bottom: 100px;
     align-items: center;
 }
-
+.selected-sidenav-item{
+    color: #00a800;
+}
 .sidenav-item{
     height: 40px;
     margin-top: 20px;

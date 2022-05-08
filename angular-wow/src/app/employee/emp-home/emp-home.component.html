@@ -3,15 +3,22 @@
         <h4 *ngIf="isManager">Manager Dashboard</h4>
         <h4 *ngIf="!isManager">Employee Dashboard</h4>
         <mat-divider></mat-divider>
-        <div class="sidenav-item" (click)="switchPage(0)">Branch Location</div>
-
-        <div class="sidenav-item" (click)="switchPage(1)">Corporate</div>
-        <div class="sidenav-item" (click)="switchPage(2)">Corporate Customer</div>
-        <div class="sidenav-item" (click)="switchPage(3)">Coupon</div>
-        <div class="sidenav-item" (click)="switchPage(4)">Reservation & Order</div>
-        <div class="sidenav-item" (click)="switchPage(5)">Vehicle</div>
-        <div class="sidenav-item" (click)="switchPage(6)">Vehicle Class</div>
-        <div class="sidenav-item" (click)="switchPage(7)" *ngIf="isManager">Employee Management</div>
+        <div *ngIf="page !== 0" class="sidenav-item" (click)="switchPage(0)">Branch Location</div>
+        <div *ngIf="page === 0" class="sidenav-item selected-sidenav-item" (click)="switchPage(0)">Branch Location</div>
+        <div *ngIf="page !== 1" class="sidenav-item" (click)="switchPage(1)">Corporate</div>
+        <div *ngIf="page === 1" class="sidenav-item selected-sidenav-item" (click)="switchPage(1)">Corporate</div>
+        <div  *ngIf="page !== 2"class="sidenav-item" (click)="switchPage(2)">Corporate Customer</div>
+        <div  *ngIf="page === 2"class="sidenav-item selected-sidenav-item" (click)="switchPage(2)">Corporate Customer</div>
+        <div  *ngIf="page !== 3"class="sidenav-item" (click)="switchPage(3)">Coupon</div>
+        <div  *ngIf="page === 3"class="sidenav-item selected-sidenav-item" (click)="switchPage(3)">Coupon</div>
+        <div  *ngIf="page !== 4"class="sidenav-item" (click)="switchPage(4)">Reservation & Order</div>
+        <div  *ngIf="page === 4"class="sidenav-item selected-sidenav-item" (click)="switchPage(4)">Reservation & Order</div>
+        <div  *ngIf="page !== 5"class="sidenav-item" (click)="switchPage(5)">Vehicle</div>
+        <div  *ngIf="page === 5"class="sidenav-item selected-sidenav-item" (click)="switchPage(5)">Vehicle</div>
+        <div  *ngIf="page !== 6"class="sidenav-item" (click)="switchPage(6)">Vehicle Class</div>
+        <div  *ngIf="page === 6"class="sidenav-item selected-sidenav-item" (click)="switchPage(6)">Vehicle Class</div>
+        <div  class="sidenav-item" (click)="switchPage(7)" *ngIf="isManager && page !== 7">Employee Management</div>
+        <div  class="sidenav-item selected-sidenav-item" (click)="switchPage(7)" *ngIf="isManager && page === 7">Employee Management</div>
     </div>
 
     <mat-divider class="divider" vertical></mat-divider>

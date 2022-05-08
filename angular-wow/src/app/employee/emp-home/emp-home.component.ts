@@ -5,6 +5,7 @@ import {Role} from '../../_models/role';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddDialogComponent} from '../add-dialog/add-dialog.component';
 import {EmpLocationComponent} from '../emp-location/emp-location.component';
+import {EmpVehicleClassComponent} from '../emp-vehicle-class/emp-vehicle-class.component';
 
 @Component({
   selector: 'app-emp-home',
@@ -15,7 +16,7 @@ export class EmpHomeComponent implements OnInit {
   currentUser: User;
   page: number;
   @ViewChild(EmpLocationComponent, { static: false }) LocationComponent: EmpLocationComponent;
-
+  @ViewChild(EmpVehicleClassComponent, {static: false}) VehicleClassComponent: EmpVehicleClassComponent;
   constructor(public dialog: MatDialog, private authService: AuthService) {
     this.currentUser = this.authService.currentUserValue;
     this.page = 0;
@@ -63,7 +64,11 @@ export class EmpHomeComponent implements OnInit {
     } else if (this.page === 6) { // vehicle class
       dialogConfig.data = {form: 6};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
-
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.VehicleClassComponent.fetchVehicleClass();
+        }
+      })
     } else if (this.page === 7) { // employee
       dialogConfig.data = {form: 5};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);

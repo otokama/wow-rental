@@ -2,9 +2,10 @@
     <div class="sidenav">
         <h4>Account Dashboard</h4>
         <mat-divider></mat-divider>
-        <div class="sidenav-item" (click)="switchPage(0)">Account Information</div>
-        <div class="sidenav-item" (click)="switchPage(1)">Login Credentials</div>
-
+        <div *ngIf="page!==0" class="sidenav-item" (click)="switchPage(0)">Account Information</div>
+        <div *ngIf="page===0" class="sidenav-item selected-sidenav-item" (click)="switchPage(0)">Account Information</div>
+        <div *ngIf="page!==1" class="sidenav-item" (click)="switchPage(1)">Login Credentials</div>
+        <div *ngIf="page===1" class="sidenav-item selected-sidenav-item" (click)="switchPage(1)">Login Credentials</div>
     </div>
 
     <mat-divider class="divider" vertical></mat-divider>

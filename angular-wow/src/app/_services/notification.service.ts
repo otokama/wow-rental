@@ -12,6 +12,7 @@ export class NotificationService {
     const config = new MatSnackBarConfig();
     config.panelClass = ['green-snackbar'];
     config.duration = 4000;
+    config.horizontalPosition = 'center';
     this.snackBar.open(message, action, config);
   }
 
@@ -23,6 +24,7 @@ export class NotificationService {
       config.panelClass = ['green-snackbar'];
     }
     config.duration = 4000;
+    config.horizontalPosition = 'center';
     this.snackBar.open(message, action, config);
   }
 

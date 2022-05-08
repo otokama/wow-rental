@@ -11,7 +11,7 @@ export class LocationService {
     }
 
     getAllBranchLocation() {
-        return this.http.get<any>(`${this.URL}/vehicle/locations`)
+        return this.http.get<any>(`${this.URL}/branch/get/locations`)
             .pipe(map(res => {
                 if (res.message === 'Success') {
                     return res.data;
@@ -20,11 +20,16 @@ export class LocationService {
     }
 
     getBranchByID(locationID) {
-        return this.http.get<any>(`${this.URL}/vehicle/location?locationId=${locationID}`)
+        return this.http.get<any>(`${this.URL}/branch/get/location?locationId=${locationID}`)
+            .pipe(map(res => {
+                if (res.message === 'Success') {
+                    return res.data;
+                }
+            }))
     }
 
     addLocation(location) {
-        return this.http.post(`${this.URL}/vehicle/add/location`, location);
+        return this.http.post(`${this.URL}/branch/add/location`, location);
     }
 
 

@@ -5,6 +5,7 @@ import {NotificationService} from '../../_services/notification.service';
 import {UserService} from '../../_services/user.service';
 import {LocationService} from "../../_services/location.service";
 import {Router} from "@angular/router";
+import {VehicleService} from "../../_services/vehicle.service";
 
 
 @Component({
@@ -25,7 +26,8 @@ export class AddDialogComponent {
   states = [];
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>, @Inject(MAT_DIALOG_DATA) data,
               private notif: NotificationService, private formBuilder: FormBuilder, private userService: UserService,
-              private locationService: LocationService, private router: Router,) {
+              private locationService: LocationService, private vehicleService: VehicleService,
+              private router: Router,) {
     if (data.form === 0) {
       this.form = 0;
       this.initCompanyForm();
@@ -57,7 +59,7 @@ export class AddDialogComponent {
   initCompanyForm() {
     this.companyForm = this.formBuilder.group({
       registrationNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.maxLength(10)]],
-      corporateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      corporateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9. ]+$'), Validators.maxLength(30)]],
       corporateDiscount: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'), Validators.max(30), Validators.min(0)]]
     })
   }
@@ -68,9 +70,9 @@ export class AddDialogComponent {
 
   initLocationForm() {
     this.locationForm = this.formBuilder.group({
-      locationName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9- ]+$'), Validators.maxLength(30)]],
+      locationName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9-. ]+$'), Validators.maxLength(30)]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      street: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      street: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9. ]+$'), Validators.maxLength(30)]],
       city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(30)]],
       state: ['', [Validators.required]],
       zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]]
@@ -156,7 +158,15 @@ export class AddDialogComponent {
           }, error => {this.notif.showNotification(error, 'Dismiss', true)}
       );
     } else if (formNumber === 6) {
-
+      if (this.vehicleClassForm.invalid){return;}
+      this.vehicleService.addVehicleClass(this.vehicleClassForm.value).subscribe(
+          data => {
+            if (data) {
+              this.notif.showNotification('Added new vehicle class', 'Dismiss', false);
+              this.dialogRef.close(data);
+            }
+          }, error => {this.notif.showNotification(error, 'Dismiss', true);}
+      )
     } else {
       console.log('unknown form');
     }

@@ -10,7 +10,7 @@
                (keypress)="enterKeyHandler($event)" required>
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayLoc" [disableRipple]="true">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option.name}}
+                {{option.locationName}}
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>

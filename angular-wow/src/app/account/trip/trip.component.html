@@ -2,9 +2,14 @@
     <div class="sidenav">
         <h4>Trips</h4>
         <mat-divider></mat-divider>
-        <div class="sidenav-item" (click)="switchPage(0)">Previous Trips</div>
-        <div class="sidenav-item" (click)="switchPage(1)">Upcoming Trips</div>
-        <div class="sidenav-item" (click)="switchPage(2)">Current Trips</div>
+        <div *ngIf="page!==0" class="sidenav-item" (click)="switchPage(0)">Previous Trips</div>
+        <div *ngIf="page===0" class="sidenav-item selected-sidenav-item" (click)="switchPage(0)">Previous Trips</div>
+
+        <div *ngIf="page!==1" class="sidenav-item" (click)="switchPage(1)">Upcoming Trips</div>
+        <div *ngIf="page===1" class="sidenav-item selected-sidenav-item" (click)="switchPage(1)">Upcoming Trips</div>
+
+        <div *ngIf="page!==2" class="sidenav-item" (click)="switchPage(2)">Current Trips</div>
+        <div *ngIf="page===2" class="sidenav-item selected-sidenav-item" (click)="switchPage(2)">Current Trips</div>
 
     </div>
 

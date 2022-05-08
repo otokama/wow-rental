@@ -18,49 +18,49 @@ export class ReserveService {
     constructor(private timeService: ReserveTimeService, private authService: AuthService) {
         this.branchLocation = [
             {
-                id: 1,
-                name: 'JFK - John F. Kennedy Intl.',
+                locationId: 1,
+                locationName: 'JFK - John F. Kennedy Intl.',
                 street: 'John F. Kennedy International Airport',
                 city: 'Jamaica',
                 state: 'New York',
                 zipcode: '11430',
-                phone: '718-244-4444'
+                phoneNumber: '718-244-4444'
             },
             {
-                id: 2,
-                name: 'SFO - San Francisco Intl.',
+                locationId: 2,
+                locationName: 'SFO - San Francisco Intl.',
                 street: 'San Francisco International Airport',
                 city: 'San Francisco',
                 state: 'California',
                 zipcode: '94128',
-                phone: '800-435-9736'
+                phoneNumber: '800-435-9736'
             },
             {
-                id: 3,
-                name: 'ORD - O\'Hare Intl.',
+                locationId: 3,
+                locationName: 'ORD - O\'Hare Intl.',
                 street: '10000 W O\'Hare Ave',
                 city: 'Chicago',
                 state: 'Illinois',
                 zipcode: '60666',
-                phone: '800-832-6352'
+                phoneNumber: '800-832-6352'
             },
             {
-                id: 4,
-                name: 'PHL - Philadelphia Intl.',
+                locationId: 4,
+                locationName: 'PHL - Philadelphia Intl.',
                 street: '8500 Essington Ave',
                 city: 'Philadelphia',
                 state: 'Pennsylvania',
                 zipcode: '19153',
-                phone: '215-937-6937'
+                phoneNumber: '215-937-6937'
             },
             {
-                id: 5,
-                name: 'DFW - Dallas-Fort Worth Intl.',
+                locationId: 5,
+                locationName: 'DFW - Dallas-Fort Worth Intl.',
                 street: '2350 Global Dr',
                 city: 'Euless',
                 state: 'Texas',
                 zipcode: '75261',
-                phone: '972-574-1234'
+                phoneNumber: '972-574-1234'
             }
         ];
 
@@ -216,7 +216,7 @@ export class ReserveService {
     getBranchByID(key: number): BranchLocation{
         let i;
         for (i = 0; i < this.branchLocation.length; ++i) {
-            if (this.branchLocation[i].id === Number(key)) {
+            if (this.branchLocation[i].locationId === Number(key)) {
                 return this.branchLocation[i];
             }
         }
@@ -226,8 +226,8 @@ export class ReserveService {
     getBranchName(key: number): string {
         let i;
         for (i = 0; i < this.branchLocation.length; ++i) {
-            if (this.branchLocation[i].id === Number(key)) {
-                return this.branchLocation[i].name;
+            if (this.branchLocation[i].locationId === Number(key)) {
+                return this.branchLocation[i].locationName;
             }
         }
         return 'No such branch ID';

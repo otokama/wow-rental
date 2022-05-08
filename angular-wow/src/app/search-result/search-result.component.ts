@@ -8,6 +8,7 @@ import { SelectLocationComponent } from '../home/reserve-gadget/select-location/
 import { Time } from '@angular/common';
 import { VehicleFilter } from '../_models/vehiclefilter';
 import { Vehicle } from '../_models/vehicle';
+import {LocationService} from "../_services/location.service";
 
 @Component({
   selector: 'app-search-result',
@@ -38,8 +39,15 @@ export class SearchResultComponent implements OnInit {
   reserveDuration: number;
   constructor(private route: ActivatedRoute, private router: Router, private timeService: ReserveTimeService,
               private reserveService: ReserveService, private dialog: MatDialog,
-              private notif: NotificationService) {
+              private notif: NotificationService, private locationService: LocationService) {
     this.sortOrder = 2;
+    this.sort = [
+      'Sort by price - High to Low','Sort by price - Low to High'
+    ];
+    this.timeOptions = this.timeService.getTimeOptions();
+    this.minDate = new Date((new Date().getTime()));
+    this.maxDate = new Date();
+    this.maxDate.setMonth(this.minDate.getMonth() + 3);
   }
 
   ngOnInit(): void {
@@ -50,15 +58,8 @@ export class SearchResultComponent implements OnInit {
       this.pickUpDate = new Date(params.pickUpDate);
       this.dropOffDate = new Date(params.dropOffDate);
       this.minDropOffDate = this.pickUpDate;
-      this.minDate = new Date((new Date().getTime()));
-      this.maxDate = new Date();
-      this.maxDate.setMonth(this.minDate.getMonth() + 3);
       this.pickUpTime = {hours: this.pickUpDate.getHours(), minutes: this.pickUpDate.getMinutes()};
       this.dropOffTime = {hours: this.dropOffDate.getHours(), minutes: this.dropOffDate.getMinutes()};
-      this.timeOptions = this.timeService.getTimeOptions();
-      this.sort = [
-        'Sort by price - High to Low','Sort by price - Low to High'
-      ];
       this.search();
     })
     if (!this.pickUpLoc || !this.pickUpDate
@@ -69,8 +70,23 @@ export class SearchResultComponent implements OnInit {
 
   initBranchName() {
     if (this.pickUpLoc && this.dropOffLoc) {
-      this.pickupBranch = this.reserveService.getBranchName((this.pickUpLoc));
-      this.dropOffBranch = this.reserveService.getBranchName(this.dropOffLoc);
+      this.locationService.getBranchByID(this.pickUpLoc).subscribe(
+          pickupLoc => {
+            if (pickupLoc) {
+              this.pickupBranch = pickupLoc.locationName;
+            }
+          }, error => {this.notif.showNotification('Cannot fetch locations.', 'Dismiss', true);}
+      );
+      this.locationService.getBranchByID(this.dropOffLoc).subscribe(
+          dropOffLoc => {
+            if (dropOffLoc) {
+              this.dropOffBranch = dropOffLoc.locationName;
+            }
+          }, error => {this.notif.showNotification('Cannot fetch locations.', 'Dismiss', true);}
+      );
+      // console.log(this.pickUpLoc, this.dropOffLoc);
+      // this.pickupBranch = this.reserveService.getBranchName((this.pickUpLoc));
+      // this.dropOffBranch = this.reserveService.getBranchName(this.dropOffLoc);
     }
   }
 
@@ -120,14 +136,16 @@ export class SearchResultComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectLocationComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result && pickup) {
-        this.pickUpLoc = result.locationID;
+        this.pickUpLoc = result.location.locationId;
+        this.pickupBranch = result.location.locationName;
         if (result.sameLoc) {
           this.dropOffLoc = this.pickUpLoc;
+          this.dropOffBranch = this.pickupBranch;
         }
       } else if (result && !pickup) {
-        this.dropOffLoc = result.locationID;
+        this.dropOffLoc = result.location.locationId;
+        this.dropOffBranch = result.location.locationName;
       }
-      this.initBranchName();
     }, error => {console.log(error); } );
   }
 
@@ -175,6 +193,10 @@ export class SearchResultComponent implements OnInit {
         this.selectedPickUpLoc = this.pickUpLoc;
         this.selectedDropOffDate = this.dropOffDate;
         this.selectedDropOffLoc = this.dropOffLoc;
+
+        if (this.sortOrder !== 2){
+          this.sortPrice(this.sortOrder);
+        }
       }
     } else {
       this.notif.showNotif('Please fill in all fields', 'Dismiss');
