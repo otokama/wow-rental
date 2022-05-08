@@ -158,6 +158,37 @@
 </div>
 
 <div *ngIf="form === 6" class="container">
-    <h5>Add New Vehicle Class</h5>
+    <form [formGroup]="vehicleClassForm" class="form-container">
+        <h5 class="title">Add New Vehicle Class</h5>
+
+        <div class="form-title">Vehicle Type *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="vehicleType" [ngClass]="{ 'is-invalid': submitted && vehicleClassControl.vehicleType.errors }">
+            <mat-hint *ngIf="submitted && vehicleClassControl.vehicleType.errors">
+                <mat-hint *ngIf="vehicleClassControl.vehicleType.errors.required" class="hint">Vehicle type is required</mat-hint>
+                <mat-hint *ngIf="vehicleClassControl.vehicleType.errors.pattern" class="hint">Invalid vehicle type</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Service Rate *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="serviceRate" [ngClass]="{ 'is-invalid': submitted && vehicleClassControl.serviceRate.errors }">
+            <mat-hint *ngIf="submitted && vehicleClassControl.serviceRate.errors">
+                <mat-hint *ngIf="vehicleClassControl.serviceRate.errors.required" class="hint">Service rate is required</mat-hint>
+                <mat-hint *ngIf="vehicleClassControl.serviceRate.errors.pattern || vehicleClassControl.serviceRate.errors.min" class="hint">Invalid service rate</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Excess Mileage Fee *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="excessMileageFee" [ngClass]="{ 'is-invalid': submitted && vehicleClassControl.excessMileageFee.errors }">
+            <mat-hint *ngIf="submitted && vehicleClassControl.excessMileageFee.errors">
+                <mat-hint *ngIf="vehicleClassControl.excessMileageFee.errors.required" class="hint">Excess mileage fee is required</mat-hint>
+                <mat-hint *ngIf="vehicleClassControl.excessMileageFee.errors.pattern || vehicleClassControl.serviceRate.errors.min" class="hint">Invalid fee</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+    </form>
+    <div class="button" (click)="submit(6)">Add</div>
 </div>
 

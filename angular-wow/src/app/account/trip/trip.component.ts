@@ -3,7 +3,7 @@ import {User} from '../../_models/user';
 import {AuthService} from '../../_services/auth.service';
 import {ReserveService} from '../../_services/reserve.service';
 import {Trip} from '../../_models/trip';
-import {TripService} from "../../_services/trip.service";
+import {TripService} from '../../_services/trip.service';
 
 @Component({
   selector: 'app-trip',

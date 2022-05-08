@@ -1,5 +1,5 @@
 import {Injectable, NgZone} from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,11 +9,22 @@ export class NotificationService {
               private zone: NgZone) {}
   // TODO: change styling of snackbar: https://stackoverflow.com/questions/47901127/angular-5-material-snackbar-panelclass-config
   public showNotif(message, action, duration = 4000): void {
-    this.snackBar.open(message, action, { duration }).onAction().subscribe(() => {
-      console.log('Notififcation action performed');
-    });
+    const config = new MatSnackBarConfig();
+    config.panelClass = ['green-snackbar'];
+    config.duration = 4000;
+    this.snackBar.open(message, action, config);
   }
 
+  public showNotification(message, action, badness: boolean) {
+    const config = new MatSnackBarConfig();
+    if (badness) {
+      config.panelClass = ['red-snackbar'];
+    } else {
+      config.panelClass = ['green-snackbar'];
+    }
+    config.duration = 4000;
+    this.snackBar.open(message, action, config);
+  }
 
   public notImplementedWarning(message, duration = 4000): void {
 

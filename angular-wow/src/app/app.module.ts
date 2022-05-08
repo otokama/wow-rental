@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
-
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MaterialModule} from './material-module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -79,6 +79,7 @@ import { ConfirmDeleteComponent } from './employee/emp-location/confirm-delete/c
         MatDatepickerModule,
         MatNativeDateModule,
         MatFormFieldModule,
+        MatSnackBarModule,
         NgbModule,
         IgxAvatarModule,
         AvatarModule

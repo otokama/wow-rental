@@ -55,15 +55,15 @@ export class LoginComponent {
                       this.router.navigate(['employee/home'])
                     }
                   }
-                  this.notif.showNotif('Welcome, ' + this.authService.currentUserValue.firstName,
-                      'Dismiss');
+                  this.notif.showNotification('Welcome, ' + this.authService.currentUserValue.firstName,
+                      'Dismiss', false);
                 }
               },
               error => {
                 console.log('Error: ', error);
               });
     } else {
-      this.notif.showNotif('Please enter Email and password.', 'Dismiss');
+      this.notif.showNotification('Please enter Email and password.', 'Dismiss', true);
     }
   }
 

@@ -45,11 +45,11 @@
         </div>
         <div class="field">
             <div class="field-title">Vehicle Class: </div>
-            <div class="field-value">{{vehicle.vehicleType.typeName}}</div>
+            <div class="field-value">{{vehicle.vehicleType.vehicleType}}</div>
         </div>
         <div class="field">
             <div class="field-title">Excess mileage charge:</div>
-            <div class="field-value">{{vehicle.vehicleType.excessRate | currency}}/mi</div>
+            <div class="field-value">{{vehicle.vehicleType.excessMileageFee | currency}}/mi</div>
         </div>
         <mat-checkbox [disableRipple]="true" [(ngModel)]="unlimitedMile" class="unlimit-checkbox">
             Opt in unlimited mileage package

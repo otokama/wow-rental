@@ -1,6 +1,6 @@
-export class VehicleType {
-    typeID: number;
-    typeName: string;
+export interface VehicleType {
+    vehicleTypeId: number;
+    vehicleType: string;
     serviceRate: number;
-    excessRate: number;
+    excessMileageFee: number;
 }

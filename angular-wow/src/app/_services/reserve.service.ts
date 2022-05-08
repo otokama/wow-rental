@@ -66,40 +66,40 @@ export class ReserveService {
 
         this.vehicleTypes = [
             {
-                typeID: 1,
-                typeName: 'Sports',
+                vehicleTypeId: 1,
+                vehicleType: 'Sports',
                 serviceRate: 220,
-                excessRate: 30
+                excessMileageFee: 30
             },
             {
-                typeID: 2,
-                typeName: 'Compact',
+                vehicleTypeId: 2,
+                vehicleType: 'Compact',
                 serviceRate: 170,
-                excessRate: 13
+                excessMileageFee: 13
             },
             {
-                typeID: 3,
-                typeName: 'Mid-size',
+                vehicleTypeId: 3,
+                vehicleType: 'Mid-size',
                 serviceRate: 182,
-                excessRate: 18
+                excessMileageFee: 18
             },
             {
-                typeID: 4,
-                typeName: 'Standard',
+                vehicleTypeId: 4,
+                vehicleType: 'Standard',
                 serviceRate: 167,
-                excessRate: 14
+                excessMileageFee: 14
             },
             {
-                typeID: 5,
-                typeName: 'Full-size',
+                vehicleTypeId: 5,
+                vehicleType: 'Full-size',
                 serviceRate: 190,
-                excessRate: 19
+                excessMileageFee: 19
             },
             {
-                typeID: 6,
-                typeName: 'SUV',
+                vehicleTypeId: 6,
+                vehicleType: 'SUV',
                 serviceRate: 199,
-                excessRate: 25
+                excessMileageFee: 25
             }
         ];
 
@@ -236,8 +236,8 @@ export class ReserveService {
     getBodyTypeName(key: number): string{
         let i;
         for (i = 0; i < this.vehicleTypes.length; ++i) {
-            if (this.vehicleTypes[i].typeID === Number(key)) {
-                return this.vehicleTypes[i].typeName;
+            if (this.vehicleTypes[i].vehicleTypeId === Number(key)) {
+                return this.vehicleTypes[i].vehicleType;
             }
         }
         return 'No such body type ID';

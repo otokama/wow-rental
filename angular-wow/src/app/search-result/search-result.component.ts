@@ -188,15 +188,15 @@ export class SearchResultComponent implements OnInit {
     if (this.vehicleReservable.length >= 1) {
       let i;
       for (i = 0; i < this.vehicleReservable.length; ++i) {
-        if( this.typeFilters.has(this.vehicleReservable[i].vehicleType.typeID) ) {
-          const filter = this.typeFilters.get(this.vehicleReservable[i].vehicleType.typeID);
+        if( this.typeFilters.has(this.vehicleReservable[i].vehicleType.vehicleTypeId) ) {
+          const filter = this.typeFilters.get(this.vehicleReservable[i].vehicleType.vehicleTypeId);
           filter.qty += 1;
-          this.typeFilters.set(this.vehicleReservable[i].vehicleType.typeID,
+          this.typeFilters.set(this.vehicleReservable[i].vehicleType.vehicleTypeId,
               filter);
         } else {
-          const filter = new VehicleFilter(this.vehicleReservable[i].vehicleType.typeID, false,
-              this.vehicleReservable[i].vehicleType.typeName, 1, this.vehicleReservable[i].vehicleType.serviceRate);
-          this.typeFilters.set(this.vehicleReservable[i].vehicleType.typeID, filter);
+          const filter = new VehicleFilter(this.vehicleReservable[i].vehicleType.vehicleTypeId, false,
+              this.vehicleReservable[i].vehicleType.vehicleType, 1, this.vehicleReservable[i].vehicleType.serviceRate);
+          this.typeFilters.set(this.vehicleReservable[i].vehicleType.vehicleTypeId, filter);
         }
       }
       this.typeFilters = new Map<number, VehicleFilter>([...this.typeFilters.entries()].sort((a, b) => {
@@ -223,7 +223,7 @@ export class SearchResultComponent implements OnInit {
       this.filteredVehicles = [];
       let i;
       for (i = 0; i < this.vehicleReservable.length; ++i) {
-        if (this.selectedFilters.indexOf(this.vehicleReservable[i].vehicleType.typeID) >= 0) {
+        if (this.selectedFilters.indexOf(this.vehicleReservable[i].vehicleType.vehicleTypeId) >= 0) {
           this.filteredVehicles.push(this.vehicleReservable[i]);
         }
       }

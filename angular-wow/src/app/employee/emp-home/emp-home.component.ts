@@ -4,7 +4,7 @@ import {User} from '../../_models/user';
 import {Role} from '../../_models/role';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddDialogComponent} from '../add-dialog/add-dialog.component';
-import {EmpLocationComponent} from "../emp-location/emp-location.component";
+import {EmpLocationComponent} from '../emp-location/emp-location.component';
 
 @Component({
   selector: 'app-emp-home',

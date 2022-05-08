@@ -3,7 +3,7 @@ import {Vehicle} from '../../_models/vehicle';
 import {VehicleType} from '../../_models/vehicleType';
 import {AuthService} from '../../_services/auth.service';
 import {NotificationService} from '../../_services/notification.service';
-import {Role} from "../../_models/role";
+import {Role} from '../../_models/role';
 
 @Component({
   selector: 'app-vehicle-item',

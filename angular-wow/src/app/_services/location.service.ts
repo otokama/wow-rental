@@ -19,13 +19,11 @@ export class LocationService {
             }))
     }
 
-    // TODO: get location by ID
-    getBranchByID(locationID: number) {
-        return this.http.get<any>(`${this.URL}/vehicle/getLocationByID/${locationID}`)
+    getBranchByID(locationID) {
+        return this.http.get<any>(`${this.URL}/vehicle/location?locationId=${locationID}`)
     }
 
     addLocation(location) {
-        console.log(location);
         return this.http.post(`${this.URL}/vehicle/add/location`, location);
     }
 

@@ -58,7 +58,7 @@ export class AddDialogComponent {
     this.companyForm = this.formBuilder.group({
       registrationNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.maxLength(10)]],
       corporateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-      corporateDiscount: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.max(30), Validators.min(0)]]
+      corporateDiscount: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'), Validators.max(30), Validators.min(0)]]
     })
   }
 
@@ -89,6 +89,10 @@ export class AddDialogComponent {
     return this.employeeForm.controls;
   }
 
+  get vehicleClassControl() {
+    return this.vehicleClassForm.controls;
+  }
+
   initCorporateCustomerForm() {
 
   }
@@ -104,7 +108,11 @@ export class AddDialogComponent {
   }
 
   initVehicleClassForm() {
-
+    this.vehicleClassForm = this.formBuilder.group({
+      vehicleType: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      serviceRate: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'), Validators.min(1)]],
+      excessMileageFee: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'), Validators.min(1)]]
+    });
   }
 
   initEmployeeForm() {
@@ -131,7 +139,7 @@ export class AddDialogComponent {
               this.notif.showNotif('Added new location', 'Dismiss');
               this.dialogRef.close(data);
             }
-          }, error => {this.notif.showNotif(error, 'error')}
+          }, error => {this.notif.showNotification(error, 'Dismiss', true)}
       );
     } else if (formNumber === 3) {
 
@@ -145,7 +153,7 @@ export class AddDialogComponent {
               this.notif.showNotif('Added new employee', 'Dismiss');
               this.dialogRef.close();
             }
-          }, error => {this.notif.showNotif(error, 'error')}
+          }, error => {this.notif.showNotification(error, 'Dismiss', true)}
       );
     } else if (formNumber === 6) {
 
