@@ -118,20 +118,6 @@ export class ReserveComponent implements OnInit {
     return this.secondaryPaymentForm.controls;
   }
 
-  validCoupon() {
-    if (this.couponCode) {
-      const discount = this.reserveService.validateCoupon(this.couponCode.toUpperCase());
-      if (discount > 0) {
-        this.couponValid = true;
-        this.discPercentage =  discount;
-        this.discAmount = discount * 0.01 * this.totalRate;
-        this.discountedRate = this.totalRate - this.discAmount;
-      } else {
-        this.notif.showNotif('Invalid coupon', 'Dismiss');
-      }
-    }
-  }
-
   validateCoupon() {
     if (this.couponCode) {
       this.couponService.validateCoupon(this.couponCode.toUpperCase()).subscribe(

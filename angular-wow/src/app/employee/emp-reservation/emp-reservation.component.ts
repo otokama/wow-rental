@@ -5,7 +5,7 @@ import {ReserveService} from "../../_services/reserve.service";
 @Component({
   selector: 'app-emp-reservation',
   templateUrl: './emp-reservation.component.html',
-  styleUrls: ['./emp-reservation.component.css'],
+  styleUrls: ['../displayTable.css'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -15,8 +15,25 @@ import {ReserveService} from "../../_services/reserve.service";
   ]
 })
 export class EmpReservationComponent {
+  reservations;
+  displayColumns: string[] = ['Pick-up Location', 'Drop-Off Location', 'Vehicle Class', 'Vehicle Brand', 'Vehicle Model',
+    'Customer Firstname', 'Customer Lastname', 'Status'];
+  namingColumns: string[] = ['pickUpLoc', 'dropOffLoc', 'vehicleType', 'make', 'model', 'firstName', 'lastName', 'status'];
+  expandedElement: any | null;
+  constructor(private reserveService: ReserveService, private notif: NotificationService) {
+    this.fetchReservation();
+  }
 
-  constructor(private reserveService: ReserveService) { }
+  fetchReservation() {
+    this.reserveService.getAllReservationCustomer().subscribe(
+      reservations => {
+        this.reservations = reservations;
+      }, error => {this.notif.showNotification('Cannot fetch reservations', 'Dismiss', true);}
+    );
+  }
 
+  updateReservation(reservation) {
+    console.log(reservation);
+  }
 
 }

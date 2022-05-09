@@ -5,6 +5,7 @@ import {Vehicle} from '../_models/vehicle';
 import {VehicleType} from '../_models/vehicleType';
 import { VehicleFilter } from '../_models/vehiclefilter';
 import {Coupon} from '../_models/coupon';
+import {ReservationStatus} from "../_models/reservationStatus";
 import {ReserveTimeService} from './reserve-time.service';
 import {RentalService} from '../_models/rentalService';
 import {AuthService} from './auth.service';
@@ -238,10 +239,52 @@ export class ReserveService {
         return -1;
     }
 
+    private processReservations(services) {
+        const processedServices = [];
+        let i;
+        for (i = 0; i < services.length; ++i) {
+            let reservationStatus;
+            if (services[i].endOdometer && services[i].startOdometer) {
+                reservationStatus = ReservationStatus.dropOff;
+            } else if (services[i].startOdometer && !services[i].endOdometer) {
+                reservationStatus = ReservationStatus.pickedUp;
+            } else if (!services[i].startOdometer && !services[i].endOdometer) {
+                reservationStatus = ReservationStatus.pendingPickUp;
+            } else {
+                console.log('status exception');
+            }
+            const service = {
+                reservationId: services[i].reservationId,
+                pickUpDate: new Date(services[i].pickupDate),
+                dropOffDate: new Date(services[i].dropOffDate),
+                pickUpLoc: services[i].pickupLocation.locationName,
+                dropOffLoc: services[i].dropOffLocation.locationName,
+                startOdo: services[i].startOdometer,
+                endOdo: services[i].endOdometer,
+                dailyMileageLimit: services[i].dailyMileageLimit,
+                customerId: services[i].customer.id,
+                firstName: services[i].customer.firstName,
+                lastName: services[i].customer.lastName,
+                insuranceCompany: services[i].customer.insuranceCompany,
+                vehicleId: services[i].vehicle.vehicleId,
+                make: services[i].vehicle.brand,
+                model: services[i].vehicle.model,
+                vehicleType: services[i].vehicle.vehicleType.vehicleType,
+                serviceRate: services[i].vehicle.vehicleType.serviceRate,
+                excessMileageFee: services[i].vehicle.vehicleType.excessMileageFee,
+                status: reservationStatus
+                };
+            processedServices.push(service);
+        }
+        return processedServices;
+    }
+
     getAllReservationCustomer() {
         return this.http.get<any>(`${this.URL}/reservation/get/reservations`).pipe(map(res => {
             if (res.message === 'Success') {
-                return res.data;
+                if (res.data) {
+                    return this.processReservations(res.data);
+                }
             }
         }));
     }
