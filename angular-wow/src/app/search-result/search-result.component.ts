@@ -107,8 +107,8 @@ export class SearchResultComponent implements OnInit {
   private sortVehicle(desc: boolean) {
     if (desc) { // sort by high to low
       this.filteredVehicles = this.filteredVehicles.sort((v1, v2) => {
-        if (this.vehicleTypes.get(v1.vehicleTypeId).serviceRate * this.reserveDuration >
-              this.vehicleTypes.get(v2.vehicleTypeId).serviceRate * this.reserveDuration) {
+        if (v1.vehicleType.serviceRate * this.reserveDuration >
+              v2.vehicleType.serviceRate * this.reserveDuration) {
           return -1;
         } else {
           return 1;
@@ -117,8 +117,8 @@ export class SearchResultComponent implements OnInit {
       );
     } else {
       this.filteredVehicles = this.filteredVehicles.sort((v1, v2) => {
-            if (this.vehicleTypes.get(v1.vehicleTypeId).serviceRate * this.reserveDuration >
-                  this.vehicleTypes.get(v2.vehicleTypeId).serviceRate * this.reserveDuration) {
+            if (v1.vehicleType.serviceRate * this.reserveDuration >
+                  v2.vehicleType.serviceRate * this.reserveDuration) {
               return 1;
             } else {
               return -1;
@@ -181,11 +181,6 @@ export class SearchResultComponent implements OnInit {
         && this.timeService.compareTime(this.dropOffTime, this.pickUpTime) < 0) {
         this.notif.showNotif('Invalid time or date', 'Dismiss');
       } else {
-        this.filteredVehicles = [];
-        this.vehicleReservable = this.reserveService.getVehicleReservable(null, this.pickUpDate, this.dropOffDate,
-            this.pickUpLoc, this.dropOffLoc);
-        this.filteredVehicles = this.vehicleReservable;
-        this.initVehicleFilters();
 
         // set reserveDuration:
         this.pickUpDate.setHours(this.pickUpTime.hours);
@@ -198,6 +193,23 @@ export class SearchResultComponent implements OnInit {
         this.selectedPickUpLoc = this.pickUpLoc;
         this.selectedDropOffDate = this.dropOffDate;
         this.selectedDropOffLoc = this.dropOffLoc;
+
+        this.filteredVehicles = [];
+        // this.vehicleReservable = this.reserveService.getVehicleReservable(null, this.pickUpDate, this.dropOffDate,
+        //     this.pickUpLoc, this.dropOffLoc);
+        // this.filteredVehicles = this.vehicleReservable;
+        // this.initVehicleFilters();
+
+        this.vehicleService.getVehicleByLocation(this.pickUpLoc).subscribe(
+            vehicles => {
+              if (vehicles) {
+                this.vehicleReservable = vehicles;
+                this.filteredVehicles = this.vehicleReservable;
+                this.initVehicleFilters();
+              }
+            }
+        )
+
 
         if (this.sortOrder !== 2){
           this.sortPrice(this.sortOrder);
@@ -224,16 +236,16 @@ export class SearchResultComponent implements OnInit {
             if (this.vehicleReservable.length >= 1) {
               let j;
               for (j = 0; j < this.vehicleReservable.length; ++j) {
-                if( this.typeFilters.has(this.vehicleReservable[j].vehicleTypeId) ) {
-                  const filter = this.typeFilters.get(this.vehicleReservable[j].vehicleTypeId);
+                if( this.typeFilters.has(this.vehicleReservable[j].vehicleType.vehicleTypeId) ) {
+                  const filter = this.typeFilters.get(this.vehicleReservable[j].vehicleType.vehicleTypeId);
                   filter.qty += 1;
-                  this.typeFilters.set(this.vehicleReservable[j].vehicleTypeId,
+                  this.typeFilters.set(this.vehicleReservable[j].vehicleType.vehicleTypeId,
                       filter);
                 } else {
-                  const filter = new VehicleFilter(this.vehicleReservable[j].vehicleTypeId, false,
-                      this.vehicleTypes.get(this.vehicleReservable[j].vehicleTypeId).vehicleType, 1,
-                      this.vehicleTypes.get(this.vehicleReservable[j].vehicleTypeId).serviceRate);
-                  this.typeFilters.set(this.vehicleReservable[j].vehicleTypeId, filter);
+                  const filter = new VehicleFilter(this.vehicleReservable[j].vehicleType.vehicleTypeId, false,
+                      this.vehicleTypes.get(this.vehicleReservable[j].vehicleType.vehicleTypeId).vehicleType, 1,
+                      this.vehicleTypes.get(this.vehicleReservable[j].vehicleType.vehicleTypeId).serviceRate);
+                  this.typeFilters.set(this.vehicleReservable[j].vehicleType.vehicleTypeId, filter);
                 }
               }
               this.typeFilters = new Map<string, VehicleFilter>([...this.typeFilters.entries()].sort((a, b) => {
@@ -263,7 +275,7 @@ export class SearchResultComponent implements OnInit {
       this.filteredVehicles = [];
       let i;
       for (i = 0; i < this.vehicleReservable.length; ++i) {
-        if (this.selectedFilters.indexOf(this.vehicleReservable[i].vehicleTypeId) >= 0) {
+        if (this.selectedFilters.indexOf(this.vehicleReservable[i].vehicleType.vehicleTypeId) >= 0) {
           this.filteredVehicles.push(this.vehicleReservable[i]);
         }
       }
@@ -280,9 +292,9 @@ export class SearchResultComponent implements OnInit {
   reserve(vehicle: Vehicle) {
     // redirect to reserve page
     this.router.navigate(['/reserve'], {queryParams: {
-      pickUpLoc: Number(this.selectedPickUpLoc),
+      pickUpLoc: this.selectedPickUpLoc,
       pickUpDate: this.selectedPickUpDate,
-      dropOffLoc: Number(this.selectedDropOffLoc),
+      dropOffLoc: this.selectedDropOffLoc,
       dropOffDate: this.selectedDropOffDate,
       vehicleDetail: vehicle.vehicleId
     }

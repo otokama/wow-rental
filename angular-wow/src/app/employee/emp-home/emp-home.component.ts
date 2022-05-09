@@ -12,6 +12,7 @@ import {LocationService} from "../../_services/location.service";
 import {VehicleService} from "../../_services/vehicle.service";
 import {NotificationService} from "../../_services/notification.service";
 import {EmpVehicleComponent} from "../emp-vehicle/emp-vehicle.component";
+import {EmpCompanyComponent} from "../emp-company/emp-company.component";
 
 @Component({
   selector: 'app-emp-home',
@@ -23,6 +24,7 @@ export class EmpHomeComponent implements OnInit {
   page: number;
   vehicleType: VehicleType[];
   branchLocations: BranchLocation[];
+  @ViewChild(EmpCompanyComponent, {static: false }) CompanyComponent: EmpCompanyComponent;
   @ViewChild(EmpLocationComponent, { static: false }) LocationComponent: EmpLocationComponent;
   @ViewChild(EmpVehicleClassComponent, {static: false}) VehicleClassComponent: EmpVehicleClassComponent;
   @ViewChild(EmpVehicleComponent, {static: false}) VehicleComponent: EmpVehicleComponent;
@@ -69,10 +71,15 @@ export class EmpHomeComponent implements OnInit {
         if (result) {
           this.LocationComponent.fetchLocation();
         }
-      })
+      });
     } else if (this.page === 1) { // company
       dialogConfig.data = {form: 0};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.CompanyComponent.fetchCompany();
+        }
+      });
     } else if (this.page === 2) { // corporate customer
       dialogConfig.data = {form: 3};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
@@ -97,7 +104,7 @@ export class EmpHomeComponent implements OnInit {
         if (result) {
           this.VehicleComponent.fetchVehicle();
         }
-      })
+      });
     } else if (this.page === 6) { // vehicle class
       dialogConfig.data = {form: 6};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
@@ -105,7 +112,7 @@ export class EmpHomeComponent implements OnInit {
         if (result) {
           this.VehicleClassComponent.fetchVehicleClass();
         }
-      })
+      });
     } else if (this.page === 7) { // employee
       dialogConfig.data = {form: 5};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);

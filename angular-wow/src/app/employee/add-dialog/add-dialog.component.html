@@ -35,7 +35,48 @@
 </div>
 
 <div *ngIf="form === 1" class="container">
-    <h5>Add New Coupon</h5>
+    <form [formGroup]="couponForm" class="form-container">
+        <h5 class="title">Add New Coupon</h5>
+
+        <div class="form-title">Coupon Code *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="couponCode" >
+            <mat-hint *ngIf="submitted && couponControl.couponCode.errors">
+                <mat-hint *ngIf="couponControl.couponCode.errors.required" class="hint">Coupon code is required</mat-hint>
+                <mat-hint *ngIf="couponControl.couponCode.errors.pattern" class="hint">Invalid code</mat-hint>
+                <mat-hint *ngIf="couponControl.couponCode.errors.maxlength" class="hint">Code exceeds 30 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Discount Percentage (%)*</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="discountPercentage" >
+            <mat-hint *ngIf="submitted && couponControl.discountPercentage.errors">
+                <mat-hint *ngIf="couponControl.discountPercentage.errors.required" class="hint">Discount is required</mat-hint>
+                <mat-hint *ngIf="couponControl.discountPercentage.errors.pattern || couponControl.discountPercentage.errors.min"
+                          class="hint">Invalid discount</mat-hint>
+                <mat-hint *ngIf="couponControl.discountPercentage.errors.max" class="hint">30% discount maximum</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Valid Date *</div>
+        <mat-form-field appearance="outline" class="date-picker">
+            <input class="date-field" matInput [matDatepicker]="dp1"  [min]="minDate" (dateChange)="dateChange($event, true)"
+                     disabled>
+            <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+            <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+        <div class="form-title">Expire Date *</div>
+        <mat-form-field appearance="outline" class="date-picker">
+            <input class="date-field" matInput  [matDatepicker]="dp2"  [min]="minDate" (dateChange)="dateChange($event, false)"
+                   [(ngModel)]="expireDate" disabled>
+            <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+            <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+    </form>
+    <div class="button" (click)="submit(1)">Add</div>
 </div>
 
 <div *ngIf="form === 2"  [formGroup]="locationForm" class="container">
@@ -102,7 +143,11 @@
 </div>
 
 <div *ngIf="form === 3" class="container">
-    <h5>Add New Corporate Customer</h5>
+    <form [formGroup]="corporateCustomerRegisterForm" class="form-container">
+        <h5 class="title">Add New Corporate Customer</h5>
+
+    </form>
+
 </div>
 
 <div *ngIf="form === 4" class="container">

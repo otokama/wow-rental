@@ -9,6 +9,12 @@ import {VehicleService} from '../../_services/vehicle.service';
 import {BranchLocation} from "../../_models/branch";
 import {VehicleType} from "../../_models/vehicleType";
 import {error} from "protractor";
+import {CorporateService} from "../../_services/corporate.service";
+import {Company} from "../../_models/company";
+import {MatDatepickerInputEvent} from "@angular/material/datepicker";
+import {CouponService} from "../../_services/coupon.service";
+import {ReserveTimeService} from "../../_services/reserve-time.service";
+import {formatDate} from "@angular/common";
 
 
 @Component({
@@ -24,15 +30,20 @@ export class AddDialogComponent {
   corporateCustomerRegisterForm: FormGroup;
   vehicleForm: FormGroup;
   vehicleClassForm: FormGroup;
+  company: Company[];
   branchLocations: BranchLocation[];
   vehicleClass: VehicleType[];
   form: number;
   submitted: boolean;
   states = [];
+  validDate: Date | null;
+  minDate: Date | null;
+  minValidDate: Date | null;
+  expireDate: Date | null;
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>, @Inject(MAT_DIALOG_DATA) data,
               private notif: NotificationService, private formBuilder: FormBuilder, private userService: UserService,
-              private locationService: LocationService, private vehicleService: VehicleService,
-              private router: Router,) {
+              private locationService: LocationService, private vehicleService: VehicleService, private corporateService: CorporateService,
+              private router: Router, private couponService: CouponService, private timeService: ReserveTimeService) {
     if (data.form === 0) {
       this.form = 0;
       this.initCompanyForm();
@@ -58,7 +69,16 @@ export class AddDialogComponent {
       console.log('Unknown form number');
     }
     this.states = this.userService.getStates();
+    this.minDate = new Date(new Date().getTime());
     this.submitted = false;
+  }
+
+  dateChange(event: MatDatepickerInputEvent<Date>, valid:boolean) {
+    if (valid) {
+      this.validDate = new Date(event.value);
+    } else {
+      this.expireDate = new Date(event.value);
+    }
   }
 
   initCompanyForm() {
@@ -67,11 +87,15 @@ export class AddDialogComponent {
       corporateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9. ]+$'), Validators.maxLength(30)]],
       corporateDiscount: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'),
         Validators.max(30), Validators.min(0)]]
-    })
+    });
   }
 
   initCouponForm() {
-
+    this.couponForm = this.formBuilder.group({
+      couponCode: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.maxLength(30)]],
+      discountPercentage: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'),
+        Validators.max(30), Validators.min(0)]]
+    });
   }
 
   initLocationForm() {
@@ -85,8 +109,16 @@ export class AddDialogComponent {
     });
   }
 
+  get corporateCustomerControl() {
+    return this.corporateCustomerRegisterForm.controls;
+  }
+
   get companyControl() {
     return this.companyForm.controls;
+  }
+
+  get couponControl() {
+    return this.couponForm.controls;
   }
 
   get locationControl() {
@@ -106,7 +138,16 @@ export class AddDialogComponent {
   }
 
   initCorporateCustomerForm() {
+    this.corporateService.getAllCorporate().subscribe(
+        company => {
+          if (company) {
+            this.company = company;
+          }
+        }, error => {this.notif.showNotification('Cannot fetch company', 'Dismiss', true);}
+    );
+    this.corporateCustomerRegisterForm = this.formBuilder.group({
 
+    });
   }
 
   initLocationAndVehicleTypes() {
@@ -162,9 +203,36 @@ export class AddDialogComponent {
   submit(formNumber) {
     this.submitted = true;
     if (formNumber === 0) {
-
+      if (this.companyForm.invalid) {return;}
+      this.corporateService.addCorporate(this.companyForm.value).subscribe(
+          data => {
+            if (data) {
+              this.notif.showNotif('Added new company', 'Dismiss');
+              this.dialogRef.close(data);
+            }
+          }, error => {this.notif.showNotification(error, 'Dismiss', true)}
+      );
     } else if (formNumber === 1) {
 
+      if (!this.validDate || !this.expireDate || (this.validDate > this.expireDate)) {
+        this.notif.showNotification('Please select valid and expire date', 'Dismiss', true);
+        return;
+      }
+      if (this.couponForm.invalid) {return;}
+      const coupon = {
+        couponCode: this.couponForm.value.couponCode,
+        discountPercentage: this.couponForm.value.discountPercentage,
+        startDate: formatDate(this.validDate, 'yyyy-MM-dd hh:mm', 'en-US') ,
+        expireDate: formatDate(this.expireDate, 'yyyy-MM-dd hh:mm', 'en-US')
+      };
+      this.couponService.addCoupon(coupon).subscribe(
+          data => {
+            if (data) {
+              this.notif.showNotification('Added new coupon', 'Dismiss', false);
+              this.dialogRef.close(data);
+            }
+          }, error => {this.notif.showNotification('Cannot add coupon', 'Dismiss', true);}
+      )
     } else if (formNumber === 2) {
       if (this.locationForm.invalid) {return;}
       this.locationService.addLocation(this.locationForm.value).subscribe(
@@ -178,9 +246,7 @@ export class AddDialogComponent {
     } else if (formNumber === 3) {
 
     } else if (formNumber === 4) {
-      if (this.vehicleForm.invalid) {
-        console.log(this.vehicleForm.value);
-        return;}
+      if (this.vehicleForm.invalid) {return;}
 
       this.vehicleService.addVehicle(this.vehicleForm.value).subscribe(
           data => {

@@ -41,14 +41,15 @@
         <div class="title">{{vehicle.year}} {{vehicle.brand}} {{vehicle.model}}</div>
         <div class="field">
             <div class="field-title">Vehicle Class: </div>
-            <div class="field-value">{{vehicleTypes.get(vehicle.vehicleId).vehicleType}}</div>
+            <div class="field-value">{{vehicle.vehicleType.vehicleType}}</div>
         </div>
         <div class="field">
             <div class="field-title">Excess mileage charge:</div>
-            <div class="field-value">{{vehicleTypes.get(vehicle.vehicleId).excessMileageFee | currency}}/mi</div>
+            <div class="field-value">{{vehicle.vehicleType.excessMileageFee | currency}}/mi</div>
         </div>
+        <mat-hint class="hint">Included daily mileage of 100 mi</mat-hint>
         <mat-checkbox [disableRipple]="true" [(ngModel)]="unlimitedMile" class="unlimit-checkbox">
-            Opt in unlimited mileage package
+            Opt in unlimited mileage package? ($50)
         </mat-checkbox>
 
     </div>
@@ -60,7 +61,7 @@
             <div class="field-title">Car rental fee x {{duration | number}} day</div>
             <div class="field-value">{{rentalRate | currency}}</div>
         </div>
-        <mat-hint class="hint">{{vehicleTypes.get(vehicle.vehicleId).serviceRate | currency}} per day</mat-hint>
+        <mat-hint class="hint">{{vehicle.vehicleType.serviceRate | currency}} per day</mat-hint>
         <div class="field">
             <div class="field-title">Service Fee</div>
             <div class="field-value">{{50 | currency}}</div>
@@ -110,8 +111,31 @@
                     <mat-hint *ngIf="f.cardNumber.errors.pattern" class="error-hint">Invalid card number</mat-hint>
                 </mat-hint>
             </mat-form-field>
+            <mat-checkbox [disableRipple]="true" [checked]="splitPayment" class="unlimit-checkbox">
+                Add another payment method?
+            </mat-checkbox>
+            <div class="form-title" *ngIf="splitPayment">Secondary Payment Method *</div>
+            <select class="form-select method-select" formControlName="secondPaymentMethod" *ngIf="splitPayment">
+                <option value="GIFT">Gift Card</option>
+                <option value="CREDIT">Credit Card</option>
+                <option value="DEBIT">Debit Card</option>
+            </select>
+            <mat-hint *ngIf="submitted && f.secondPaymentMethod.errors" >
+                <mat-hint *ngIf="f.secondPaymentMethod.errors.required" class="method-error-hint">Payment method is required</mat-hint>
+            </mat-hint>
 
-            <div class="form-title">Coupon Code:</div>
+            <div  class="form-title" *ngIf="splitPayment">Card Number *</div>
+            <mat-form-field appearance="outline" class="form-field" *ngIf="splitPayment">
+                <input matInput type="text" formControlName="secondCardNumber" class="form-input"
+                       [ngClass]="{'is-invalid': submitted && f.secondCardNumber.errors}" >
+                <mat-hint *ngIf="submitted && f.secondCardNumber.errors">
+                    <mat-hint *ngIf="f.secondCardNumber.errors.required" class="error-hint">Card number is required</mat-hint>
+                    <mat-hint *ngIf="f.secondCardNumber.errors.pattern" class="error-hint">Invalid card number</mat-hint>
+                </mat-hint>
+            </mat-form-field>
+
+
+            <div class="form-title">Have a coupon?</div>
             <div class="coupon-field">
                 <mat-form-field appearance="outline" class="form-field">
                     <input matInput type="text" formControlName="couponCode" class="form-input"

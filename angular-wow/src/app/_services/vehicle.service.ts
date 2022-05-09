@@ -55,6 +55,24 @@ export class VehicleService {
         }));
     }
 
+    getVehicleById(vehicleId) {
+        return this.http.get<any>(`${this.URL}/vehicle/get/vehicle/by/vehicleId?vehicleId=${vehicleId}`)
+            .pipe(map(res => {
+                if (res.message === 'Success') {
+                    return res.data;
+                }
+            }));
+    }
+
+    getVehicleByLocation(locationId) {
+        return this.http.get<any>(`${this.URL}/vehicle/get/vehicle/by/locationId?locationId=${locationId}`)
+            .pipe(map(res => {
+                if (res.message === 'Success') {
+                    return res.data;
+                }
+            }));
+    }
+
     addVehicle(vehicle) {
         return this.http.post<any>(`${this.URL}/vehicle/add/vehicle`, vehicle);
     }

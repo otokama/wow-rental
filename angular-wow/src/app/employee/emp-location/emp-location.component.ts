@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {BranchLocation} from '../../_models/branch';
 import {LocationService} from '../../_services/location.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {NotificationService} from "../../_services/notification.service";
 
 @Component({
   selector: 'app-emp-location',
@@ -21,7 +22,7 @@ export class EmpLocationComponent  {
   displayColumns: string[] = ['Branch Name', 'Street', 'City', 'State', 'Phone'];
   namingColumns: string[] = ['locationName', 'street', 'city', 'state', 'phoneNumber'];
   expandedElement: BranchLocation | null;
-  constructor(private locationService: LocationService) {
+  constructor(private locationService: LocationService, private notif: NotificationService) {
       this.fetchLocation();
   }
 
@@ -29,7 +30,7 @@ export class EmpLocationComponent  {
       this.locationService.getAllBranchLocation().subscribe(
           locations => {
               this.locations = locations;
-          }, error => {console.log('cannot load branch locations');}
+          }, error => {this.notif.showNotification('Cannot fetch branch location', 'Dismiss', true)}
       );
   }
 

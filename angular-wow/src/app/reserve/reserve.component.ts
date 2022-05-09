@@ -10,6 +10,7 @@ import {AuthService} from '../_services/auth.service';
 import {first} from 'rxjs/operators';
 import {VehicleType} from '../_models/vehicleType';
 import {VehicleService} from '../_services/vehicle.service';
+import {LocationService} from '../_services/location.service';
 
 @Component({
   selector: 'app-reserve',
@@ -35,10 +36,11 @@ export class ReserveComponent implements OnInit {
   submitted = false;
   loading = false;
   totalPayment: number;
+  splitPayment: boolean;
   vehicleTypes: Map<string, VehicleType>;
   constructor(private reserveService: ReserveService, private router: Router, private route: ActivatedRoute,
     private timeService: ReserveTimeService, private formBuilder: FormBuilder, private notif: NotificationService,
-    private authService: AuthService, private vehicleService: VehicleService) {
+    private authService: AuthService, private vehicleService: VehicleService, private locationService: LocationService) {
     this.route.queryParams.subscribe(params => {
       if (!params.pickUpLoc|| !params.pickUpDate || !params.dropOffLoc || !params.dropOffDate || !params.vehicleDetail
           || !this.authService.currentUserValue) {
@@ -50,6 +52,7 @@ export class ReserveComponent implements OnInit {
     })
     this.couponValid = false;
     this.unlimitedMile = false;
+    this.splitPayment = false;
     this.totalPayment = 1;
   }
 
@@ -57,40 +60,58 @@ export class ReserveComponent implements OnInit {
     this.initForms();
   }
 
+  // secondPayment($event) {
+  //   if(event.checked)
+  // }
+
   initFields(pickUpLoc, pickUpDate, dropOffLoc, dropOffDate, vin) {
-    this.vehicle = this.reserveService.getVehicleByVin(vin);
-    this.pickUpLoc = this.reserveService.getBranchByID(pickUpLoc);
+    this.locationService.getBranchByID(pickUpLoc).subscribe(
+        pickUpLocation => {
+          if (pickUpLocation) {
+            this.pickUpLoc = pickUpLocation;
+          }
+        }, error => {this.notif.showNotification('Cannot fetch location', 'Dismiss', true);}
+    );
     this.pickUpDate = new Date(pickUpDate);
-    this.dropOffLoc = this.reserveService.getBranchByID(dropOffLoc);
+    this.locationService.getBranchByID(dropOffLoc).subscribe(
+        dropOffLocation => {
+          if (dropOffLocation) {
+            this.dropOffLoc = dropOffLocation;
+          }
+        }, error => {this.notif.showNotification('Cannot fetch location', 'Dismiss', true);}
+    );
     this.dropOffDate = new Date(dropOffDate);
     this.duration = this.timeService.getDuration(this.pickUpDate, this.dropOffDate);
-    this.rentalRate = 0;
-    this.totalRate = this.rentalRate + 50;
-    this.initVehicleTypes();
+    this.vehicleService.getVehicleById(vin).subscribe(
+        vehicle => {
+          if (vehicle) {
+            this.vehicle = vehicle;
+            this.rentalRate = this.vehicle.vehicleType.serviceRate * this.duration;
+            this.totalRate = this.rentalRate + 50;
+          }
+        }, error => {this.notif.showNotification('Cannot fetch vehicle', 'Dismiss', true);}
+    );
   }
 
   initForms() {
-    this.reserveForm = this.formBuilder.group({
-      couponCode: ['', [Validators.pattern('^[a-zA-Z]+$')]],
-      paymentMethod: ['', [Validators.required]],
-      cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]]
-    })
+    if (this.splitPayment) {
+      this.reserveForm = this.formBuilder.group({
+        couponCode: ['', [Validators.pattern('^[a-zA-Z]+$')]],
+        paymentMethod: ['', [Validators.required]],
+        cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
+        secondPaymentMethod: ['', [Validators.required]],
+        secondCardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]]}
+      );
+    } else {
+      this.reserveForm = this.formBuilder.group({
+        couponCode: ['', [Validators.pattern('^[a-zA-Z]+$')]],
+        paymentMethod: ['', [Validators.required]],
+        cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]]
+      });
+    }
   }
 
-// Initialize all vehicle types
-  initVehicleTypes() {
-    this.vehicleTypes = new Map<string, VehicleType>();
-    this.vehicleService.getAllVehicleClass().subscribe(
-        allVehicleClass => {
-          if (allVehicleClass) {
-            let i;
-            for (i = 0; i < allVehicleClass.length(); ++i) {
-              this.vehicleTypes.set(allVehicleClass[i].vehicleTypeId, allVehicleClass[i]);
-            }
-          }
-        }, error => {this.notif.showNotification('Cannot fetch vehicle class', 'Dismiss', true);}
-    );
-  }
+
 
   get f() {
     return this.reserveForm.controls;

@@ -209,29 +209,7 @@ export class ReserveService {
 
     }
 
-    getAllBranchLocation(): BranchLocation[] {
-        return this.branchLocation;
-    }
 
-    getBranchByID(key: number): BranchLocation{
-        let i;
-        for (i = 0; i < this.branchLocation.length; ++i) {
-            if (this.branchLocation[i].locationId === Number(key)) {
-                return this.branchLocation[i];
-            }
-        }
-        return;
-    }
-
-    getBranchName(key: number): string {
-        let i;
-        for (i = 0; i < this.branchLocation.length; ++i) {
-            if (this.branchLocation[i].locationId === Number(key)) {
-                return this.branchLocation[i].locationName;
-            }
-        }
-        return 'No such branch ID';
-    }
 
 
     getVehicleReservable(carType: number[] | null, pickUpDate: Date, dropOffDate: Date,
@@ -240,15 +218,6 @@ export class ReserveService {
         return this.vehicles;
     }
 
-    // TODO: put this in vehicle service.
-    getVehicleByVin(vin: string) {
-        let i;
-        for (i = 0; i < this.vehicles.length; ++i) {
-            if (this.vehicles[i].vehicleId === vin) {
-                return this.vehicles[i];
-            }
-        }
-    }
 
     // TODO: put this in coupon service.
     validateCoupon(coupon: string): number{

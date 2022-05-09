@@ -69,4 +69,6 @@ export class ReserveTimeService {
         return this.displayHour(t.hours) + ' : ' + this.displayMin(t.minutes);
     }
 
+
+
 }

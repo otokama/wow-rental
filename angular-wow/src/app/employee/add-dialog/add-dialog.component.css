@@ -34,8 +34,13 @@
     width: 160px;
     font-size: 16px;
 }
-
-
+.date-picker{
+    font-size: 14px;
+    width: 180px;
+}
+.date-field{
+    color: black;
+}
 .button {
     background-color:  #00a800 ;
     color: white;
