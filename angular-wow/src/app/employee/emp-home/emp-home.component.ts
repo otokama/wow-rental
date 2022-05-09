@@ -6,6 +6,12 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddDialogComponent} from '../add-dialog/add-dialog.component';
 import {EmpLocationComponent} from '../emp-location/emp-location.component';
 import {EmpVehicleClassComponent} from '../emp-vehicle-class/emp-vehicle-class.component';
+import {VehicleType} from "../../_models/vehicleType";
+import {BranchLocation} from "../../_models/branch";
+import {LocationService} from "../../_services/location.service";
+import {VehicleService} from "../../_services/vehicle.service";
+import {NotificationService} from "../../_services/notification.service";
+import {EmpVehicleComponent} from "../emp-vehicle/emp-vehicle.component";
 
 @Component({
   selector: 'app-emp-home',
@@ -15,11 +21,29 @@ import {EmpVehicleClassComponent} from '../emp-vehicle-class/emp-vehicle-class.c
 export class EmpHomeComponent implements OnInit {
   currentUser: User;
   page: number;
+  vehicleType: VehicleType[];
+  branchLocations: BranchLocation[];
   @ViewChild(EmpLocationComponent, { static: false }) LocationComponent: EmpLocationComponent;
   @ViewChild(EmpVehicleClassComponent, {static: false}) VehicleClassComponent: EmpVehicleClassComponent;
-  constructor(public dialog: MatDialog, private authService: AuthService) {
+  @ViewChild(EmpVehicleComponent, {static: false}) VehicleComponent: EmpVehicleComponent;
+  constructor(public dialog: MatDialog, private authService: AuthService, private locationService: LocationService,
+              private vehicleService: VehicleService, private notif: NotificationService) {
     this.currentUser = this.authService.currentUserValue;
     this.page = 0;
+    this.locationService.getAllBranchLocation().subscribe(
+        locations => {
+          if (locations) {
+            this.branchLocations = locations;
+          }
+        }, error => {this.notif.showNotification('Cannot fetch locations', 'Dismiss', true);}
+    );
+    this.vehicleService.getAllVehicleClass().subscribe(
+        vehicleClass => {
+          if (vehicleClass) {
+            this.vehicleType = vehicleClass;
+          }
+        }, error => {this.notif.showNotification('Cannot fetch vehicle class', 'Dismiss', true);}
+    );
   }
 
   ngOnInit(): void {
@@ -58,9 +82,22 @@ export class EmpHomeComponent implements OnInit {
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
 
     } else if (this.page === 5) { // vehicle
+      if (this.branchLocations.length === 0) {
+        this.notif.showNotification('Branch location empty. At least one branch location is required.',
+            'Dismiss', true);
+        return;
+      } else if (this.vehicleType.length === 0) {
+        this.notif.showNotification('Vehicle class empty. At least one vehicle class is required.',
+            'Dismiss', true);
+        return;
+      }
       dialogConfig.data = {form: 4};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
-
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.VehicleComponent.fetchVehicle();
+        }
+      })
     } else if (this.page === 6) { // vehicle class
       dialogConfig.data = {form: 6};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);

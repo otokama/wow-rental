@@ -60,7 +60,26 @@
 
 </div>
 <div class="fab-container" *ngIf="page !== 4">
-    <button mat-flat-button color="primary" class="button" matTooltip="Add new location" matTooltipPosition="above" (click)="add()">
+    <button *ngIf="page===0" mat-flat-button color="primary" class="button" matTooltip="Add new location" matTooltipPosition="above" (click)="add()">
         <i class="material-icons">add</i>
     </button>
+    <button *ngIf="page===1" mat-flat-button color="primary" class="button" matTooltip="Add new company" matTooltipPosition="above" (click)="add()">
+        <i class="material-icons">add</i>
+    </button>
+    <button *ngIf="page===2" mat-flat-button color="primary" class="button" matTooltip="Add new corporate customer" matTooltipPosition="above" (click)="add()">
+        <i class="material-icons">add</i>
+    </button>
+    <button *ngIf="page===3" mat-flat-button color="primary" class="button" matTooltip="Add new coupon" matTooltipPosition="above" (click)="add()">
+        <i class="material-icons">add</i>
+    </button>
+    <button *ngIf="page===5" mat-flat-button color="primary" class="button" matTooltip="Add new vehicle" matTooltipPosition="above" (click)="add()">
+        <i class="material-icons">add</i>
+    </button>
+    <button *ngIf="page===6" mat-flat-button color="primary" class="button" matTooltip="Add new vehicle class" matTooltipPosition="above" (click)="add()">
+        <i class="material-icons">add</i>
+    </button>
+    <button *ngIf="page===7" mat-flat-button color="primary" class="button" matTooltip="Add new employee" matTooltipPosition="above" (click)="add()">
+        <i class="material-icons">add</i>
+    </button>
+
 </div>

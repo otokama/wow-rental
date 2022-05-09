@@ -3,9 +3,12 @@ import {Form, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {NotificationService} from '../../_services/notification.service';
 import {UserService} from '../../_services/user.service';
-import {LocationService} from "../../_services/location.service";
-import {Router} from "@angular/router";
-import {VehicleService} from "../../_services/vehicle.service";
+import {LocationService} from '../../_services/location.service';
+import {Router} from '@angular/router';
+import {VehicleService} from '../../_services/vehicle.service';
+import {BranchLocation} from "../../_models/branch";
+import {VehicleType} from "../../_models/vehicleType";
+import {error} from "protractor";
 
 
 @Component({
@@ -21,6 +24,8 @@ export class AddDialogComponent {
   corporateCustomerRegisterForm: FormGroup;
   vehicleForm: FormGroup;
   vehicleClassForm: FormGroup;
+  branchLocations: BranchLocation[];
+  vehicleClass: VehicleType[];
   form: number;
   submitted: boolean;
   states = [];
@@ -60,7 +65,8 @@ export class AddDialogComponent {
     this.companyForm = this.formBuilder.group({
       registrationNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.maxLength(10)]],
       corporateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9. ]+$'), Validators.maxLength(30)]],
-      corporateDiscount: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'), Validators.max(30), Validators.min(0)]]
+      corporateDiscount: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'),
+        Validators.max(30), Validators.min(0)]]
     })
   }
 
@@ -95,25 +101,51 @@ export class AddDialogComponent {
     return this.vehicleClassForm.controls;
   }
 
+  get vehicleControl() {
+    return this.vehicleForm.controls;
+  }
+
   initCorporateCustomerForm() {
 
   }
 
+  initLocationAndVehicleTypes() {
+    this.locationService.getAllBranchLocation().subscribe(
+        locations => {
+          if (locations) {
+            this.branchLocations = locations;
+          }
+        }, error => {this.notif.showNotification('Cannot fetch locations', 'Dismiss', true);}
+    );
+    this.vehicleService.getAllVehicleClass().subscribe(
+        vehicleClass => {
+          if (vehicleClass) {
+            this.vehicleClass = vehicleClass;
+          }
+        }, error => {this.notif.showNotification('Cannot fetch vehicle class', 'Dismiss', true);}
+    );
+  }
+
   initVehicleForm() {
-    // this.vehicleForm = this.formBuilder.group({
-    //   vehicleId: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]{17}$')]],
-    //   year: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
-    //   brand: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-    //   model: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-    //   vehicleType: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(10)]],
-    // })
+    this.initLocationAndVehicleTypes();
+    this.vehicleForm = this.formBuilder.group({
+      vehicleId: ['', [Validators.required, Validators.pattern('^[A-Z0-9]{17}$')]],
+      vehicleTypeId: ['', [Validators.required]],
+      year: ['', [Validators.required, Validators.pattern('^[0-9]{4}$'), Validators.min(1970), Validators.max(2022)]],
+      brand: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      model: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+      licensePlate: ['', [Validators.required, Validators.pattern('^[A-Z0-9]+$'), Validators.maxLength(10)]],
+      locationId: ['', [Validators.required]]
+    })
   }
 
   initVehicleClassForm() {
     this.vehicleClassForm = this.formBuilder.group({
       vehicleType: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-      serviceRate: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'), Validators.min(1)]],
-      excessMileageFee: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'), Validators.min(1)]]
+      serviceRate: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'),
+        Validators.min(1)]],
+      excessMileageFee: ['', [Validators.required, Validators.pattern('(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )'),
+        Validators.min(1)]]
     });
   }
 
@@ -146,14 +178,25 @@ export class AddDialogComponent {
     } else if (formNumber === 3) {
 
     } else if (formNumber === 4) {
+      if (this.vehicleForm.invalid) {
+        console.log(this.vehicleForm.value);
+        return;}
 
+      this.vehicleService.addVehicle(this.vehicleForm.value).subscribe(
+          data => {
+            if (data) {
+              this.notif.showNotification('Added new vehicle', 'Dismiss', false);
+              this.dialogRef.close(data);
+            }
+          }, error => {this.notif.showNotification(error, 'Dismiss', true)}
+      )
     } else if (formNumber === 5) {
       if (this.employeeForm.invalid) {return;}
       this.userService.registerEmployee(this.employeeForm.value).subscribe(
           data => {
             if (data) {
               this.notif.showNotif('Added new employee', 'Dismiss');
-              this.dialogRef.close();
+              this.dialogRef.close(data);
             }
           }, error => {this.notif.showNotification(error, 'Dismiss', true)}
       );

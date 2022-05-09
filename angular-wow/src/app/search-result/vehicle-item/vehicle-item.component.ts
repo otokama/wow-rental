@@ -12,21 +12,18 @@ import {Role} from '../../_models/role';
 })
 export class VehicleItemComponent implements OnInit {
 
-  vehicleType: VehicleType;
   year: number;
   model: string;
   make: string;
-  mileage: number;
   @Input() reserveDays: number;
   @Input() vehicle: Vehicle;
+  @Input() vehicleType: VehicleType;
   @Output() reserveEvent: EventEmitter<Vehicle> = new EventEmitter<Vehicle>();
   constructor(private authService: AuthService, private notif: NotificationService) { }
   ngOnInit(): void {
-    this.vehicleType = this.vehicle.vehicleType;
     this.year = this.vehicle.year;
     this.model = this.vehicle.model;
-    this.make = this.vehicle.make;
-    this.mileage = this.vehicle.mileage;
+    this.make = this.vehicle.brand;
   }
 
   reserve() {

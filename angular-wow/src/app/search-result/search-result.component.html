@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <app-vehicle-item *ngFor="let vehicle of filteredVehicles" [vehicle]="vehicle"
+        <app-vehicle-item *ngFor="let vehicle of filteredVehicles" [vehicle]="vehicle" [vehicleType]="vehicleTypes.get(vehicle.vehicleTypeId)"
                           [reserveDays]="reserveDuration" (reserveEvent)="reserve($event)"></app-vehicle-item>
     </div>
 

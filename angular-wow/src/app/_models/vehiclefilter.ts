@@ -1,11 +1,11 @@
 export class VehicleFilter {
-    typeID: number;
+    typeID: string;
     checked: boolean;
     carType: string;
     qty: number;
     price: number
 
-    constructor(typeID: number, checked: boolean, carType: string, qty: number, price: number){
+    constructor(typeID: string, checked: boolean, carType: string, qty: number, price: number){
         this.typeID = typeID;
         this.checked = checked;
         this.carType = carType;

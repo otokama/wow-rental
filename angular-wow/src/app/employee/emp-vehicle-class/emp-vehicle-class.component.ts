@@ -29,7 +29,6 @@ export class EmpVehicleClassComponent {
     this.vehicleService.getAllVehicleClass().subscribe(
         vehicleClass => {
           this.vehicleClass = vehicleClass;
-          console.log('got vehicle class: ', this.vehicleClass.length);
         }, error => {
           this.notif.showNotification('Cannot fetch vehicle classes', 'Dismiss', true);
         }

@@ -29,7 +29,6 @@ export class EmpLocationComponent  {
       this.locationService.getAllBranchLocation().subscribe(
           locations => {
               this.locations = locations;
-              console.log('got locations: ', this.locations.length);
           }, error => {console.log('cannot load branch locations');}
       );
   }

@@ -38,18 +38,14 @@
     </div>
 
     <div class="rental-detail">
-        <div class="title">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}}</div>
-        <div class="field">
-            <div class="field-title">Current Mileage:</div>
-            <div class="field-value">{{vehicle.mileage | number}} mi</div>
-        </div>
+        <div class="title">{{vehicle.year}} {{vehicle.brand}} {{vehicle.model}}</div>
         <div class="field">
             <div class="field-title">Vehicle Class: </div>
-            <div class="field-value">{{vehicle.vehicleType.vehicleType}}</div>
+            <div class="field-value">{{vehicleTypes.get(vehicle.vehicleId).vehicleType}}</div>
         </div>
         <div class="field">
             <div class="field-title">Excess mileage charge:</div>
-            <div class="field-value">{{vehicle.vehicleType.excessMileageFee | currency}}/mi</div>
+            <div class="field-value">{{vehicleTypes.get(vehicle.vehicleId).excessMileageFee | currency}}/mi</div>
         </div>
         <mat-checkbox [disableRipple]="true" [(ngModel)]="unlimitedMile" class="unlimit-checkbox">
             Opt in unlimited mileage package
@@ -64,7 +60,7 @@
             <div class="field-title">Car rental fee x {{duration | number}} day</div>
             <div class="field-value">{{rentalRate | currency}}</div>
         </div>
-        <mat-hint class="hint">{{vehicle.vehicleType.serviceRate | currency}} per day</mat-hint>
+        <mat-hint class="hint">{{vehicleTypes.get(vehicle.vehicleId).serviceRate | currency}} per day</mat-hint>
         <div class="field">
             <div class="field-title">Service Fee</div>
             <div class="field-value">{{50 | currency}}</div>

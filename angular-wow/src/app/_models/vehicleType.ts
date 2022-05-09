@@ -1,5 +1,5 @@
 export interface VehicleType {
-    vehicleTypeId: number;
+    vehicleTypeId: string;
     vehicleType: string;
     serviceRate: number;
     excessMileageFee: number;

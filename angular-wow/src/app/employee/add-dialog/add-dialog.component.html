@@ -106,7 +106,75 @@
 </div>
 
 <div *ngIf="form === 4" class="container">
-    <h5>Add New Vehicle</h5>
+    <form [formGroup]="vehicleForm" class="form-container">
+        <h5 class="title">Add New Vehicle</h5>
+
+        <div class="form-title">Vehicle Year *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="year" [ngClass]="{ 'is-invalid': submitted && vehicleControl.year.errors }">
+            <mat-hint *ngIf="submitted && vehicleControl.year.errors">
+                <mat-hint *ngIf="vehicleControl.year.errors.required" class="hint">Vehicle year is required</mat-hint>
+                <mat-hint *ngIf="vehicleControl.year.errors.pattern || vehicleControl.year.errors.min
+                    || vehicleControl.year.errors.max" class="hint">Invalid vehicle year</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Vehicle Make *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="brand" [ngClass]="{ 'is-invalid': submitted && vehicleControl.brand.errors }">
+            <mat-hint *ngIf="submitted && vehicleControl.brand.errors">
+                <mat-hint *ngIf="vehicleControl.brand.errors.required" class="hint">Vehicle make is required</mat-hint>
+                <mat-hint *ngIf="vehicleControl.brand.errors.pattern" class="hint">Invalid vehicle make</mat-hint>
+                <mat-hint *ngIf="vehicleControl.brand.errors.maxlength" class="hint">Exceeds 30 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Vehicle Model *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="model" [ngClass]="{ 'is-invalid': submitted && vehicleControl.model.errors }">
+            <mat-hint *ngIf="submitted && vehicleControl.model.errors">
+                <mat-hint *ngIf="vehicleControl.model.errors.required" class="hint">Vehicle model is required</mat-hint>
+                <mat-hint *ngIf="vehicleControl.model.errors.pattern" class="hint">Invalid vehicle model</mat-hint>
+                <mat-hint *ngIf="vehicleControl.model.errors.maxlength" class="hint">Exceeds 30 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Vehicle Class *</div>
+        <select class="form-select state-select" formControlName="vehicleTypeId">
+            <option [value]="vehicleType.vehicleTypeId" *ngFor="let vehicleType of vehicleClass;">{{vehicleType.vehicleType}}</option>
+        </select>
+        <mat-hint *ngIf="submitted && vehicleControl.vehicleTypeId.errors" >
+            <mat-hint *ngIf="vehicleControl.vehicleTypeId.errors.required" class="hint">Vehicle class is required</mat-hint>
+        </mat-hint>
+
+        <div class="form-title">Vehicle VIN *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="vehicleId" [ngClass]="{ 'is-invalid': submitted && vehicleControl.vehicleId.errors }">
+            <mat-hint *ngIf="submitted && vehicleControl.vehicleId.errors">
+                <mat-hint *ngIf="vehicleControl.vehicleId.errors.required" class="hint">Vehicle VIN is required</mat-hint>
+                <mat-hint *ngIf="vehicleControl.vehicleId.errors.pattern" class="hint">Invalid vehicle VIN. Must be 17 characters.</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Vehicle License Plate *</div>
+        <mat-form-field appearance="outline" class="form-field">
+            <input class="form-input" matInput formControlName="licensePlate" [ngClass]="{ 'is-invalid': submitted && vehicleControl.licensePlate.errors }">
+            <mat-hint *ngIf="submitted && vehicleControl.licensePlate.errors">
+                <mat-hint *ngIf="vehicleControl.licensePlate.errors.required" class="hint">Vehicle license plate is required</mat-hint>
+                <mat-hint *ngIf="vehicleControl.licensePlate.errors.pattern" class="hint">Capital letters and numbers only</mat-hint>
+                <mat-hint *ngIf="vehicleControl.licensePlate.errors.maxlength" class="hint">Exceeds 10 characters</mat-hint>
+            </mat-hint>
+        </mat-form-field>
+
+        <div class="form-title">Vehicle Branch Location *</div>
+        <select class="form-select state-select" formControlName="locationId">
+            <option [value]="location.locationId" *ngFor="let location of branchLocations">{{location.locationName}}</option>
+        </select>
+        <mat-hint *ngIf="submitted && vehicleControl.locationId.errors" >
+            <mat-hint *ngIf="vehicleControl.locationId.errors.required" class="hint">Vehicle branch location is required</mat-hint>
+        </mat-hint>
+    </form>
+    <div class="button" (click)="submit(4)">Add</div>
 </div>
 
 <div *ngIf="form === 5" class="container">

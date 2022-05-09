@@ -8,6 +8,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../_services/notification.service';
 import {AuthService} from '../_services/auth.service';
 import {first} from 'rxjs/operators';
+import {VehicleType} from '../_models/vehicleType';
+import {VehicleService} from '../_services/vehicle.service';
 
 @Component({
   selector: 'app-reserve',
@@ -33,9 +35,10 @@ export class ReserveComponent implements OnInit {
   submitted = false;
   loading = false;
   totalPayment: number;
+  vehicleTypes: Map<string, VehicleType>;
   constructor(private reserveService: ReserveService, private router: Router, private route: ActivatedRoute,
     private timeService: ReserveTimeService, private formBuilder: FormBuilder, private notif: NotificationService,
-    private authService: AuthService) {
+    private authService: AuthService, private vehicleService: VehicleService) {
     this.route.queryParams.subscribe(params => {
       if (!params.pickUpLoc|| !params.pickUpDate || !params.dropOffLoc || !params.dropOffDate || !params.vehicleDetail
           || !this.authService.currentUserValue) {
@@ -61,8 +64,9 @@ export class ReserveComponent implements OnInit {
     this.dropOffLoc = this.reserveService.getBranchByID(dropOffLoc);
     this.dropOffDate = new Date(dropOffDate);
     this.duration = this.timeService.getDuration(this.pickUpDate, this.dropOffDate);
-    this.rentalRate = this.duration*this.vehicle.vehicleType.serviceRate;
+    this.rentalRate = 0;
     this.totalRate = this.rentalRate + 50;
+    this.initVehicleTypes();
   }
 
   initForms() {
@@ -73,6 +77,20 @@ export class ReserveComponent implements OnInit {
     })
   }
 
+// Initialize all vehicle types
+  initVehicleTypes() {
+    this.vehicleTypes = new Map<string, VehicleType>();
+    this.vehicleService.getAllVehicleClass().subscribe(
+        allVehicleClass => {
+          if (allVehicleClass) {
+            let i;
+            for (i = 0; i < allVehicleClass.length(); ++i) {
+              this.vehicleTypes.set(allVehicleClass[i].vehicleTypeId, allVehicleClass[i]);
+            }
+          }
+        }, error => {this.notif.showNotification('Cannot fetch vehicle class', 'Dismiss', true);}
+    );
+  }
 
   get f() {
     return this.reserveForm.controls;

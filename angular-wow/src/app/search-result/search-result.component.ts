@@ -8,7 +8,9 @@ import { SelectLocationComponent } from '../home/reserve-gadget/select-location/
 import { Time } from '@angular/common';
 import { VehicleFilter } from '../_models/vehiclefilter';
 import { Vehicle } from '../_models/vehicle';
-import {LocationService} from "../_services/location.service";
+import {LocationService} from '../_services/location.service';
+import {VehicleType} from '../_models/vehicleType';
+import {VehicleService} from '../_services/vehicle.service';
 
 @Component({
   selector: 'app-search-result',
@@ -32,14 +34,15 @@ export class SearchResultComponent implements OnInit {
   selectedDropOffLoc: number;
   sort: string[];
   sortOrder: number;
-  typeFilters: Map<number, VehicleFilter>;
-  selectedFilters: number[] | null;
+  vehicleTypes: Map<string, VehicleType>;
+  typeFilters: Map<string, VehicleFilter>;
+  selectedFilters: string[] | null;
   vehicleReservable: Vehicle[] | null;
   filteredVehicles: Vehicle[] | null;
   reserveDuration: number;
   constructor(private route: ActivatedRoute, private router: Router, private timeService: ReserveTimeService,
               private reserveService: ReserveService, private dialog: MatDialog,
-              private notif: NotificationService, private locationService: LocationService) {
+              private notif: NotificationService, private locationService: LocationService, private vehicleService:VehicleService) {
     this.sortOrder = 2;
     this.sort = [
       'Sort by price - High to Low','Sort by price - Low to High'
@@ -104,7 +107,8 @@ export class SearchResultComponent implements OnInit {
   private sortVehicle(desc: boolean) {
     if (desc) { // sort by high to low
       this.filteredVehicles = this.filteredVehicles.sort((v1, v2) => {
-        if (v1.vehicleType.serviceRate * this.reserveDuration > v2.vehicleType.serviceRate * this.reserveDuration) {
+        if (this.vehicleTypes.get(v1.vehicleTypeId).serviceRate * this.reserveDuration >
+              this.vehicleTypes.get(v2.vehicleTypeId).serviceRate * this.reserveDuration) {
           return -1;
         } else {
           return 1;
@@ -113,7 +117,8 @@ export class SearchResultComponent implements OnInit {
       );
     } else {
       this.filteredVehicles = this.filteredVehicles.sort((v1, v2) => {
-            if (v1.vehicleType.serviceRate * this.reserveDuration > v2.vehicleType.serviceRate * this.reserveDuration) {
+            if (this.vehicleTypes.get(v1.vehicleTypeId).serviceRate * this.reserveDuration >
+                  this.vehicleTypes.get(v2.vehicleTypeId).serviceRate * this.reserveDuration) {
               return 1;
             } else {
               return -1;
@@ -204,31 +209,44 @@ export class SearchResultComponent implements OnInit {
   }
 
 
+
   initVehicleFilters() {
-    this.typeFilters = new Map<number, VehicleFilter>();
-    this.selectedFilters = [];
-    if (this.vehicleReservable.length >= 1) {
-      let i;
-      for (i = 0; i < this.vehicleReservable.length; ++i) {
-        if( this.typeFilters.has(this.vehicleReservable[i].vehicleType.vehicleTypeId) ) {
-          const filter = this.typeFilters.get(this.vehicleReservable[i].vehicleType.vehicleTypeId);
-          filter.qty += 1;
-          this.typeFilters.set(this.vehicleReservable[i].vehicleType.vehicleTypeId,
-              filter);
-        } else {
-          const filter = new VehicleFilter(this.vehicleReservable[i].vehicleType.vehicleTypeId, false,
-              this.vehicleReservable[i].vehicleType.vehicleType, 1, this.vehicleReservable[i].vehicleType.serviceRate);
-          this.typeFilters.set(this.vehicleReservable[i].vehicleType.vehicleTypeId, filter);
-        }
-      }
-      this.typeFilters = new Map<number, VehicleFilter>([...this.typeFilters.entries()].sort((a, b) => {
-        if (a[1].price > b[1].price) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }));
-    }
+    this.vehicleTypes = new Map<string, VehicleType>();
+    this.vehicleService.getAllVehicleClass().subscribe(
+        allVehicleClass => {
+          if (allVehicleClass) {
+            let i;
+            for (i = 0; i < allVehicleClass.length; ++i) {
+              this.vehicleTypes.set(allVehicleClass[i].vehicleTypeId, allVehicleClass[i]);
+            }
+            this.typeFilters = new Map<string, VehicleFilter>();
+            this.selectedFilters = [];
+            if (this.vehicleReservable.length >= 1) {
+              let j;
+              for (j = 0; j < this.vehicleReservable.length; ++j) {
+                if( this.typeFilters.has(this.vehicleReservable[j].vehicleTypeId) ) {
+                  const filter = this.typeFilters.get(this.vehicleReservable[j].vehicleTypeId);
+                  filter.qty += 1;
+                  this.typeFilters.set(this.vehicleReservable[j].vehicleTypeId,
+                      filter);
+                } else {
+                  const filter = new VehicleFilter(this.vehicleReservable[j].vehicleTypeId, false,
+                      this.vehicleTypes.get(this.vehicleReservable[j].vehicleTypeId).vehicleType, 1,
+                      this.vehicleTypes.get(this.vehicleReservable[j].vehicleTypeId).serviceRate);
+                  this.typeFilters.set(this.vehicleReservable[j].vehicleTypeId, filter);
+                }
+              }
+              this.typeFilters = new Map<string, VehicleFilter>([...this.typeFilters.entries()].sort((a, b) => {
+                if (a[1].price > b[1].price) {
+                  return 1;
+                } else {
+                  return -1;
+                }
+              }));
+            }
+          }
+        }, error => {this.notif.showNotification('Cannot fetch vehicle class', 'Dismiss', true);}
+    );
 
   }
 
@@ -245,7 +263,7 @@ export class SearchResultComponent implements OnInit {
       this.filteredVehicles = [];
       let i;
       for (i = 0; i < this.vehicleReservable.length; ++i) {
-        if (this.selectedFilters.indexOf(this.vehicleReservable[i].vehicleType.vehicleTypeId) >= 0) {
+        if (this.selectedFilters.indexOf(this.vehicleReservable[i].vehicleTypeId) >= 0) {
           this.filteredVehicles.push(this.vehicleReservable[i]);
         }
       }
@@ -266,7 +284,7 @@ export class SearchResultComponent implements OnInit {
       pickUpDate: this.selectedPickUpDate,
       dropOffLoc: Number(this.selectedDropOffLoc),
       dropOffDate: this.selectedDropOffDate,
-      vehicleDetail: vehicle.VIN
+      vehicleDetail: vehicle.vehicleId
     }
     });
   }
