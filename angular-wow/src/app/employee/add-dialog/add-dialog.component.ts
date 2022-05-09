@@ -70,6 +70,7 @@ export class AddDialogComponent {
     }
     this.states = this.userService.getStates();
     this.minDate = new Date(new Date().getTime());
+    this.minDate.setMonth(new Date().getMonth() - 1);
     this.submitted = false;
   }
 
@@ -223,7 +224,7 @@ export class AddDialogComponent {
         couponCode: this.couponForm.value.couponCode,
         discountPercentage: this.couponForm.value.discountPercentage,
         startDate: formatDate(this.validDate, 'yyyy-MM-dd hh:mm', 'en-US') ,
-        expireDate: formatDate(this.expireDate, 'yyyy-MM-dd hh:mm', 'en-US')
+        expiredDate: formatDate(this.expireDate, 'yyyy-MM-dd hh:mm', 'en-US')
       };
       this.couponService.addCoupon(coupon).subscribe(
           data => {

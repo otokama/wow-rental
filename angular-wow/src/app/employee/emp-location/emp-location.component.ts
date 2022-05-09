@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {BranchLocation} from '../../_models/branch';
 import {LocationService} from '../../_services/location.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {NotificationService} from "../../_services/notification.service";
+import {NotificationService} from '../../_services/notification.service';
 
 @Component({
   selector: 'app-emp-location',

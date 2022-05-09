@@ -111,28 +111,11 @@
                     <mat-hint *ngIf="f.cardNumber.errors.pattern" class="error-hint">Invalid card number</mat-hint>
                 </mat-hint>
             </mat-form-field>
-            <mat-checkbox [disableRipple]="true" [checked]="splitPayment" class="unlimit-checkbox">
-                Add another payment method?
-            </mat-checkbox>
-            <div class="form-title" *ngIf="splitPayment">Secondary Payment Method *</div>
-            <select class="form-select method-select" formControlName="secondPaymentMethod" *ngIf="splitPayment">
-                <option value="GIFT">Gift Card</option>
-                <option value="CREDIT">Credit Card</option>
-                <option value="DEBIT">Debit Card</option>
-            </select>
-            <mat-hint *ngIf="submitted && f.secondPaymentMethod.errors" >
-                <mat-hint *ngIf="f.secondPaymentMethod.errors.required" class="method-error-hint">Payment method is required</mat-hint>
-            </mat-hint>
 
-            <div  class="form-title" *ngIf="splitPayment">Card Number *</div>
-            <mat-form-field appearance="outline" class="form-field" *ngIf="splitPayment">
-                <input matInput type="text" formControlName="secondCardNumber" class="form-input"
-                       [ngClass]="{'is-invalid': submitted && f.secondCardNumber.errors}" >
-                <mat-hint *ngIf="submitted && f.secondCardNumber.errors">
-                    <mat-hint *ngIf="f.secondCardNumber.errors.required" class="error-hint">Card number is required</mat-hint>
-                    <mat-hint *ngIf="f.secondCardNumber.errors.pattern" class="error-hint">Invalid card number</mat-hint>
-                </mat-hint>
-            </mat-form-field>
+            <mat-checkbox [disableRipple]="true" (change)="checkedSecondPayment()" [(ngModel)]="splitPayment" class="unlimit-checkbox">
+                Split payment with another payment method?
+            </mat-checkbox>
+
 
 
             <div class="form-title">Have a coupon?</div>
@@ -144,11 +127,36 @@
                         <mat-hint *ngIf="f.couponCode.errors.pattern" class="error-hint">Invalid coupon code</mat-hint>
                     </mat-hint>
                 </mat-form-field>
-                <div class="apply-coupon" (click)="validCoupon()">Apply</div>
+                <div class="apply-coupon" (click)="validateCoupon()">Apply</div>
             </div>
         </form>
 
 
+    </div>
+
+    <div class="rental-detail" *ngIf="splitPayment">
+        <form [formGroup]="secondaryPaymentForm" class="payment-form">
+            <div class="title">Secondary Payment</div>
+            <div class="form-title" >Secondary Payment Method *</div>
+            <select class="form-select method-select" formControlName="paymentMethod" >
+                <option value="GIFT">Gift Card</option>
+                <option value="CREDIT">Credit Card</option>
+                <option value="DEBIT">Debit Card</option>
+            </select>
+            <mat-hint *ngIf="submitted  && secondPaymentControl.paymentMethod.errors" >
+                <mat-hint *ngIf="secondPaymentControl.paymentMethod.errors.required" class="method-error-hint">Payment method is required</mat-hint>
+            </mat-hint>
+
+            <div  class="form-title">Card Number *</div>
+            <mat-form-field appearance="outline" class="form-field">
+                <input matInput type="text" formControlName="cardNumber" class="form-input"
+                       [ngClass]="{'is-invalid': submitted && secondPaymentControl.cardNumber.errors}" >
+                <mat-hint *ngIf="submitted  && secondPaymentControl.cardNumber.errors">
+                    <mat-hint *ngIf="secondPaymentControl.cardNumber.errors.required" class="error-hint">Card number is required</mat-hint>
+                    <mat-hint *ngIf="secondPaymentControl.cardNumber.errors.pattern" class="error-hint">Invalid card number</mat-hint>
+                </mat-hint>
+            </mat-form-field>
+        </form>
     </div>
     <div class="submit" (click)="onSubmit()">Confirm Booking</div>
 

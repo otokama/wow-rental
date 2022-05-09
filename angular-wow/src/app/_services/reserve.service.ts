@@ -8,14 +8,17 @@ import {Coupon} from '../_models/coupon';
 import {ReserveTimeService} from './reserve-time.service';
 import {RentalService} from '../_models/rentalService';
 import {AuthService} from './auth.service';
+import {environment} from '../../environments/environment';
+import {map} from "rxjs/operators";
 
 @Injectable({ providedIn: 'root' })
 export class ReserveService {
+    private URL = environment.URL;
     branchLocation: BranchLocation[];
     vehicleTypes: VehicleType[];
     vehicles: Vehicle[];
     coupons: Coupon[];
-    constructor(private timeService: ReserveTimeService, private authService: AuthService) {
+    constructor(private timeService: ReserveTimeService, private authService: AuthService, private http: HttpClient) {
         // this.branchLocation = [
         //     {
         //         locationId: 1,
@@ -235,9 +238,16 @@ export class ReserveService {
         return -1;
     }
 
+    getAllReservationCustomer() {
+        return this.http.get<any>(`${this.URL}/reservation/get/reservations`).pipe(map(res => {
+            if (res.message === 'Success') {
+                return res.data;
+            }
+        }));
+    }
 
-    submitNewReservation(service: RentalService) {
-
+    reserve(service) {
+        return this.http.post<any>(`${this.URL}/reservation/reserve/vehicle`, service);
     }
 
 }

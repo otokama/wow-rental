@@ -13,6 +13,7 @@ import {VehicleService} from "../../_services/vehicle.service";
 import {NotificationService} from "../../_services/notification.service";
 import {EmpVehicleComponent} from "../emp-vehicle/emp-vehicle.component";
 import {EmpCompanyComponent} from "../emp-company/emp-company.component";
+import {EmpCouponComponent} from "../emp-coupon/emp-coupon.component";
 
 @Component({
   selector: 'app-emp-home',
@@ -24,6 +25,7 @@ export class EmpHomeComponent implements OnInit {
   page: number;
   vehicleType: VehicleType[];
   branchLocations: BranchLocation[];
+  @ViewChild(EmpCouponComponent, {static:false}) CouponComponent: EmpCouponComponent;
   @ViewChild(EmpCompanyComponent, {static: false }) CompanyComponent: EmpCompanyComponent;
   @ViewChild(EmpLocationComponent, { static: false }) LocationComponent: EmpLocationComponent;
   @ViewChild(EmpVehicleClassComponent, {static: false}) VehicleClassComponent: EmpVehicleClassComponent;
@@ -87,7 +89,11 @@ export class EmpHomeComponent implements OnInit {
     } else if (this.page === 3) { // coupon
       dialogConfig.data = {form: 1};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
-
+      dialogRef.afterClosed().subscribe( result => {
+        if (result) {
+          this.CouponComponent.fetchCoupon();
+        }
+      })
     } else if (this.page === 5) { // vehicle
       if (this.branchLocations.length === 0) {
         this.notif.showNotification('Branch location empty. At least one branch location is required.',
