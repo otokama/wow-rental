@@ -104,6 +104,7 @@
 
                     <div class="form-title">State *</div>
                     <select class="form-select state-select" formControlName="state">
+                        <option value="{{customerForm.state.value}}" selected>{{customerForm.state.value}}</option>
                         <option [value]="state" *ngFor="let state of states;">{{state}}</option>
                     </select>
                     <mat-hint *ngIf="submittedCustomerAccountForm && customerForm.state.errors" >

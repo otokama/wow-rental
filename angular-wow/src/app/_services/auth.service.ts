@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {Role} from '../_models/role';
 import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import {NotificationService} from "./notification.service";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
   public currentUser: Observable<User>;
   private URL = environment.URL;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private notif: NotificationService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -91,6 +92,7 @@ export class AuthService {
 
 
     logout() {
+    this.notif.showNotification('See you soon! ' + this.currentUserValue.firstName, 'Dismiss', false);
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     // notify all subscribers that user has logged out.

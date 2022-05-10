@@ -29,30 +29,46 @@ export class AccountComponent implements OnInit {
     this.page = 0;
     this.states = this.userService.getStates();
     this.currentUser = this.authService.currentUserValue;
+    if (this.currentUser.customerId) {
+      this.initCustomerForm();
+    }
+  }
+
+  initCustomerForm() {
+    this.userService.getCustomerBy(this.currentUser.customerId).subscribe(
+        customer => {
+          if (customer) {
+            this.customerAccountForm = this.formBuilder.group({
+              firstName: [this.currentUser.firstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
+              lastName: [this.currentUser.lastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
+              middleName: [customer.middleName, [Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
+              phoneNumber: [customer.phoneNumber, [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+              street: [customer.street, [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+              city: [customer.city, [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(30)]],
+              state: [customer.state, [Validators.required]],
+              zipcode: [customer.zipcode, [Validators.required, Validators.pattern('^[0-9]{5}$')]],
+              driverLicense: [customer.driverLicense, [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+              insuranceCompany: [customer.insuranceCompany, [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+              insuranceNumber: [customer.insuranceNumber, [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
+              customerId: [this.currentUser.customerId]
+            });
+          }
+        }, error => {this.notification.showNotification('Cannot fetch customer info', 'Dismiss', true);}
+    );
   }
 
   ngOnInit(): void {
-    // TODO: get user account detail:
-    this.customerAccountForm = this.formBuilder.group({
-      customerId: [this.currentUser.customerId],
-      firstName: [this.currentUser.firstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
-      lastName: [this.currentUser.lastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
-      middleName: ['', [Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      street: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-      city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.maxLength(30)]],
-      state: ['', [Validators.required]],
-      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
-      driverLicense: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-      insuranceCompany: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]],
-      insuranceNumber: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.maxLength(30)]]
-    });
+    // init customer account form
+    this.initCustomerForm();
+
+    // init employee account form
     this.employeeAccountForm = this.formBuilder.group({
       employeeId: [this.currentUser.employeeId],
       firstName: [this.currentUser.firstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       lastName: [this.currentUser.lastName, [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
       middleName: ['', [Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(20)]],
     });
+    // init credential form
     if (this.isEmployee) {
       this.credentials = this.formBuilder.group({
         employeeId: [this.currentUser.employeeId],
@@ -98,6 +114,7 @@ export class AccountComponent implements OnInit {
       }
       this.userService.updateEmployee(this.employeeAccountForm.value).subscribe(
           data => {
+            this.ngOnInit();
             this.notification.showNotif('Account updated! Changes apply in next sign in.', 'Dismiss');
           }, error => {
             this.notification.showNotif(error, 'error');
@@ -111,6 +128,7 @@ export class AccountComponent implements OnInit {
       }
       this.userService.updateIndividual(this.customerAccountForm.value).subscribe(
           data => {
+            this.ngOnInit();
             this.notification.showNotif('Account updated! Changes apply in next sign in.', 'Dismiss');
           }, error => {
             this.notification.showNotif(error, 'error');

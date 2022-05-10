@@ -5,6 +5,7 @@ import {RegisterIndividual} from '../_models/registerIndividual';
 import {environment} from '../../environments/environment';
 import {UpdateIndividual} from '../_models/updateIndividual';
 import {UpdateEmployee} from "../_models/updateEmployee";
+import {map} from "rxjs/operators";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -27,6 +28,14 @@ export class UserService {
 
   getStates(): string[]{
     return this.states;
+  }
+
+  getCustomerBy(customerId) {
+    return this.http.get<any>(`${this.URL}/customer/get/customer?customerId=${customerId}`).pipe(map(res => {
+      if (res.message === 'Success') {
+        return res.data;
+      }
+    }));
   }
 
   updateCustomerCredential(credentials) {

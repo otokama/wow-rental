@@ -76,6 +76,8 @@ export class RegisterComponent implements OnInit {
         data => {
           //  this.alertService.success('Registration successful', true);
           this.router.navigate(['/']);
+          this.notification.showNotification('Login to make reservation! ' + this.registerForm.value.firstName,
+              'Dismiss', false);
         },
         error => {
           console.log('Error:', error);

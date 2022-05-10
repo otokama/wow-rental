@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Trip} from "../_models/trip";
+import {Trip} from '../_models/trip';
 
 @Injectable({ providedIn: 'root' })
 export class TripService {
@@ -56,38 +56,5 @@ export class TripService {
         ];
     }
 
-    getPreviousTrip(): Trip[] {
-        const prevTrip: Trip[] = [];
-        let i;
-        for (i = 0; i < this.trips.length; ++i) {
-            if (this.trips[i].dropOffDate < new Date(new Date().getTime())) {
-                prevTrip.push(this.trips[i]);
-            }
-        }
-        return prevTrip;
-    }
-
-    getCurrentTrip(): Trip[] {
-        const currTrip: Trip[] = [];
-        let i;
-        for (i = 0; i < this.trips.length; ++i) {
-            if (this.trips[i].dropOffDate > new Date(new Date().getTime()) &&
-                    this.trips[i].pickUpDate < new Date(new Date().getTime())) {
-                currTrip.push(this.trips[i]);
-            }
-        }
-        return currTrip;
-    }
-
-    getUpcomingTrip(): Trip[] {
-        const upComingTrip: Trip[] = [];
-        let i;
-        for (i = 0; i < this.trips.length; ++i) {
-            if (this.trips[i].pickUpDate > new Date(new Date().getTime())) {
-                upComingTrip.push(this.trips[i]);
-            }
-        }
-        return upComingTrip;
-    }
 
 }

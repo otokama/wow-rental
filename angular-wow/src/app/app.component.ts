@@ -50,7 +50,6 @@ export class AppComponent implements OnInit{
 
   logout() {
     this.authService.logout();
-    this.notif.showNotif('You have been signed out.', 'Dismiss');
     this.router.navigate(['']);
   }
 

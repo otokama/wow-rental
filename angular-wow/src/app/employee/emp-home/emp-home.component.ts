@@ -34,6 +34,13 @@ export class EmpHomeComponent implements OnInit {
               private vehicleService: VehicleService, private notif: NotificationService) {
     this.currentUser = this.authService.currentUserValue;
     this.page = 0;
+    this.initBranchLocationVehicleTypes();
+  }
+
+  ngOnInit(): void {
+  }
+
+  initBranchLocationVehicleTypes() {
     this.locationService.getAllBranchLocation().subscribe(
         locations => {
           if (locations) {
@@ -49,10 +56,6 @@ export class EmpHomeComponent implements OnInit {
         }, error => {this.notif.showNotification('Cannot fetch vehicle class', 'Dismiss', true);}
     );
   }
-
-  ngOnInit(): void {
-  }
-
 
   switchPage(page) {
     this.page = page;
@@ -95,22 +98,36 @@ export class EmpHomeComponent implements OnInit {
         }
       })
     } else if (this.page === 5) { // vehicle
-      if (this.branchLocations.length === 0) {
-        this.notif.showNotification('Branch location empty. At least one branch location is required.',
-            'Dismiss', true);
-        return;
-      } else if (this.vehicleType.length === 0) {
-        this.notif.showNotification('Vehicle class empty. At least one vehicle class is required.',
-            'Dismiss', true);
-        return;
-      }
-      dialogConfig.data = {form: 4};
-      const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.VehicleComponent.fetchVehicle();
-        }
-      });
+
+      this.locationService.getAllBranchLocation().subscribe(
+          locations => {
+            if (locations) {
+              this.branchLocations = locations;
+              if (this.branchLocations.length === 0) {
+                this.notif.showNotification('At least one branch location required to add vehicle', 'Dismiss', true);
+                return;
+              }
+              this.vehicleService.getAllVehicleClass().subscribe(
+                  vehicleClass => {
+                    if (vehicleClass) {
+                      this.vehicleType = vehicleClass;
+                      if (this.vehicleType.length === 0){
+                        this.notif.showNotification('At least one vehicle class required to add vehicle', 'Dismiss', true);
+                        return;
+                      }
+                      dialogConfig.data = {form: 4};
+                      const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
+                      dialogRef.afterClosed().subscribe(result => {
+                        if (result) {
+                          this.VehicleComponent.fetchVehicle();
+                        }
+                      });
+                    }
+                  }, error => {this.notif.showNotification('Cannot fetch vehicle class', 'Dismiss', true);}
+              );
+            }
+          }, error => {this.notif.showNotification('Cannot fetch locations', 'Dismiss', true);}
+      );
     } else if (this.page === 6) { // vehicle class
       dialogConfig.data = {form: 6};
       const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
