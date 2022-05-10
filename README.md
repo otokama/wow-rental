@@ -16,4 +16,4 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 Can be found [here](https://github.com/poppingary/car-rental-springboot-backend). Credit: [@popingary](https://github.com/poppingary)
 
 ## Demo Screenshots
-Can be found [here](./../demo)
+Can be found [here](angular-wow/demo)
