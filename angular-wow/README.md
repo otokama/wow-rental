@@ -1,11 +1,19 @@
-# angular wow
+# WOW Rental
+Car rental project in Angular, MySQL and SpringBoot
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+## Usage
+### Development server for angular frontend
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Build
+Run `ng serve` for a dev server. 
+### Build angular frontend
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+
+
+
+## Springboot backend
+Can be found [here](https://github.com/poppingary/car-rental-springboot-backend). Credit: [@popingary](https://github.com/poppingary)
+
+## Demo Screenshots
+Can be found [here](./demo)
