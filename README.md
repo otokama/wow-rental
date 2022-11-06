@@ -1,5 +1,5 @@
 # WOW Rental
-Car rental project in Angular, MySQL and SpringBoot
+Car rental project in Angular, MySQL and NodeJS
 
 ## Usage
 ### Development server for angular frontend
