@@ -13,7 +13,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 
 ## Springboot backend
-Can be found [here](https://github.com/poppingary/car-rental-springboot-backend). Credit: [@popingary](https://github.com/poppingary)
+Can be found [here](https://github.com/otokama/wow-rental-backend).
 
 ## Demo Screenshots
 Can be found [here](angular-wow/demo)
